@@ -2,14 +2,14 @@ _:
 
 [
   # Development Tools
-  "homebrew/cask/docker"
-  "visual-studio-code"
+  # "homebrew/cask/docker"
+  # "visual-studio-code"
 
   # Productivity Tools
-  "raycast"
+  # "raycast"
 
   # Browsers
-  "google-chrome"
+  # "google-chrome"
 
   # Communication Tools - Examples (uncomment as needed)
   # "discord"
