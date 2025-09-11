@@ -30,7 +30,7 @@ let user = "moonshot"; in
 
 
   environment.systemPackages = with pkgs; [
-    emacs-unstable
+    # emacs-unstable
   ] ++ (import ../../modules/shared/packages.nix { inherit pkgs; });
 
   launchd.user.agents.emacs.path = [ config.environment.systemPath ];
