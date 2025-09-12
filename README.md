@@ -19,7 +19,7 @@ One flake to build them all: **macOS** (nix-darwin) + **NixOS** + **home-manager
 
 ## 📖 TOC
 - [Features](#features)
-- [Folder Map](#folder-map)
+- [Foldrer Map](#folder-map)
 - [Quick Start](#quick-start)
   - [macOS (nix-darwin)](#macos-nix-darwin)
   - [NixOS](#nixos)
