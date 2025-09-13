@@ -20,6 +20,10 @@ in
 
   homebrew = {
     enable = true;
+    brews = [
+      "nvm"
+      "pyenv"
+    ];
     casks = pkgs.callPackage ./casks.nix {};
     # onActivation.cleanup = "uninstall";
 
@@ -41,6 +45,7 @@ in
   # Enable home-manager
   home-manager = {
     useGlobalPkgs = true;
+    backupFileExtension = "backup";
     users.${user} = { pkgs, config, lib, ... }:{
       home = {
         enableNixpkgsReleaseCheck = false;
@@ -61,7 +66,7 @@ in
 
   # Fully declarative dock using the latest from Nix Store
   local.dock = {
-    enable = true;
+    enable = false;
     username = user;
     entries = [];
   };
