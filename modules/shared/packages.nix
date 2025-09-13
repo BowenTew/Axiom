@@ -1,6 +1,7 @@
 { pkgs }:
 
 with pkgs; [
+  home-manager
   # # General packages for development and system management
   # alacritty
   # aspell

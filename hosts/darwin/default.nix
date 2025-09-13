@@ -64,7 +64,7 @@ let user = "moonshot"; in
       };
 
       trackpad = {
-        Clicking = true;
+        Clicking = false;
         TrackpadThreeFingerDrag = true;
       };
     };
