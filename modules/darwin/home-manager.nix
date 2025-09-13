@@ -23,6 +23,7 @@ in
     brews = [
       "nvm"
       "pyenv"
+      "goenv"
     ];
     casks = pkgs.callPackage ./casks.nix {};
     # onActivation.cleanup = "uninstall";
