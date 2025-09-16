@@ -8,25 +8,40 @@ let name = "Tetsuya";
   zsh = {
     enable = true;
     autocd = false;
-    plugins = [
-      {
-        name = "powerlevel10k";
-        src = pkgs.zsh-powerlevel10k;
-        file = "share/zsh-powerlevel10k/powerlevel10k.zsh-theme";
-      }
-      {
-        name = "powerlevel10k-config";
-        src = lib.cleanSource ./config;
-        file = "p10k.zsh";
-      }
-    ];
+    "oh-my-zsh" = {
+      enable = true;
+      theme = "robbyrussell";
+      plugins = [ "git" "web-search" ];
+    };
 
     initContent = lib.mkBefore ''
+      # This script initializes the environment for the Nix package manager.
+
+      # Check if the specified file exists and is a regular file.
+      # This file is part of a standard Nix multi-user installation.
       if [[ -f /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh ]]; then
+        # Source (execute) the nix-daemon.sh script in the current shell session.
+        # This script sets up environment variables and paths necessary for the
+        # Nix daemon, which manages builds and packages in a multi-user setup.
+        # It typically adds the Nix binary directory to the PATH.
         . /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
+        # Source the nix.sh script in the current shell session.
+        # This script sets up essential user-specific Nix environment variables.
+        # The most important one is NIX_PATH, which tells Nix where to look for
+        # expressions (like nixpkgs). It may also configure other settings.
         . /nix/var/nix/profiles/default/etc/profile.d/nix.sh
       fi
 
+      # Pyenv Setup, use pyenv in terminal to manage python version
+      export PATH="$HOME/.pyenv/bin:$PATH"
+      eval "$(pyenv init --path)"
+      eval "$(pyenv init -)"
+
+      # NVM Setup, can use nvm command in your terminal
+      export NVM_DIR="$HOME/.nvm"
+      [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+      [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+      
       # Define variables for directories
       export PATH=$HOME/.pnpm-packages/bin:$HOME/.pnpm-packages:$PATH
       export PATH=$HOME/.npm-packages/bin:$HOME/bin:$PATH
@@ -46,6 +61,9 @@ let name = "Tetsuya";
 
       # Always color ls and group directories
       alias ls='ls --color=auto'
+    '';
+    envExtra = ''
+      export PATH="/opt/homebrew/bin:$PATH"
     '';
   };
 
@@ -261,5 +279,5 @@ let name = "Tetsuya";
       bind-key -T copy-mode-vi 'C-l' select-pane -R
       bind-key -T copy-mode-vi 'C-\' select-pane -l
       '';
-    };
+  };
 }
