@@ -2,7 +2,9 @@
 
 with pkgs; [
   home-manager
-  # # General packages for development and system management
+  neovim
+  git
+  # General packages for development and system management
   # alacritty
   # aspell
   # aspellDicts.en
@@ -36,9 +38,6 @@ with pkgs; [
   # noto-fonts
   # noto-fonts-emoji
   # meslo-lgs-nf
-
-  # # Node.js development tools
-  # nodejs_24
 
   # # Text and terminal utilities
   # htop

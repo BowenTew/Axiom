@@ -66,3 +66,11 @@ sh ./aarch64-darwin/build-switch
 ### <img src="./assets/linux.svg" alt="Axiom" width="24" />  Linux (NixOS)
 
 TBD....
+
+## 🤖 FAQ
+
+- **⚠️ After running build and switch, `~/.zshrc` and `~/.oh-my-zsh` package are still missing**  
+  
+  1. In your Home-Manager config, quote the plugin name exactly like this: programs.zsh.oh-my-zsh = "oh-my-zsh"; (double quotes around the string).
+  2. Make sure ~/.zshrc.backup does not exist; with home-manager.backupFileExtension = "backup" Home-Manager will refuse to proceed if it sees that file.
+  3. Home-Manager installs Oh-My-Zsh into the Nix store and only references it from ~/.zshrc, so you won’t find an oh-my-zsh folder in your home directory.
