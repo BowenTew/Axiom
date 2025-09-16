@@ -5,6 +5,7 @@ with pkgs; [
   neovim
   git
   tig
+  git-lfs
   # General packages for development and system management
   # alacritty
   # aspell
@@ -51,7 +52,6 @@ with pkgs; [
   # tmux
   # unrar
   # unzip
-  # zsh-powerlevel10k
 
   # # Python packages
   # python3
