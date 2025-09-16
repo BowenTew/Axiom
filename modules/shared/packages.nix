@@ -4,6 +4,7 @@ with pkgs; [
   home-manager
   neovim
   git
+  tig
   # General packages for development and system management
   # alacritty
   # aspell
