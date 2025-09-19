@@ -39,6 +39,41 @@ One flake to build them all: **macOS** (nix-darwin) + **NixOS** + **home-manager
 
 ## 📁 Folder Map
 
+```
+.
+├── apps
+│   ├── aarch64-darwin
+│   ├── aarch64-linux -> x86_64-linux
+│   ├── x86_64-darwin
+│   └── x86_64-linux
+├── assets
+│   ├── brew-casks.txt
+│   ├── brew-formulae.txt
+│   ├── Brewfile
+│   ├── linux.svg
+│   ├── macos.svg
+│   └── nix-icon.svg
+├── devshells
+│   ├── deno
+│   ├── devshell.nix
+│   ├── go
+│   ├── java
+│   ├── node
+│   └── rust
+├── flake.lock
+├── flake.nix
+├── hosts
+│   ├── darwin
+│   └── nixos
+├── modules
+│   ├── darwin
+│   ├── nixos
+│   └── shared
+├── overlays
+│   ├── 10-feather-font.nix
+│   └── README.md
+└── README.md
+```
 ## 🚀 Quick Start
 
 ### <img src="./assets/macos.svg" alt="Axiom" width="24" />  MacOS (nix-darwin)
