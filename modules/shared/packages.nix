@@ -3,6 +3,7 @@
 with pkgs; [
   home-manager
   neovim
+  tree
   git
   tig
   git-lfs
