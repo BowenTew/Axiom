@@ -35,9 +35,11 @@
       linuxSystems = [ "x86_64-linux" "aarch64-linux" ];
       darwinSystems = [ "aarch64-darwin" "x86_64-darwin" ];
       forAllSystems = f: nixpkgs.lib.genAttrs (linuxSystems ++ darwinSystems) f;
+
+      # Define Develop Shell
       devShell = system:
         let pkgs = nixpkgs.legacyPackages.${system}; in
-        import ./devshells/devshell.nix { inherit pkgs; };
+        import ./devshells/default.nix { inherit pkgs; };
       mkApp = scriptName: system: {
         type = "app";
         program = "${(nixpkgs.legacyPackages.${system}.writeScriptBin scriptName ''
