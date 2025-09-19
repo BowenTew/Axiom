@@ -67,6 +67,39 @@ sh ./aarch64-darwin/build-switch
 
 TBD....
 
+## 🧪 DevShells（Stack-isolated development environment）
+
+Provide reproducible, stack-specific dev environments without global installs. Enter with nix develop to get the exact toolchains and PATH you need (preferring project-local node_modules/.bin) for Node, Rust, Go, Java, Deno, and more.
+
+The environment entered by runing nix develop xxx use bash as default shell-env.You can use `nix develop -c zsh xxx` to enter the zsh-env.
+
+```zsh
+# Default devShell: minimal dependencies (zsh, git), no language toolchains.
+nix develop -c zsh
+
+# Node devShell: Node.js (20/22) with Corepack (pnpm, Yarn) enabled; prefers project-local node_modules/.bin.
+nix develop .#node22 -c zsh
+
+# Rust devShell: Rust toolchain (rustup, cargo, clippy, rustfmt, rust-analyzer); reproducible, no global installs.
+nix develop .#rust -c zsh
+
+# Go devShell: Go toolchain (go, gopls, delve, go-tools, gotestsum); reproducible, no global installs.
+nix develop .#go -c zsh
+
+# Java devShell: JDK (8/11/17), Maven, Gradle; reproducible, no global installs.
+nix develop .#java17 -c zsh 
+```
+
+You can also explicitly specify the system for different architectures: 
+
+```zsh
+nix develop .#frontend --system aarch64-darwin -c zsh
+nix develop .#rust --system x86_64-linux' -c zsh
+```
+
+It’s recommended to place a .envrc (with direnv) or a devenv.yaml in the project subdirectory so the corresponding devShell is auto-activated when entering the directory.
+
+
 ## 🤖 FAQ
 
 - **⚠️ After running build and switch, `~/.zshrc` and `~/.oh-my-zsh` package are still missing**  
