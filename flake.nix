@@ -39,7 +39,7 @@
       # Define Develop Shell
       devShell = system:
         let pkgs = nixpkgs.legacyPackages.${system}; in
-        import ./devshells/devshell.nix { inherit pkgs; };
+        import ./devshells/default.nix { inherit pkgs; };
       mkApp = scriptName: system: {
         type = "app";
         program = "${(nixpkgs.legacyPackages.${system}.writeScriptBin scriptName ''
