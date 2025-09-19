@@ -35,14 +35,9 @@
       linuxSystems = [ "x86_64-linux" "aarch64-linux" ];
       darwinSystems = [ "aarch64-darwin" "x86_64-darwin" ];
       forAllSystems = f: nixpkgs.lib.genAttrs (linuxSystems ++ darwinSystems) f;
-      devShell = system: let pkgs = nixpkgs.legacyPackages.${system}; in {
-        default = with pkgs; mkShell {
-          nativeBuildInputs = with pkgs; [ bashInteractive git ];
-          shellHook = with pkgs; ''
-            export EDITOR=vim
-          '';
-        };
-      };
+      devShell = system:
+        let pkgs = nixpkgs.legacyPackages.${system}; in
+        import ./devshells/devshell.nix { inherit pkgs; };
       mkApp = scriptName: system: {
         type = "app";
         program = "${(nixpkgs.legacyPackages.${system}.writeScriptBin scriptName ''
