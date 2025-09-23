@@ -1,7 +1,11 @@
-{ user, config, pkgs, ... }:
+{ user, config, pkgs, lib, ... }:
 
 let
-  xdg_configHome = "${config.users.users.${user}.home}/.config"; in 
-{
-
-}
+  xdg_configHome = "${config.users.users.${user}.home}/.config";
+  homeDirectory = "/Users";
+  sharedFiles = import ../shared/files.nix { inherit config pkgs homeDirectory user; };
+in 
+lib.mkMerge [
+  sharedFiles
+  {}
+]
