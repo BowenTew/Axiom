@@ -24,6 +24,7 @@ One flake to build them all: **macOS** (nix-darwin) + **NixOS** + **home-manager
   - [MacOS (nix-darwin)](#macos)
   - [Linux (NixOS)](#linux)
 - [🧪 DevShells](#-devshells)
+- [🔗 Reference](#-reference)
 - [🤖 FAQ](#-faq)
 - [🛠️ Development Tools](#-development-tools)
 ---
@@ -146,6 +147,11 @@ nix develop .#rust --system x86_64-linux' -c zsh
 
 It’s recommended to place a .envrc (with direnv) or a devenv.yaml in the project subdirectory so the corresponding devShell is auto-activated when entering the directory.
 
+## 🔗 Reference
+* [Home Manager](https://github.com/nix-community/home-manager)
+* [NixOS Wiki - Home Manager](https://nixos.wiki/wiki/Home_Manager)
+* [mitchellh - nixos-config](https://github.com/mitchellh/nixos-config/blob/main/users/mitchellh/home-manager.nix)
+* [dustinlyons - nixos-config](https://github.com/dustinlyons/nixos-config)
 
 ## 🤖 FAQ
 
