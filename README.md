@@ -18,14 +18,14 @@ One flake to build them all: **macOS** (nix-darwin) + **NixOS** + **home-manager
 ---
 
 ## 📖 TOC
-- [Features](#-features)
-- [Foldrer Map](#-folder-map)
-- [Quick Start](#-quick-start)
-  - [macOS (nix-darwin)](#macos-nix-darwin)
-  - [NixOS](#nixos)
-- [Updating](#updating)
-- [Tips](#tips)
-- [Contributing](#contributing)
+- [✨ Features](#-features)
+- [📁 Folder Map](#-folder-map)
+- [🚀 Quick Start](#-quick-start)
+  - [MacOS (nix-darwin)](#macos)
+  - [Linux (NixOS)](#linux)
+- [🧪 DevShells](#-devshells)
+- [🤖 FAQ](#-faq)
+- [🛠️ Development Tools](#-development-tools)
 ---
 
 ## ✨ Features
@@ -114,7 +114,7 @@ sh ./x86_64-linux/apply
 sh ./x86_64-linux/build-switch
 ```
 
-## 🧪 DevShells（Stack-isolated development environment）
+## 🧪 DevShells
 
 Provide reproducible, stack-specific dev environments without global installs. Enter with nix develop to get the exact toolchains and PATH you need (preferring project-local node_modules/.bin) for Node, Rust, Go, Java, Deno, and more.
 
