@@ -62,11 +62,6 @@ let user = "moonshot"; in
       finder = {
         _FXShowPosixPathInTitle = false;
       };
-
-      trackpad = {
-        Clicking = false;
-        TrackpadThreeFingerDrag = true;
-      };
     };
   };
 }
