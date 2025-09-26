@@ -26,6 +26,12 @@ let
     tree
     home-manager
   ];
+  FONTS_PACKAGES = with pkgs; [
+    hack-font
+    meslo-lgs-nf
+    noto-fonts
+    noto-fonts-emoji
+  ];
 in
 
 with pkgs; [
@@ -59,10 +65,8 @@ with pkgs; [
   # ffmpeg
   # fd
   # font-awesome
-  # hack-font
   # noto-fonts
   # noto-fonts-emoji
-  # meslo-lgs-nf
 
   # # Text and terminal utilities
   # htop
@@ -81,4 +85,4 @@ with pkgs; [
   # virtualenv
 
   # Include development packages
-] ++ GO_DEVELOPMENT_PACKAGES ++ DEVELOPMENT_PACKAGES ++ TOOLS_PACKAGES
+] ++ GO_DEVELOPMENT_PACKAGES ++ DEVELOPMENT_PACKAGES ++ TOOLS_PACKAGES ++ FONTS_PACKAGES
