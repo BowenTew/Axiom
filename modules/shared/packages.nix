@@ -1,7 +1,7 @@
 { pkgs }:
 
-
 let
+  # 语言开发环境
   GO_DEVELOPMENT_PACKAGES = with pkgs; [
     go
     gopls
@@ -9,6 +9,7 @@ let
     go-tools
     gotestsum
   ];
+
   RUST_DEVELOPMENT_PACKAGES = with pkgs; [
     rustc
     cargo
@@ -16,67 +17,66 @@ let
     rust-analyzer
     rustfmt
   ];
+
   PYTHON_PACKAGES = with pkgs; [
     python3
     virtualenv
   ];
+
+  # 基础开发工具
   DEVELOPMENT_PACKAGES = with pkgs; [
-    neovim
     git
-    tig
     git-lfs
+    tig
+    neovim
+    ripgrep
+    wget
   ];
-  TOOLS_PACKAGES = with pkgs; [
+
+  # 终端和界面工具
+  TERMINAL_PACKAGES = with pkgs; [
+    tmux
+    kitty
+  ];
+
+  # 系统工具
+  SYSTEM_PACKAGES = with pkgs; [
+    bat
     tree
-    home-manager
+    coreutils
+    zip
+    unzip
+    unrar
   ];
+
+  # 字体包
   FONTS_PACKAGES = with pkgs; [
     hack-font
     meslo-lgs-nf
     noto-fonts
     noto-fonts-emoji
   ];
+
+  # 容器工具
+  DOCKER_PACKAGES = with pkgs; [
+    docker
+    docker-compose
+  ];
+
+  # 所有包组
   ALL_PACKAGE_GROUPS = [
     GO_DEVELOPMENT_PACKAGES
     RUST_DEVELOPMENT_PACKAGES
-    # PYTHON_PACKAGES
     DEVELOPMENT_PACKAGES
-    TOOLS_PACKAGES
+    TERMINAL_PACKAGES
+    SYSTEM_PACKAGES
     FONTS_PACKAGES
+    # PYTHON_PACKAGES
+    # DOCKER_PACKAGES
   ];
 in
 
 with pkgs; [
-  # General packages for development and system management
-  # alacritty
-  # aspell
-  # aspellDicts.en
-  # bash-completion
-  # bat
-  # btop
-  # coreutils
-  # killall
-  # neofetch
-  # openssh
-  # sqlite
-  # wget
-  # zip
-
-  # # Cloud-related tools and SDKs
-  # docker
-  # docker-compose
-
-  # # Text and terminal utilities
-  # htop
-  # hunspell
-  # iftop
-  # jetbrains-mono
-  # jq
-  # ripgrep
-  # tree
-  # tmux
-  # unrar
-  # unzip
-
-  # Include development packages
+  # 系统管理工具
+  home-manager
 ] ++ lib.concatLists ALL_PACKAGE_GROUPS
