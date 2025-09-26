@@ -16,6 +16,10 @@ let
     rust-analyzer
     rustfmt
   ];
+  PYTHON_PACKAGES = with pkgs; [
+    python3
+    virtualenv
+  ];
   DEVELOPMENT_PACKAGES = with pkgs; [
     neovim
     git
@@ -31,6 +35,14 @@ let
     meslo-lgs-nf
     noto-fonts
     noto-fonts-emoji
+  ];
+  ALL_PACKAGE_GROUPS = [
+    GO_DEVELOPMENT_PACKAGES
+    RUST_DEVELOPMENT_PACKAGES
+    # PYTHON_PACKAGES
+    DEVELOPMENT_PACKAGES
+    TOOLS_PACKAGES
+    FONTS_PACKAGES
   ];
 in
 
@@ -50,23 +62,9 @@ with pkgs; [
   # wget
   # zip
 
-  # # Encryption and security tools
-  # age
-  # age-plugin-yubikey
-  # gnupg
-  # libfido2
-
   # # Cloud-related tools and SDKs
   # docker
   # docker-compose
-
-  # # Media-related packages
-  # dejavu_fonts
-  # ffmpeg
-  # fd
-  # font-awesome
-  # noto-fonts
-  # noto-fonts-emoji
 
   # # Text and terminal utilities
   # htop
@@ -80,9 +78,5 @@ with pkgs; [
   # unrar
   # unzip
 
-  # # Python packages
-  # python3
-  # virtualenv
-
   # Include development packages
-] ++ GO_DEVELOPMENT_PACKAGES ++ DEVELOPMENT_PACKAGES ++ TOOLS_PACKAGES ++ FONTS_PACKAGES
+] ++ lib.concatLists ALL_PACKAGE_GROUPS
