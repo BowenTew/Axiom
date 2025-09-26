@@ -1,12 +1,34 @@
 { pkgs }:
 
+
+let
+  GO_DEVELOPMENT_PACKAGES = with pkgs; [
+    go
+    gopls
+    delve
+    go-tools
+    gotestsum
+  ];
+  RUST_DEVELOPMENT_PACKAGES = with pkgs; [
+    rustc
+    cargo
+    clippy
+    rust-analyzer
+    rustfmt
+  ];
+  DEVELOPMENT_PACKAGES = with pkgs; [
+    neovim
+    git
+    tig
+    git-lfs
+  ];
+  TOOLS_PACKAGES = with pkgs; [
+    tree
+    home-manager
+  ];
+in
+
 with pkgs; [
-  home-manager
-  neovim
-  tree
-  git
-  tig
-  git-lfs
   # General packages for development and system management
   # alacritty
   # aspell
@@ -57,4 +79,6 @@ with pkgs; [
   # # Python packages
   # python3
   # virtualenv
-]
+
+  # Include development packages
+] ++ GO_DEVELOPMENT_PACKAGES ++ DEVELOPMENT_PACKAGES ++ TOOLS_PACKAGES
