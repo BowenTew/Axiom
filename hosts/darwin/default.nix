@@ -1,16 +1,26 @@
-{ config, pkgs, ... }:
+{ config, pkgs, inputs, ... }:
 
 let
-  user = "moonshot"; 
-  sharedPackages = import ../../modules/shared/packages.nix { inherit pkgs; };
+  user = "moonshot";
+  darwinModule = import ../../modules/darwin { 
+    inherit config user; 
+    inherit (inputs) home-manager; 
+    inherit pkgs; 
+    inherit (pkgs) lib; 
+  };
 in
 
 {
   imports = [
-    ../../modules/darwin
+    darwinModule
   ];
 
-  environment.systemPackages = sharedPackages.systemPackages;
+  users.users.${user} = {
+    name = "${user}";
+    home = "/Users/${user}";
+    isHidden = false;
+    shell = pkgs.zsh;
+  };
 
   nix = {
     package = pkgs.nix;
