@@ -1,6 +1,9 @@
 { config, pkgs, ... }:
 
-let user = "moonshot"; in
+let
+  user = "moonshot"; 
+  sharedPackages = import ../../modules/shared/packages.nix { inherit pkgs; };
+in
 
 {
   imports = [
@@ -29,8 +32,7 @@ let user = "moonshot"; in
   };
 
 
-  environment.systemPackages = with pkgs; [
-  ] ++ (import ../../modules/shared/packages.nix { inherit pkgs; });
+  environment.systemPackages = sharedPackages.systemPackages;
 
 
   system = {
