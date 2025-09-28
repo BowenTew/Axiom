@@ -45,14 +45,9 @@ Clone this repo, run a command, and watch your system bend to your will. No more
 ## 📁 Folder Map
 
 ```
-├── README.md
 ├── apps
-│   ├── aarch64-darwin
-│   ├── aarch64-linux -> x86_64-linux
-│   ├── x86_64-darwin
-│   └── x86_64-linux
+│   └── software.md
 ├── assets
-│   ├── homebrew
 │   ├── linux.svg
 │   ├── macos.svg
 │   └── nix-icon.svg
@@ -72,8 +67,14 @@ Clone this repo, run a command, and watch your system bend to your will. No more
 │   ├── darwin
 │   ├── nixos
 │   └── shared
-└── overlays
-    └── README.md
+├── overlays
+│   └── README.md
+├── README.md
+└── scripts
+    ├── aarch64-darwin
+    ├── aarch64-linux -> x86_64-linux
+    ├── x86_64-darwin
+    └── x86_64-linux
 ```
 ## 🚀 Quick Start
 
