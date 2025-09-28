@@ -1,0 +1,51 @@
+name: Update Flake
+
+on:
+  schedule:
+    # 每周一凌晨 2 点运行
+    - cron: '0 2 * * 1'
+  workflow_dispatch: # 允许手动触发
+
+jobs:
+  update:
+    name: Update Flake Lock
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install Nix
+        uses: cachix/install-nix-action@v23
+        with:
+          nix_path: nixpkgs=channel:nixpkgs-unstable
+
+      - name: Update flake.lock
+        run: |
+          nix flake update --commit-lock-file
+
+      - name: Check if changes were made
+        id: verify-changed-files
+        run: |
+          if [ -n "$(git status --porcelain)" ]; then
+            echo "changed=true" >> $GITHUB_OUTPUT
+          else
+            echo "changed=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Create Pull Request
+        if: steps.verify-changed-files.outputs.changed == 'true'
+        uses: peter-evans/create-pull-request@v5
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: "chore: update flake.lock"
+          title: "chore: update flake.lock"
+          body: |
+            This PR updates the flake.lock file with the latest package versions.
+            
+            **Changes:**
+            - Updated flake.lock with latest package versions
+            - Automated update via GitHub Actions
+            
+            Please review the changes and merge if everything looks good.
+          branch: update-flake-lock
+          delete-branch: true

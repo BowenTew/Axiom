@@ -1,0 +1,57 @@
+name: PR Check
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  # 快速检查
+  quick-check:
+    name: Quick Configuration Check
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install Nix
+        uses: cachix/install-nix-action@v23
+        with:
+          nix_path: nixpkgs=channel:nixpkgs-unstable
+
+      - name: Verify flake syntax
+        run: nix flake check --show-trace
+
+      - name: Check Darwin configuration
+        run: nix build .#darwinConfigurations.moonshot.system --dry-run --show-trace
+
+      - name: Check dev shells
+        run: |
+          nix develop .#default --command echo "Dev shell check passed"
+          nix develop .#go --command echo "Go dev shell check passed"
+          nix develop .#rust --command echo "Rust dev shell check passed"
+
+  # 代码格式检查
+  format-check:
+    name: Format Check
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install Nix
+        uses: cachix/install-nix-action@v23
+        with:
+          nix_path: nixpkgs=channel:nixpkgs-unstable
+
+      - name: Install nixpkgs-fmt
+        run: nix-env -iA nixpkgs.nixpkgs-fmt
+
+      - name: Check Nix formatting
+        run: |
+          find . -name "*.nix" -not -path "./.git/*" -not -path "./result/*" | xargs nixpkgs-fmt --check
+
+      - name: Suggest formatting fixes
+        if: failure()
+        run: |
+          echo "::warning::Some Nix files are not properly formatted"
+          echo "Run 'nixpkgs-fmt' to fix formatting issues"

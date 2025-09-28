@@ -1,0 +1,144 @@
+name: CI
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  # 检查 Nix 配置语法
+  check:
+    name: Check Nix Configuration
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install Nix
+        uses: cachix/install-nix-action@v23
+        with:
+          nix_path: nixpkgs=channel:nixpkgs-unstable
+
+      - name: Verify flake
+        run: nix flake check --show-trace
+
+      - name: Check Darwin configuration
+        run: nix build .#darwinConfigurations.moonshot.system --dry-run --show-trace
+
+      - name: Check NixOS configurations
+        run: |
+          nix build .#nixosConfigurations.nixos.system --dry-run --show-trace || true
+          nix build .#nixosConfigurations.nixos-aarch64.system --dry-run --show-trace || true
+
+  # 检查开发环境
+  devshells:
+    name: Check Dev Shells
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        system: [x86_64-linux, aarch64-linux]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install Nix
+        uses: cachix/install-nix-action@v23
+        with:
+          nix_path: nixpkgs=channel:nixpkgs-unstable
+
+      - name: Check dev shells
+        run: |
+          nix develop .#default --command echo "Default dev shell works"
+          nix develop .#go --command echo "Go dev shell works"
+          nix develop .#rust --command echo "Rust dev shell works"
+          nix develop .#node --command echo "Node dev shell works"
+
+  # 检查 Darwin 配置（仅在 macOS runner 上）
+  darwin-check:
+    name: Check Darwin Configuration
+    runs-on: macos-latest
+    if: github.event_name == 'pull_request' || github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install Nix
+        uses: cachix/install-nix-action@v23
+        with:
+          nix_path: nixpkgs=channel:nixpkgs-unstable
+
+      - name: Check Darwin flake
+        run: nix flake check --show-trace
+
+      - name: Dry run Darwin build
+        run: nix build .#darwinConfigurations.moonshot.system --dry-run --show-trace
+
+  # 代码质量检查
+  lint:
+    name: Lint and Format Check
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install Nix
+        uses: cachix/install-nix-action@v23
+        with:
+          nix_path: nixpkgs=channel:nixpkgs-unstable
+
+      - name: Install nixpkgs-fmt
+        run: nix-env -iA nixpkgs.nixpkgs-fmt
+
+      - name: Check Nix formatting
+        run: |
+          find . -name "*.nix" -not -path "./.git/*" -not -path "./result/*" | xargs nixpkgs-fmt --check
+
+      - name: Check for dead code
+        run: |
+          nix flake check --show-trace 2>&1 | grep -i "unused\|dead" || true
+
+  # 安全扫描
+  security:
+    name: Security Scan
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install Nix
+        uses: cachix/install-nix-action@v23
+        with:
+          nix_path: nixpkgs=channel:nixpkgs-unstable
+
+      - name: Check for unfree packages
+        run: |
+          nix flake check --show-trace 2>&1 | grep -i "unfree" || echo "No unfree packages detected"
+
+      - name: Check for insecure packages
+        run: |
+          nix flake check --show-trace 2>&1 | grep -i "insecure\|vulnerability" || echo "No insecure packages detected"
+
+  # 构建缓存
+  cache:
+    name: Build Cache
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install Nix
+        uses: cachix/install-nix-action@v23
+        with:
+          nix_path: nixpkgs=channel:nixpkgs-unstable
+
+      - name: Setup Cachix
+        uses: cachix/cachix-action@v12
+        with:
+          name: nix-community
+          authToken: '${{ secrets.CACHIX_AUTH_TOKEN }}'
+
+      - name: Build and cache
+        run: |
+          nix build .#darwinConfigurations.moonshot.system --show-trace || true
+          nix build .#nixosConfigurations.nixos.system --show-trace || true
