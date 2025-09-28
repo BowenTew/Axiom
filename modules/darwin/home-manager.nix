@@ -3,10 +3,10 @@
 let
   user = "moonshot";
   file = import ./files.nix { inherit user config pkgs lib; };
+  sharedPrograms = import ../shared/programs.nix { inherit config pkgs lib; };
 in
 {
-  imports = [
-  ];
+  imports = [];
 
   # It me
   users.users.${user} = {
@@ -52,7 +52,7 @@ in
         inherit file;
         stateVersion = "23.11";
       };
-      programs = {} // import ../shared/home-manager.nix { inherit config pkgs lib; };
+      programs = sharedPrograms;
 
       # Marked broken Oct 20, 2022 check later to remove this
       # https://github.com/nix-community/home-manager/issues/3344
