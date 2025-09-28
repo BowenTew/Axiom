@@ -1,4 +1,4 @@
-{ pkgs }:
+{ pkgs, fenix }:
 
 {
   # 默认最小 shell
@@ -12,6 +12,7 @@
   go = import ./go/go-stable.nix { inherit pkgs; };
 
   rust = import ./rust/rust-stable.nix { inherit pkgs; };
+  rust-wasm = import ./rust/rust-wasm.nix { inherit pkgs fenix; };
 
   node20 = import ./node/node20.nix { inherit pkgs; };
   node22 = import ./node/node22.nix { inherit pkgs; };

@@ -27,9 +27,13 @@
       url = "github:nix-community/disko";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    fenix = {
+      url = "github:nix-community/fenix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = { self, darwin, nix-homebrew, homebrew-bundle, homebrew-core, homebrew-cask, home-manager, nixpkgs, disko } @inputs:
+  outputs = { self, darwin, nix-homebrew, homebrew-bundle, homebrew-core, homebrew-cask, home-manager, nixpkgs, disko, fenix } @inputs:
     let
       user = "moonshot";
       linuxSystems = [ "x86_64-linux" "aarch64-linux" ];
@@ -39,7 +43,7 @@
       # Define Develop Shell
       devShell = system:
         let pkgs = nixpkgs.legacyPackages.${system}; in
-        import ./devshells/default.nix { inherit pkgs; };
+        import ./devshells/default.nix { inherit pkgs fenix; };
       mkApp = scriptName: system: {
         type = "app";
         program = "${(nixpkgs.legacyPackages.${system}.writeScriptBin scriptName ''
