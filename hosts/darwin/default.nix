@@ -51,13 +51,6 @@ let user = "moonshot"; in
         "com.apple.sound.beep.feedback" = 0;
       };
 
-      dock = {
-        autohide = false;
-        show-recents = false;
-        launchanim = true;
-        orientation = "left";
-        tilesize = 48;
-      };
 
       finder = {
         _FXShowPosixPathInTitle = false;

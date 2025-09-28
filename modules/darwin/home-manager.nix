@@ -6,7 +6,6 @@ let
 in
 {
   imports = [
-   ./dock
   ];
 
   # It me
@@ -61,11 +60,5 @@ in
     };
   };
 
-  # Fully declarative dock using the latest from Nix Store
-  local.dock = {
-    enable = false;
-    username = user;
-    entries = [];
-  };
 
 }
