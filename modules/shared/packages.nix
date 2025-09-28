@@ -46,7 +46,6 @@ let
     coreutils
     zip
     unzip
-    unrar
   ];
 
   # 字体包
@@ -64,7 +63,7 @@ let
   ];
 
   # 所有包组
-  ALL_PACKAGE_GROUPS = [
+  HOME_MANAGER_PACKAGE_GROUPS = [
     GO_DEVELOPMENT_PACKAGES
     RUST_DEVELOPMENT_PACKAGES
     DEVELOPMENT_PACKAGES
@@ -76,7 +75,10 @@ let
   ];
 in
 
-with pkgs; [
-  # 系统管理工具
-  home-manager
-] ++ lib.concatLists ALL_PACKAGE_GROUPS
+{
+  systemPackages =  with pkgs; [
+    home-manager
+  ];
+
+  homeManagerPackages = pkgs.lib.concatLists HOME_MANAGER_PACKAGE_GROUPS;
+}
