@@ -16,7 +16,6 @@ let
     clippy
     rust-analyzer
     rustfmt
-    wasm-pack
   ];
 
   PYTHON_PACKAGES = with pkgs; [
