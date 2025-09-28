@@ -46,7 +46,6 @@ let
     coreutils
     zip
     unzip
-    unrar
   ];
 
   # 字体包

@@ -7,9 +7,10 @@ in
 
 {
   imports = [
-    ../../modules/darwin/home-manager.nix
-    ../../modules/shared
+    ../../modules/darwin
   ];
+
+  environment.systemPackages = sharedPackages.systemPackages;
 
   nix = {
     package = pkgs.nix;
@@ -31,10 +32,6 @@ in
     '';
   };
 
-
-  environment.systemPackages = sharedPackages.systemPackages;
-
-
   system = {
     checks.verifyNixPath = false;
     primaryUser = user;
@@ -48,14 +45,8 @@ in
         KeyRepeat = 2; # Values: 120, 90, 60, 30, 12, 6, 2
         InitialKeyRepeat = 15; # Values: 120, 94, 68, 35, 25, 15
 
-        "com.apple.mouse.tapBehavior" = 1;
         "com.apple.sound.beep.volume" = 0.0;
         "com.apple.sound.beep.feedback" = 0;
-      };
-
-
-      finder = {
-        _FXShowPosixPathInTitle = false;
       };
     };
   };
