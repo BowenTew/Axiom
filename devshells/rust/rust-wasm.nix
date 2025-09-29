@@ -1,13 +1,18 @@
 { pkgs, fenix }:
 
+let
+  # Rust WebAssembly 工具链
+  rustWasmToolchain = with fenix.packages.${pkgs.system};
+    combine [
+      stable.toolchain
+      targets.wasm32-unknown-unknown.stable.rust-std
+    ];
+in
+
 pkgs.mkShell {
   packages = with pkgs; [
     # 使用 fenix 管理的 Rust 工具链，包含 WebAssembly 目标
-    (with fenix.packages.${pkgs.system};
-      combine [
-        stable.toolchain          # rustc/cargo
-        targets.wasm32-unknown-unknown.stable.rust-std   # WebAssembly 标准库
-      ])
+    rustWasmToolchain
     
     # WebAssembly 工具链
     wasm-pack
@@ -15,7 +20,6 @@ pkgs.mkShell {
     wabt
     
     # 链接器
-    lld
     llvmPackages.lld
     
     # 开发工具
@@ -24,6 +28,9 @@ pkgs.mkShell {
     
     # 可选：Node.js 用于测试
     nodejs_20
+
+    # 以下为可扩展区域，可根据需要添加更多 WebAssembly 相关工具或依赖包
+    rust-analyzer 
   ];
 
   # 设置 WebAssembly 链接器
