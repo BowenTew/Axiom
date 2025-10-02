@@ -77,7 +77,10 @@ Clone this repo, run a command, and watch your system bend to your will. No more
     └── x86_64-linux
 ```
 ## 🚀 Quick Start
-
+First of all, you should run the command to install the nix
+```sh
+sh <(curl -L https://nixos.org/nix/install) --daemon
+```
 Axiom is a declarative system configuration management tool built on Nix, supporting both macOS (nix-darwin) and Linux (NixOS). It enables rapid deployment of complete development environments through simple commands, encompassing system configuration, development tools, and desktop environments.
 
 ### NixOS
