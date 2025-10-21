@@ -54,6 +54,8 @@ let
     meslo-lgs-nf
     noto-fonts
     noto-fonts-emoji
+    nerd-fonts.roboto-mono  
+    powerline               
   ];
 
   # 容器工具
