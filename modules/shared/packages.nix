@@ -18,6 +18,10 @@ let
     rustfmt
   ];
 
+  JAVASCRIPT_DEVELOPMENT_PACKAGES = with pkgs; [
+    nodejs_22 # default version is 22
+  ];
+
   PYTHON_PACKAGES = with pkgs; [
     python3
     virtualenv
@@ -68,6 +72,7 @@ let
   HOME_MANAGER_PACKAGE_GROUPS = [
     GO_DEVELOPMENT_PACKAGES
     RUST_DEVELOPMENT_PACKAGES
+    JAVASCRIPT_DEVELOPMENT_PACKAGES
     DEVELOPMENT_PACKAGES
     TERMINAL_PACKAGES
     SYSTEM_PACKAGES

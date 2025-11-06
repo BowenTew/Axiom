@@ -36,17 +36,6 @@ in
         # expressions (like nixpkgs). It may also configure other settings.
         . /nix/var/nix/profiles/default/etc/profile.d/nix.sh
       fi
-
-      # Pyenv Setup, use pyenv in terminal to manage python version
-      export PATH="$HOME/.pyenv/bin:$PATH"
-      eval "$(pyenv init --path)"
-      eval "$(pyenv init -)"
-
-      # NVM Setup, can use nvm command in your terminal
-      export NVM_DIR="$HOME/.nvm"
-      [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-      [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
-      
       # Define variables for directories
       export PATH=$HOME/.pnpm-packages/bin:$HOME/.pnpm-packages:$PATH
       export PATH=$HOME/.npm-packages/bin:$HOME/bin:$PATH
