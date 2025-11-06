@@ -18,9 +18,14 @@ let
     rustfmt
   ];
 
+  JAVASCRIPT_DEVELOPMENT_PACKAGES = with pkgs; [
+    nodejs_22 # default version is 22
+    pnpm
+  ];
+
   PYTHON_PACKAGES = with pkgs; [
+    uv
     python3
-    virtualenv
   ];
 
   # 基础开发工具
@@ -54,6 +59,8 @@ let
     meslo-lgs-nf
     noto-fonts
     noto-fonts-emoji
+    nerd-fonts.roboto-mono  
+    powerline               
   ];
 
   # 容器工具
@@ -66,11 +73,12 @@ let
   HOME_MANAGER_PACKAGE_GROUPS = [
     GO_DEVELOPMENT_PACKAGES
     RUST_DEVELOPMENT_PACKAGES
+    JAVASCRIPT_DEVELOPMENT_PACKAGES
     DEVELOPMENT_PACKAGES
     TERMINAL_PACKAGES
     SYSTEM_PACKAGES
     FONTS_PACKAGES
-    # PYTHON_PACKAGES
+    PYTHON_PACKAGES
     # DOCKER_PACKAGES
   ];
 in
