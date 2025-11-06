@@ -1,7 +1,7 @@
 { config, pkgs, lib, name, email, ... }:
 
 let 
-  sharedPrograms = import ../../shared/programs.nix { inherit config pkgs lib name email; };
+  sharedPrograms = import ../../shared/programs { inherit config pkgs lib name email; };
   
   # Darwin 特定的程序配置
   darwinPrograms = {};
