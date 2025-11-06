@@ -24,8 +24,8 @@ let
   ];
 
   PYTHON_PACKAGES = with pkgs; [
+    uv
     python3
-    virtualenv
   ];
 
   # 基础开发工具
@@ -78,7 +78,7 @@ let
     TERMINAL_PACKAGES
     SYSTEM_PACKAGES
     FONTS_PACKAGES
-    # PYTHON_PACKAGES
+    PYTHON_PACKAGES
     # DOCKER_PACKAGES
   ];
 in
