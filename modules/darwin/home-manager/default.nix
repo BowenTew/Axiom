@@ -3,7 +3,7 @@ let
   homeDirectory = "${config.users.users.${user}.home}";
 
   packages = import ../../shared/packages.nix { inherit pkgs; };
-  files = import ../../shared/files { inherit config pkgs homeDirectory user; };
+  files = import ../../shared/files { inherit homeDirectory; };
   programs = import ../../shared/programs { inherit pkgs lib; };
 in
 
