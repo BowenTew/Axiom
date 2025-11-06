@@ -1,11 +1,11 @@
-{ pkgs, lib, name, email, ... }:
+{ pkgs, lib, ... }:
 
 {
+  git = import ./git;
+
   zsh = import ./zsh { inherit lib; };
 
   vim = import ./vim { inherit pkgs; };
-
-  git = import ./git { inherit name email; };
 
   tmux = import ./tmux { inherit pkgs; };
 }

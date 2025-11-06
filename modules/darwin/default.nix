@@ -1,7 +1,7 @@
-{ config, pkgs, lib, home-manager, user, name, email, ... }:
+{ config, pkgs, lib, home-manager, user, ... }:
 
 let
-  darwinHomeManagerConfig = import ./home-manager/default.nix { inherit config pkgs lib home-manager user name email; };
+  darwinHomeManagerConfig = import ./home-manager/default.nix { inherit config pkgs lib home-manager user; };
   darwinNixHomebrewConfig = import ./nix-homebrew/default.nix { inherit config pkgs lib; };
   sharedPackages = import ../shared/packages.nix { inherit pkgs; };
 in

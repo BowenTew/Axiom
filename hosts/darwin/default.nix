@@ -2,10 +2,8 @@
 
 let
   user = "moonshot";
-  name = "Tetsuya";
-  email = "1376490336@qq.com";
   darwinModule = import ../../modules/darwin { 
-    inherit config user name email pkgs; 
+    inherit config user pkgs; 
     inherit (inputs) home-manager; 
     inherit (pkgs) lib; 
   };

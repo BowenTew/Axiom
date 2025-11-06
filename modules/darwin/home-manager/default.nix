@@ -1,10 +1,10 @@
-{ config, pkgs, lib, home-manager, user, name, email }:
+{ config, pkgs, lib, home-manager, user }:
 let 
   homeDirectory = "${config.users.users.${user}.home}";
 
   packages = import ../../shared/packages.nix { inherit pkgs; };
   files = import ../../shared/files { inherit config pkgs homeDirectory user; };
-  programs = import ../../shared/programs { inherit pkgs lib name email; };
+  programs = import ../../shared/programs { inherit pkgs lib; };
 in
 
 {

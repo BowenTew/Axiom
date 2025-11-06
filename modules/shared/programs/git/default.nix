@@ -1,5 +1,7 @@
-{name, email, ... }:
-
+let
+  name = "Tetsuya";
+  email = "1376490336@qq.com";
+in
 {
   enable = true;
   ignores = [ "*.swp" ];
