@@ -4,9 +4,6 @@ let
   name = "Tetsuya";
   user = "moonshot";
   email = "1376490336@qq.com";
-  
-  # 导入 vim 配置模块
-  vimModule = import ./programs/vim/vim.nix { inherit config pkgs lib; };
 in
 {
   # Shared shell configuration
@@ -81,8 +78,8 @@ in
     };
   };
 
-  # 使用从 ./programs/vim/vim.nix 导入的配置
-  vim = vimModule.programs.vim;
+  # Import vim configuration
+  vim = import ./programs/vim { inherit config pkgs lib; };
 
   tmux = {
     enable = true;
