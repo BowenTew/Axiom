@@ -20,6 +20,7 @@ let
 
   JAVASCRIPT_DEVELOPMENT_PACKAGES = with pkgs; [
     nodejs_22 # default version is 22
+    pnpm
   ];
 
   PYTHON_PACKAGES = with pkgs; [
