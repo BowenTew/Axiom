@@ -1,4 +1,4 @@
-{ config, pkgs, lib, name, email, ... }:
+{ pkgs, lib, name, email, ... }:
 
 {
   zsh = import ./zsh { inherit lib; };

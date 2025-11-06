@@ -1,8 +1,8 @@
 { config, pkgs, lib, home-manager, user, name, email }:
 let 
-  packages = import ./packages.nix { inherit pkgs; };
+  packages = import ../../shared/packages.nix { inherit pkgs; };
   files = import ./files.nix { inherit user config pkgs lib; };
-  programs = import ./programs.nix { inherit config pkgs lib name email; };
+  programs = import ../../shared/programs { inherit pkgs lib name email; };
 in
 
 {
@@ -13,7 +13,7 @@ in
     users.${user} = { pkgs, config, lib, ... }:{
       home = {
         enableNixpkgsReleaseCheck = false;
-        inherit packages;
+        packages = packages.homeManagerPackages;
         file = files;
         stateVersion = "23.11";
       };
