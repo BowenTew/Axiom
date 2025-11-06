@@ -1,7 +1,7 @@
-{ pkgs, config, homeDirectory, user, ... }:
+{ homeDirectory, ... }:
 
 let
-  XDG_CONFIG_HOME = "${homeDirectory}/${user}/.config";
+  XDG_CONFIG_HOME = "${homeDirectory}/.config";
 in
 {
   # Neovim配置文件映射
