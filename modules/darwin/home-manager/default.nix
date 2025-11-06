@@ -1,8 +1,8 @@
-{ config, pkgs, lib, home-manager, user }:
+{ config, pkgs, lib, home-manager, user, name, email }:
 let 
   packages = import ./packages.nix { inherit pkgs; };
   files = import ./files.nix { inherit user config pkgs lib; };
-  programs = import ./programs.nix { inherit config pkgs lib; };
+  programs = import ./programs.nix { inherit config pkgs lib name email; };
 in
 
 {

@@ -2,10 +2,11 @@
 
 let
   user = "moonshot";
+  name = "Tetsuya";
+  email = "1376490336@qq.com";
   darwinModule = import ../../modules/darwin { 
-    inherit config user; 
+    inherit config user name email pkgs; 
     inherit (inputs) home-manager; 
-    inherit pkgs; 
     inherit (pkgs) lib; 
   };
 in
@@ -54,9 +55,6 @@ in
 
         KeyRepeat = 2; # Values: 120, 90, 60, 30, 12, 6, 2
         InitialKeyRepeat = 15; # Values: 120, 94, 68, 35, 25, 15
-
-        "com.apple.sound.beep.volume" = 0.0;
-        "com.apple.sound.beep.feedback" = 0;
       };
     };
   };
