@@ -1,6 +1,6 @@
 let
-  gitUserName = "Tetsuya";
-  gitUserEmail = "1376490336@qq.com";
+  gitUserName = "%NAME%";
+  gitUserEmail = "%EMAIL%";
 in
 {
   enable = true;
