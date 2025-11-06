@@ -1,7 +1,10 @@
 { config, pkgs, lib, home-manager, user, name, email }:
 let 
+  xdg_configHome = "${config.users.users.${user}.home}/.config";
+  homeDirectory = "/Users";
+
   packages = import ../../shared/packages.nix { inherit pkgs; };
-  files = import ./files.nix { inherit user config pkgs lib; };
+  files = import ../../shared/files { inherit config pkgs homeDirectory user; };
   programs = import ../../shared/programs { inherit pkgs lib name email; };
 in
 
