@@ -1,12 +1,12 @@
 let
-  name = "Tetsuya";
-  email = "1376490336@qq.com";
+  gitUserName = "Tetsuya";
+  gitUserEmail = "1376490336@qq.com";
 in
 {
   enable = true;
   ignores = [ "*.swp" ];
-  userName = name;
-  userEmail = email;
+  userName = gitUserName;
+  userEmail = gitUserEmail;
   lfs.enable = true;
 
   extraConfig = {
