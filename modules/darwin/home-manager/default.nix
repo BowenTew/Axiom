@@ -1,8 +1,10 @@
 { config, pkgs, lib, home-manager, user }:
 let 
-  packages = import ./packages.nix { inherit pkgs; };
-  files = import ./files.nix { inherit user config pkgs lib; };
-  programs = import ./programs.nix { inherit config pkgs lib; };
+  homeDirectory = "${config.users.users.${user}.home}";
+
+  packages = import ../../shared/packages.nix { inherit pkgs; };
+  files = import ../../shared/files { inherit homeDirectory; };
+  programs = import ../../shared/programs { inherit pkgs lib; };
 in
 
 {
@@ -13,7 +15,7 @@ in
     users.${user} = { pkgs, config, lib, ... }:{
       home = {
         enableNixpkgsReleaseCheck = false;
-        inherit packages;
+        packages = packages.homeManagerPackages;
         file = files;
         stateVersion = "23.11";
       };

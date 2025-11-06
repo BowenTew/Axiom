@@ -84,9 +84,5 @@ let
 in
 
 {
-  systemPackages =  with pkgs; [
-    home-manager
-  ];
-
   homeManagerPackages = pkgs.lib.concatLists HOME_MANAGER_PACKAGE_GROUPS;
 }
