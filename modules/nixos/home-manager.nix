@@ -1,7 +1,7 @@
 { config, pkgs, lib, ... }:
 
 let
-  user = "moonshot";
+  user = "%USER%";
   homeDirectory = "/home";
   xdg_configHome  = "/home/${user}/.config";
   shared-programs = import ../shared/home-manager.nix { inherit config pkgs lib; };
