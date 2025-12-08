@@ -36,6 +36,8 @@ let
     neovim
     ripgrep
     wget
+    fd
+    fzf
   ];
 
   # 终端和界面工具
