@@ -1,7 +1,7 @@
 { self, darwin, nix-homebrew, homebrew-bundle, homebrew-core, homebrew-cask, home-manager, nixpkgs, disko, fenix } @inputs:
 
 let
-  user = "moonshot";
+  user = "%USER%";
   darwinSystems = [ "aarch64-darwin" "x86_64-darwin" ];
   darwinConfigModule = ../../modules/darwin;
   nixHomebrewConfigModule = {
