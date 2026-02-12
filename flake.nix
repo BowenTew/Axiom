@@ -75,7 +75,7 @@
       devShells = forAllSystems devShell;
       apps = nixpkgs.lib.genAttrs linuxSystems mkLinuxApps // nixpkgs.lib.genAttrs darwinSystems mkDarwinApps;
 
-      darwinConfigurations = import ./hosts/darwin inputs;
+      darwinConfigurations = import ./hosts/darwin.nix inputs;
 
     #   nixosConfigurations = nixpkgs.lib.genAttrs linuxSystems (system: nixpkgs.lib.nixosSystem {
     #     inherit system;

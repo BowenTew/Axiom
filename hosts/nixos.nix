@@ -7,8 +7,8 @@ let
   ];
 in {
   imports = [
-    ../../modules/nixos/disk-config.nix
-    ../../modules/shared
+    ../modules/nixos/disk-config.nix
+    ../modules/shared
   ];
 
   # Use the systemd-boot EFI boot loader.
@@ -93,7 +93,7 @@ in {
         lightdm = {
           enable = true;
           greeters.slick.enable = true;
-          background = ../../modules/nixos/config/login-wallpaper.png;
+          background = ../modules/nixos/config/login-wallpaper.png;
         };
       };
 
