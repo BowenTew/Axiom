@@ -1,9 +1,10 @@
-{ self, darwin, nix-homebrew, homebrew-bundle, homebrew-core, homebrew-cask, home-manager, nixpkgs, disko, fenix } @inputs:
+{ self, darwin, nix-homebrew, homebrew-bundle, homebrew-core, homebrew-cask, home-manager, nixpkgs, disko, fenix, ... } @inputs:
 
 let
   user = "moonshot";
   darwinSystems = [ "aarch64-darwin" "x86_64-darwin" ];
-  darwinConfigModule = ../modules/darwin;
+  macosModule = ../module/macos;
+
   nixHomebrewConfigModule = {
     nix-homebrew = {
       inherit user;
@@ -14,6 +15,68 @@ let
         "homebrew/homebrew-core" = homebrew-core;
         "homebrew/homebrew-cask" = homebrew-cask;
         "homebrew/homebrew-bundle" = homebrew-bundle;
+      };
+    };
+  };
+
+  # MacOS System Configuration
+  darwinConfigModule = { config, lib, pkgs, ... }: {
+    options = {
+      user = lib.mkOption {
+        type = lib.types.str;
+        description = "Primary user of the system";
+        default = user;
+      };
+    };
+
+    config = {
+      # User Configuration
+      users.users.${user} = {
+        home = "/Users/${user}";
+        isHidden = false;
+        name = user;
+        shell = pkgs.zsh;
+      };
+
+      # Nix Configuration
+      nix = {
+        package = pkgs.nix;
+        settings = {
+          trusted-users = [ "@admin" user ];
+          substituters = [
+            "https://nix-community.cachix.org"
+            "https://cache.nixos.org"
+          ];
+          trusted-public-keys = [
+            "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
+          ];
+        };
+        gc = {
+          automatic = true;
+          interval = {
+            Weekday = 0;
+            Hour = 2;
+            Minute = 0;
+          };
+          options = "--delete-older-than 30d";
+        };
+        extraOptions = ''experimental-features = nix-command flakes'';
+      };
+
+      # System Configuration
+      system = {
+        checks.verifyNixPath = false;
+        primaryUser = user;
+        stateVersion = 5;
+
+        defaults = {
+          NSGlobalDomain = {
+            AppleShowAllExtensions = true;
+            ApplePressAndHoldEnabled = false;
+            KeyRepeat = 2;
+            InitialKeyRepeat = 15;
+          };
+        };
       };
     };
   };
@@ -28,6 +91,7 @@ nixpkgs.lib.genAttrs darwinSystems (system:
       nix-homebrew.darwinModules.nix-homebrew
       nixHomebrewConfigModule
       darwinConfigModule
+      macosModule
     ];
   }
 )
