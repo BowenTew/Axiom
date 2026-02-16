@@ -10,7 +10,7 @@
         ../common/git.nix
         ../common/zsh.nix
         ../common/tmux.nix
-        ../common/vim.nix
+        ../common/vim
         ../common/kitty
         # ../common/neovim
       ];
