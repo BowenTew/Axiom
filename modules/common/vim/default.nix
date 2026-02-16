@@ -24,6 +24,7 @@
     extraConfig = 
       builtins.readFile ./config/settings.vim +
       builtins.readFile ./config/ui.vim +
+      builtins.readFile ./config/git.vim +
       builtins.readFile ./config/coc.vim +
       builtins.readFile ./config/keymaps.vim;
   };
