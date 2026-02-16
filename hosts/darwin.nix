@@ -3,7 +3,7 @@
 let
   user = "moonshot";
   darwinSystems = [ "aarch64-darwin" "x86_64-darwin" ];
-  macosModule = ../module/macos;
+  macosModule = ../modules/macos;
 
   nixHomebrewConfigModule = {
     nix-homebrew = {
