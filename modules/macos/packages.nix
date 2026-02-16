@@ -47,6 +47,8 @@ let
   TERMINAL_PACKAGES = with pkgs; [
     tmux
     kitty
+    wezterm
+    alacritty
   ];
 
   # 系统工具
