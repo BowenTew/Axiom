@@ -12,7 +12,7 @@
         ../common/tmux.nix
         ../common/vim
         ../common/kitty
-        # ../common/neovim
+        ../common/neovim
       ];
 
       home = {

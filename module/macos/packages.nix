@@ -1,6 +1,7 @@
 { config, pkgs, user, ... }:
 
 let
+  # 语言开发环境
   GO_DEVELOPMENT_PACKAGES = with pkgs; [
     go
     gopls
@@ -27,6 +28,7 @@ let
     python3
   ];
 
+  # 基础开发工具
   DEVELOPMENT_PACKAGES = with pkgs; [
     git
     git-lfs
@@ -35,13 +37,19 @@ let
     wget
     fd
     fzf
+    neovim       
+    gcc 
+    gnumake       
+    lazygit
   ];
 
+  # 终端和界面工具
   TERMINAL_PACKAGES = with pkgs; [
     tmux
     kitty
   ];
 
+  # 系统工具
   SYSTEM_PACKAGES = with pkgs; [
     bat
     tree
@@ -50,6 +58,7 @@ let
     unzip
   ];
 
+  # 字体包
   FONTS_PACKAGES = with pkgs; [
     hack-font
     meslo-lgs-nf
@@ -59,6 +68,7 @@ let
     powerline
   ];
 
+  # 所有包组合
   HOME_MANAGER_PACKAGE_GROUPS = [
     GO_DEVELOPMENT_PACKAGES
     RUST_DEVELOPMENT_PACKAGES
@@ -74,9 +84,8 @@ in
   config.home-manager.users.${user} = {
     home.packages = pkgs.lib.concatLists HOME_MANAGER_PACKAGE_GROUPS;
   };
-  
+
   config.environment.systemPackages = with pkgs; [
     zsh
   ];
-  
 }
