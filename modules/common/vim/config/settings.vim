@@ -23,3 +23,11 @@ set nowritebackup
 set noswapfile
 let mapleader=" "
 let maplocalleader=" "
+
+" ============================================
+" Diff 优化配置 - 最清晰的对比体验
+" ============================================
+set diffopt=internal,filler,closeoff,vertical,algorithm:histogram,indent-heuristic,linematch:60,context:5,iblank,iwhiteall
+
+" 快速刷新 diff
+nnoremap <leader>du :diffupdate<CR>
