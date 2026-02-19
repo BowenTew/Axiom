@@ -18,6 +18,7 @@
       vim-commentary
       auto-pairs
       vim-polyglot
+      vim-startify
     ];
 
     # 从多个文件加载配置
