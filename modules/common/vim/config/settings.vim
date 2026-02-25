@@ -17,7 +17,7 @@ set smartcase
 set clipboard=unnamedplus
 set mouse=a
 set hidden
-set updatetime=300
+set updatetime=100
 set nobackup
 set nowritebackup
 set noswapfile

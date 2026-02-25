@@ -5,9 +5,6 @@
 " 始终显示符号列（避免抖动）
 set signcolumn=yes
 
-" 实时更新（比默认更快）
-set updatetime=100
-
 " 高亮设置
 let g:gitgutter_highlight_lines = 0
 let g:gitgutter_highlight_linenrs = 1
