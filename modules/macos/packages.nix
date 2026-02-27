@@ -28,6 +28,10 @@ let
     python3
   ];
 
+  LUA_PACKAGES = with pkgs; [
+    lua
+  ];
+
   # 基础开发工具
   DEVELOPMENT_PACKAGES = with pkgs; [
     git
@@ -80,6 +84,7 @@ let
     SYSTEM_PACKAGES
     FONTS_PACKAGES
     PYTHON_PACKAGES
+    LUA_PACKAGES
   ];
 in
 {
