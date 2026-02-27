@@ -5,19 +5,19 @@
     user = lib.mkOption {
       type = lib.types.str;
       description = "Primary user of the system";
-      default = "moonshot";
+      default = "%USER%";
     };
 
     gitName = lib.mkOption {
       type = lib.types.str;
       description = "Git user name";
-      default = "Tetsuya";
+      default = "%GIT_NAME%";
     };
 
     gitEmail = lib.mkOption {
       type = lib.types.str;
       description = "Git user email";
-      default = "1376490336@qq.com";
+      default = "%GIT_EMAIL%";
     };
   };
 }
