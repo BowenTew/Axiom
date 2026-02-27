@@ -41,6 +41,7 @@ let
     wget
     fd
     fzf
+    universal-ctags
     neovim       
     gcc 
     gnumake       
