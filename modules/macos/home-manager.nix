@@ -1,11 +1,15 @@
-{ config, pkgs, lib, user, ... }:
+{ config, ... }:
 
-{
+let
+  identity = config.axiom.identity;
+in {
   config.home-manager = {
     useGlobalPkgs = true;
     backupFileExtension = "backup";
 
-    users.${user} = { ... }: {
+    users.${identity.user} = { ... }: {
+      _module.args.axiomIdentity = identity;
+
       imports = [
         ../common/git.nix
         ../common/zsh.nix

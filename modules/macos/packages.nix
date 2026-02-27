@@ -1,4 +1,4 @@
-{ config, pkgs, user, ... }:
+{ config, pkgs, ... }:
 
 let
   # 语言开发环境
@@ -83,7 +83,7 @@ let
   ];
 in
 {
-  config.home-manager.users.${user} = {
+  config.home-manager.users.${config.axiom.identity.user} = {
     home.packages = pkgs.lib.concatLists HOME_MANAGER_PACKAGE_GROUPS;
   };
 

@@ -159,9 +159,13 @@ replace_tokens() {
   fi
 }
 
-# Traverse directories and call replace_tokens on each Nix file
-export -f replace_tokens
-find . -type f -exec bash -c 'replace_tokens "$0"' {} \;
+# Replace identity placeholders only in the centralized identity module
+IDENTITY_FILE="./modules/common/identity.nix"
+if [[ -f "$IDENTITY_FILE" ]]; then
+  replace_tokens "$IDENTITY_FILE"
+else
+  _print "${YELLOW}Identity file not found, skipping token replacement.${NC}"
+fi
 
 echo "$USERNAME" > /tmp/username.txt
 _print "${GREEN}User $USERNAME information applied.${NC}"

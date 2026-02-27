@@ -1,13 +1,12 @@
 { self, darwin, nix-homebrew, homebrew-bundle, homebrew-core, homebrew-cask, home-manager, nixpkgs, disko, fenix, ... } @inputs:
 
 let
-  user = "moonshot";
   darwinSystems = [ "aarch64-darwin" "x86_64-darwin" ];
   macosModule = ../modules/macos;
 
-  nixHomebrewConfigModule = {
+  nixHomebrewConfigModule = { config, ... }: {
     nix-homebrew = {
-      inherit user;
+      user = config.axiom.identity.user;
       enable = true;
       mutableTaps = false;
       autoMigrate = true;
@@ -20,62 +19,55 @@ let
   };
 
   # MacOS System Configuration
-  darwinConfigModule = { config, lib, pkgs, ... }: {
-    options = {
-      user = lib.mkOption {
-        type = lib.types.str;
-        description = "Primary user of the system";
-        default = user;
-      };
+  darwinConfigModule = { config, pkgs, ... }:
+    let
+      user = config.axiom.identity.user;
+    in {
+    # User Configuration
+    users.users.${user} = {
+      home = "/Users/${user}";
+      isHidden = false;
+      name = user;
+      shell = pkgs.zsh;
     };
 
-    config = {
-      # User Configuration
-      users.users.${user} = {
-        home = "/Users/${user}";
-        isHidden = false;
-        name = user;
-        shell = pkgs.zsh;
+    # Nix Configuration
+    nix = {
+      package = pkgs.nix;
+      settings = {
+        trusted-users = [ "@admin" user ];
+        substituters = [
+          "https://nix-community.cachix.org"
+          "https://cache.nixos.org"
+        ];
+        trusted-public-keys = [
+          "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
+        ];
       };
-
-      # Nix Configuration
-      nix = {
-        package = pkgs.nix;
-        settings = {
-          trusted-users = [ "@admin" user ];
-          substituters = [
-            "https://nix-community.cachix.org"
-            "https://cache.nixos.org"
-          ];
-          trusted-public-keys = [
-            "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
-          ];
+      gc = {
+        automatic = true;
+        interval = {
+          Weekday = 0;
+          Hour = 2;
+          Minute = 0;
         };
-        gc = {
-          automatic = true;
-          interval = {
-            Weekday = 0;
-            Hour = 2;
-            Minute = 0;
-          };
-          options = "--delete-older-than 30d";
-        };
-        extraOptions = ''experimental-features = nix-command flakes'';
+        options = "--delete-older-than 30d";
       };
+      extraOptions = ''experimental-features = nix-command flakes'';
+    };
 
-      # System Configuration
-      system = {
-        checks.verifyNixPath = false;
-        primaryUser = user;
-        stateVersion = 5;
+    # System Configuration
+    system = {
+      checks.verifyNixPath = false;
+      primaryUser = user;
+      stateVersion = 5;
 
-        defaults = {
-          NSGlobalDomain = {
-            AppleShowAllExtensions = true;
-            ApplePressAndHoldEnabled = false;
-            KeyRepeat = 2;
-            InitialKeyRepeat = 15;
-          };
+      defaults = {
+        NSGlobalDomain = {
+          AppleShowAllExtensions = true;
+          ApplePressAndHoldEnabled = false;
+          KeyRepeat = 2;
+          InitialKeyRepeat = 15;
         };
       };
     };
@@ -85,7 +77,7 @@ in
 nixpkgs.lib.genAttrs darwinSystems (system:
   darwin.lib.darwinSystem {
     inherit system;
-    specialArgs = inputs // { inherit user; };
+    specialArgs = inputs;
     modules = [
       home-manager.darwinModules.home-manager
       nix-homebrew.darwinModules.nix-homebrew

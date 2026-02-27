@@ -1,15 +1,13 @@
-{ lib, ... }:
+{ axiomIdentity, ... }:
 
 let
-  gitUserName = "Tetsuya";
-  gitUserEmail = "1376490336@qq.com";
-in
-{
+  identity = axiomIdentity;
+in {
   programs.git = {
     enable = true;
     ignores = [ "*.swp" ];
-    userName = gitUserName;
-    userEmail = gitUserEmail;
+    userName = identity.gitName;
+    userEmail = identity.gitEmail;
     lfs.enable = true;
 
     extraConfig = {
