@@ -6,5 +6,6 @@ let g:coc_global_extensions = [
   \ 'coc-pyright',
   \ 'coc-go',
   \ 'coc-rust-analyzer',
-  \ 'coc-clangd'
+  \ 'coc-clangd',
+  \ 'coc-docker'
   \ ]

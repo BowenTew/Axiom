@@ -46,6 +46,7 @@ let
     gcc 
     gnumake       
     lazygit
+    dockerfile-language-server-nodejs
   ];
 
   # 终端和界面工具
