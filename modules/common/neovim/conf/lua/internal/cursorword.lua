@@ -1,81 +1,125 @@
-local function highlight_cursorword()
-  if vim.g.cursorword_highlight ~= false then
-    vim.cmd('highlight CursorWord term=underline cterm=underline gui=underline')
-  end
-end
+-- ============================================================================
+-- 光标下单词高亮
+-- 轻量级实现，无需额外插件
+-- ============================================================================
 
-local function disable_cursorword()
-  local disable_ft = {
-    ['alpha'] = true,
-    ['lspsagafinder'] = true,
-    ['NeogitStatus'] = true,
-    ['text'] = true,
-  }
-  if not disable_ft[vim.bo.ft] then
-    return
-  end
-  if vim.w.cursorword_id ~= 0 and vim.w.cursorword_id ~= nil and vim.w.cursorword_match ~= 0 then
-    vim.fn.matchdelete(vim.w.cursorword_id)
-    vim.w.cursorword_id = nil
-    vim.w.cursorword_match = nil
-    vim.w.cursorword = nil
-  end
-end
+local api = vim.api
+local fn = vim.fn
 
-local function matchadd()
-  local disable_ft = {
-    ['alpha'] = true,
-    ['NvimTree'] = true,
-    ['lspsagafinder'] = true,
-    ['dashboard'] = true,
-  }
-  if disable_ft[vim.bo.ft] then
-    return
-  end
+local enabled = true
+local highlight_group = "CursorWord"
 
-  if vim.api.nvim_get_mode().mode == 'i' then
-    return
-  end
-
-  local column = vim.api.nvim_win_get_cursor(0)[2]
-  local line = vim.api.nvim_get_current_line()
-  local cursorword = vim.fn.matchstr(line:sub(1, column + 1), [[\k*$]])
-      .. vim.fn.matchstr(line:sub(column + 1), [[^\k*]]):sub(2)
-
-  if cursorword == vim.w.cursorword then
-    return
-  end
-  vim.w.cursorword = cursorword
-  if vim.w.cursorword_match == 1 then
-    vim.call('matchdelete', vim.w.cursorword_id)
-  end
-  vim.w.cursorword_match = 0
-  if cursorword == ''
-      or #cursorword > 100
-      or #cursorword < 3
-      or string.find(cursorword, '[\192-\255]+') ~= nil
-  then
-    return
-  end
-  local pattern = [[\<]] .. cursorword .. [[\>]]
-  vim.w.cursorword_id = vim.fn.matchadd('CursorWord', pattern, -1)
-  vim.w.cursorword_match = 1
-end
-
-local function cursor_moved()
-  if vim.api.nvim_get_mode().mode == 'n' then
-    matchadd()
-  end
-end
-
-highlight_cursorword()
-
-vim.api.nvim_create_autocmd({ 'CursorMoved', 'CursorMovedI' }, {
-  pattern = '*',
-  callback = cursor_moved,
+-- 创建高亮组
+api.nvim_set_hl(0, highlight_group, {
+  underline = true,
+  sp = "#7aa2f7",
 })
 
-vim.api.nvim_create_autocmd({ 'InsertEnter', 'BufWinEnter' }, {
-  pattern = '*',
-  callback = disable_cursorword,
+-- 获取光标下的单词
+local function get_cursor_word()
+  local line = api.nvim_get_current_line()
+  local col = fn.col(".")
+  
+  -- 找到单词边界
+  local left = col
+  while left > 1 and line:sub(left - 1, left - 1):match("[%w_]") do
+    left = left - 1
+  end
+  
+  local right = col
+  while right < #line and line:sub(right + 1, right + 1):match("[%w_]") do
+    right = right + 1
+  end
+  
+  return line:sub(left, right)
+end
+
+-- 清除高亮
+local function clear_highlight()
+  local buf = api.nvim_get_current_buf()
+  local ns = api.nvim_create_namespace("cursorword")
+  api.nvim_buf_clear_namespace(buf, ns, 0, -1)
+end
+
+-- 高亮单词
+local function highlight_word()
+  if not enabled then
+    return
+  end
+  
+  clear_highlight()
+  
+  local word = get_cursor_word()
+  if word == "" or #word < 2 then
+    return
+  end
+  
+  -- 忽略关键字
+  local ignore_patterns = {
+    "^if$", "^else$", "^for$", "^while$", "^return$",
+    "^function$", "^local$", "^var$", "^let$", "^const$",
+  }
+  
+  for _, pattern in ipairs(ignore_patterns) do
+    if word:match(pattern) then
+      return
+    end
+  end
+  
+  local buf = api.nvim_get_current_buf()
+  local ns = api.nvim_create_namespace("cursorword")
+  local cursor_line = fn.line(".") - 1
+  
+  -- 获取可见区域
+  local top = fn.line("w0") - 1
+  local bottom = fn.line("w$") - 1
+  
+  -- 在可见区域内搜索
+  local lines = api.nvim_buf_get_lines(buf, top, bottom + 1, false)
+  
+  for i, line in ipairs(lines) do
+    local line_num = top + i - 1
+    if line_num ~= cursor_line then
+      local col = 0
+      while true do
+        local start_col, end_col = line:find("%f[%w_]" .. word:gsub("(%W)", "%%%1") .. "%f[^%w_]", col + 1)
+        if not start_col then
+          break
+        end
+        api.nvim_buf_add_highlight(buf, ns, highlight_group, line_num, start_col - 1, end_col)
+        col = end_col
+      end
+    end
+  end
+end
+
+-- 自动命令
+local group = api.nvim_create_augroup("CursorWord", { clear = true })
+
+api.nvim_create_autocmd({ "CursorMoved", "CursorMovedI" }, {
+  group = group,
+  callback = function()
+    highlight_word()
+  end,
 })
+
+api.nvim_create_autocmd({ "BufLeave", "InsertEnter" }, {
+  group = group,
+  callback = function()
+    clear_highlight()
+  end,
+})
+
+-- 切换功能
+function _G.toggle_cursorword()
+  enabled = not enabled
+  if not enabled then
+    clear_highlight()
+  else
+    highlight_word()
+  end
+  vim.notify("Cursor word highlight: " .. (enabled and "enabled" or "disabled"), vim.log.levels.INFO)
+end
+
+-- 快捷键
+vim.keymap.set("n", "<leader>uw", toggle_cursorword, { desc = "Toggle cursor word highlight" })

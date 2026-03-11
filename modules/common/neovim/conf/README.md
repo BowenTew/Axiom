@@ -1,291 +1,338 @@
-# Ecovim: Frontend Neovim Config
-
-[![Last commit](https://img.shields.io/github/last-commit/ecosse3/nvim?style=for-the-badge)](https://github.com/ecosse3/nvim/commits/master)
-![Stars](https://img.shields.io/github/stars/ecosse3/nvim?style=for-the-badge)
-![License](https://img.shields.io/github/license/ecosse3/nvim?style=for-the-badge)
-![Neovim Version](https://img.shields.io/badge/For%20Neovim-0.9+-yellowgreen?style=for-the-badge&logo=neovim&logoColor=d8abbb&color=d8abbb)
-
-### A non-minimal Neovim config built to work most efficiently with Frontend Development.
-
-## Features
-
-- Configured for TypeScript Development (React.js, Next.js, Vue.js, Angular, Node.js etc.)
-- Great default theme: [Tokyonight](https://github.com/folke/tokyonight.nvim)
-- Lazy loaded via [lazy.nvim](https://github.com/folke/lazy.nvim)
-- Highly performant (90ms load time)
-- Extendable LSP configuration via [mason.nvim](https://github.com/williamboman/mason.nvim)
-- Support for :robot: AI: [ChatGPT](https://openai.com/blog/chatgpt/), [GitHub Copilot](https://github.com/features/copilot), [Codeium](https://codeium.com/) and [Tabnine](https://www.tabnine.com/)
-- Support for [TailwindCSS](https://tailwindcss.com/) with highlighted colors
-- JSON autocompletion for most popular Frontend configs
-- NPM packages autocompletion in _package.json_
-- Internal [Jest](https://github.com/facebook/jest) testing and [Coverage](https://github.com/andythigpen/nvim-coverage) support
-- Debugging with [nvim-dap](https://github.com/mfussenegger/nvim-dap) (works with React.js & React Native)
-- Automatic Treesitter-based folding with imports folded by default
-- Current code context via [nvim-navic](https://github.com/SmiteshP/nvim-navic)
-- Beautiful and functional custom statusline built with [galaxyline.nvim](https://github.com/glepnir/galaxyline.nvim) 
-- Git management with [Lazygit](https://github.com/jesseduffield/lazygit), custom telescope commits view with [git-delta](https://github.com/dandavison/delta), [gitsigns](https://github.com/lewis6991/gitsigns.nvim) & [diffview](https://github.com/sindrets/diffview.nvim), custom git blame
-
-And of course usage of [telescope](https://github.com/nvim-telescope/telescope.nvim), [nvim-tree](https://github.com/kyazdani42/nvim-tree.lua), [barbar](https://github.com/romgrk/barbar.nvim), [cmp](https://github.com/hrsh7th/nvim-cmp), [treesitter](https://github.com/nvim-treesitter/nvim-treesitter), [blankline](https://github.com/lukas-reineke/indent-blankline.nvim) & more!
-
-## Screenshots
-
-Dashboard
-
-![Dashboard](./.screenshots/6-alpha.png)
-
-Overview
-
-![Neovim](./.screenshots/5-main.png)
-
-<details>
-<summary>More screenshots</summary>
-
-Some of screenshots can be old
-
-TailwindCSS with nvim-cmp
-
-![TailwindCSS](./.screenshots/5-tailwind.png)
-
-Which Key Menu
-
-![WhichKey](./.screenshots/4-which-key.png)
-
-Lazygit
-
-![Lazygit](./.screenshots/4-lazygit.png)
-
-Telescope
-
-![Telescope](./.screenshots/4-telescope.png)
-
-Git Commits w/ Telescope
-
-![Commits](./.screenshots/4-bcommits.png)
-
-Git Side Blame
-
-![Side Blame](./.screenshots/4-side-blame.png)
-</details>
-
-## Installation
-
-**Just clone GitHub repo into ~/.config/nvim.**
-
-**Prerequisities**
-
-- Make sure you have installed the latest version of Neovim v0.9.0+ (nightly is preferred).
-- Have wget, curl, unzip, git, make, pip, python, npm, node, luarocks, fd, ripgrep and cargo installed on your system. You can check if you are missing anything with `:checkhealth` command.
-- Have any nerd font installed. *Fira Code* has been used in screenshots. You can download it from [nerdfonts.com](https://www.nerdfonts.com/font-downloads).
-
-**After install configuration:**
-
-1. Selected treesitter Languages are installed by default.
-To check it run `:TSInstallInfo`.
-Make sure to run `:TSInstall <lang>` for specific language you want to install.
-2. LSP servers are enabled by default. You can check installed LSP servers by `:Mason` command.
-
-## Configuration
-
-To change EcoVim related config use the `config/EcoVim.lua` file.
-
-To change vim settings use the `config/options.lua` file.
-
-To change plugin related settings use the specific `plugins/[name].lua` file. Some of the plugin config can be set up during plugin installation in `config/plugins.lua` file, where you can add new plugins.
-
-## Keybindings
-
-Currently I have no idea how to write for you my whole workflow of using Ecovim config in React.js projects I am working on,\
-but I can write you the most useful custom key bindings by the frequency I use them.
-
-Space (SPC) is my Leader key.
-
-<details>
-<summary>File Explorer</summary>
-
-### File Explorer
-
-| Key Bindings | Description                                   |
-|--------------|-----------------------------------------------|
-| <C - e>      | Open File Explorer                            |
-| Backspace    | Back to file explorer (in editor normal mode) |
-| g?           | Open commands menu                            |
-| a            | Create new file/directory                     |
-| x            | Cut                                           |
-| c            | Copy                                          |
-| y            | Copy name                                     |
-| r            | Rename                                        |
-| I            | Toggle git ignore files                       |
-
-</details>
-
-<details>
-<summary>Searching</summary>
-
-### Searching
-
-| Key Bindings | Description         |
-|--------------|---------------------|
-| <C - p>      | Telescope git files |
-| <S - p>      | Telescope live grep |
-| s            | Enables lightspeed  |
-| SPC s d      | Search dotfiles     |
-| SPC s h      | Search file history |
-| SPC s s      | Search history      |
-
-</details>
-
-<details>
-<summary>Working with LSP</summary>
-
-### Working with LSP:
-
-| Key Bindings           | Description                                       |
-|------------------------|---------------------------------------------------|
-| <C - Space> or SPC c a | Code action                                       |
-| <S - K>                | Show documentation under cursor                   |
-| gd                     | Go to definition                                  |
-| gr                     | Go to references                                  |
-| ]g                     | Go to next diagnostic                             |
-| [g                     | Go to prev diagnostic                             |
-| SPC c f                | Format document (usually ESLint/Prettier)         |
-| SPC c r                | Rename                                            |
-| SPC c q                | Quick fix - when I exactly know if it will fix it |
-| SPC c d                | Local diagnostics list                            |
-| SPC c o                | Organize imports                                  |
-
-</details>
-
-<details>
-<summary>Working with Git</summary>
-
-### Working with Git:
-
-| Key Bindings | Description                                                                                                                              |
-|--------------|------------------------------------------------------------------------------------------------------------------------------------------|
-| SPC g g      | Lazygit - for committing and branch change                                                                                               |
-| SPC g s      | Telescope status - when I want to change/search file I am working on with git changes                                                    |
-| ]c           | Go to next change hunk                                                                                                                   |
-| [c           | Go to prev change hunk                                                                                                                   |
-| SPC g d      | Advanced powerful diff view with many filters for debugging code, checking previous changes etc.                                         |
-| SPC g m      | View hunk diff of a line under cursor                                                                                                    |
-| SPC g h r    | Reset changed hunk under cursor - I like to check quickly what I have changed in that line and then just type 'u' to go back             |
-| SPC g h s    | Stage hunk under cursor - Sometimes it's faster than selecting lines in Lazygit, so I can stage specific lines and then just do a commit |
-| SPC g l c    | Quick check of previous commit in current buffer, <C-s> inside to switch preview                                                         |
-| SPC g w c    | Creates a new worktree. Recommended directory is `../path`                                                                               |
-| SPC g w w    | Switches to a worktree. <C-d> removes worktree.                                                                                          |
-
-</details>
-
-<details>
-<summary>Working with Project</summary>
-
-### Working with Project:
-
-| Key Bindings | Description                                                                                                                                                                                                                                                                             |
-|--------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| <C - e>      | Toggles nvim-tree file explorer                                                                                                                                                                                                                                                         |
-| SPC p w      | Find word under cursor in project - very useful to find where component is used. Just use binding and type '<'. There is a lot of alternatives like LSP references but I like it with telescope and to not find only references but whole text under cursor.                            |
-| SPC p f      | Find file under cursor in project - it finds files in project which contains text under cursor. Useful when you name directories by component name in React and wants to go quickly to file. 'gd' is better but in some projects without TS or with mixed JS/TS it cannot work properly |
-| SPC p t      | Finds TODOs/NOTES in project                                                                                                                                                                                                                                                            |
-| SPC p l      | Switch between projects                                                                                                                                                                                                                                                                 |
-| SPC p s      | Save session to load it later from Dashboard                                                                                                                                                                                                                                            |
-
-</details>
-
-<details>
-<summary>Commenting</summary>
-
-### Commenting
-
-| Key Bindings | Description                |
-|--------------|----------------------------|
-| gcc          | Create/remove comment      |
-| gc (visual)  | Create/remove comment      |
-| gcO          | Create comment line before |
-| gco          | Create comment line after  |
-
-</details>
-
-<details>
-<summary>Table Mode / Alignment</summary>
-
-### Table Mode / Alignment
-
-| Key Bindings | Description                                                                       |
-|--------------|-----------------------------------------------------------------------------------|
-| ga (visual)  | Aligns selection based on separator (comma, semi-colon, colon etc.)               |
-| SPC t m      | Enables Table Mode. Do it in markdown file with some table and you will see magic |
-| SPC t i C    | (Only when Table Mode Enabled) Insert column before                               |
-| SPC t i c    | (Only when Table Mode Enabled) Insert column after                                |
-| SPC t d c    | (Only when Table Mode Enabled) Delete column                                      |
-| SPC t d r    | (Only when Table Mode Enabled) Delete row                                         |
-| SPC t s      | (Only when Table Mode Enabled) Sort table alphabetically                          |
-
-</details>
-
-<details>
-<summary>Other</summary>
-
-### Other VERY useful bindings
-
-| Key Bindings | Description                                                                                                                                                                               |
-|--------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| <S - q>      | Smartly closes current buffer without breaking UI                                                                                                                                         |
-| <C - a>      | It is not only increases number, but switches between true/false/const/let/function/arrow function/increment dates etc.                                                                   |
-| <C - n>      | Finds next occurrence (like *) of word and puts multi-cursor there. Then you can go to Insert mode, Append, Change or Delete. [Read more](https://github.com/mg979/vim-visual-multi/wiki) |
-| <C - o>      | Jumps to previous cursor in jumplist. I use it very often.                                                                                                                                |
-| v <ENTER>    | Smartly selects next subjects of current treesitter context                                                                                                                               |
-| s            | Standalone jump to any word with `folke/flash.nvim`                                                                                                                                       |
-| ciq          | Change inside ANY quotes (`` or '' or "" etc.) with `mini.ai`                                                                                                                             |
-| cib          | Change inside ANY brackets ({} or [] or () etc.) with `mini.ai`                                                                                                                           |
-| za           | Toggle folds. By LSP and nvim-ufo they are automatically added to supported files in smart way.                                                                                           |
-| zM           | Close all folds                                                                                                                                                                           |
-| zR           | Open all folds                                                                                                                                                                            |
-| zr           | Open all folds except imports/comments                                                                                                                                                    |
-| gJ           | Smartly joins lines based on treesitter                                                                                                                                                   |
-| gS           | Smartly splits lines based on treesitter. I do if VERY often when I want to put import element to new lines (e.g. import { A, B, C, D, E } from ...)                                      |
-| < F12 >      | Opens/closes terminal                                                                                                                                                                     |
-| ~            | Switch function arguments smartly                                                                                                                                                         |
-
-</details>
-
-Check out the which-key menu and [keymappings.lua](https://github.com/ecosse3/nvim/blob/master/lua/config/keymappings.lua) for most used maps. 
-
-
-## Performance
-
-Measured on M1.
-
-Ecovim started in 91.13ms 
-
-## Future Todo 
-
-| Description                                                          | Progress                                                           |
-|----------------------------------------------------------------------|--------------------------------------------------------------------|
-| Support more LSPs (not only frontend? - already possible via Mason)  | ![50%](https://progress-bar.dev/50/?title=progres)                 |
-| Better configuration of additional LSPs (already possible via Mason) | ![50%](https://progress-bar.dev/50/?title=planned)                 |
-| Project Logo                                                         | ![Planned](https://progress-bar.dev/0/?title=planned&color=b8860b) |
-| Auto resize for more consistent UI behavior                          | ![Planned](https://progress-bar.dev/0/?title=planned&color=b8860b) |
-| Reload in-time support                                               | ![Planned](https://progress-bar.dev/0/?title=planned&color=b8860b) |
-
-
-<details>
-<summary>Done</summary>
-
-| Description                                     | Progress                                                       |
-|-------------------------------------------------|----------------------------------------------------------------|
-| lazy.nvim instead of packer                     | ![100%](https://progress-bar.dev/100/?title=done&color=555555) |
-| Better support for null-ls and local formatting | ![100%](https://progress-bar.dev/100/?title=done&color=555555) |
-| Better support to project word refactor         | ![100%](https://progress-bar.dev/100/?title=done&color=555555) |
-| Support for nvim-dap debugger for React         | ![100%](https://progress-bar.dev/100/?title=done&color=555555) |
-| Support ESLint & Prettier in Native LSP         | ![100%](https://progress-bar.dev/100/?title=done&color=555555) |
-| Replace coc-explorer with nvim-tree.lua         | ![100%](https://progress-bar.dev/100/?title=done&color=555555) |
-| Replace coc.nvim with Native LSP                | ![100%](https://progress-bar.dev/100/?title=done&color=555555) |
-| Change fzf.nvim to telescope.nvim               | ![100%](https://progress-bar.dev/100/?title=done&color=555555) |
-| Update statusline to support LSP diagnostics    | ![100%](https://progress-bar.dev/100/?title=done&color=555555) |
-| Rewrite most config to lua                      | ![100%](https://progress-bar.dev/100/?title=done&color=555555) |
-| Support TailwindCSS with colors                 | ![100%](https://progress-bar.dev/100/?title=done&color=555555) |
-| Provide current screenshots                     | ![100%](https://progress-bar.dev/100/?title=done&color=555555) |
-| Create shell installer for Linux & MacOS        | ![100%](https://progress-bar.dev/100/?title=done&color=555555) |
-
-</details>
+# AeonVim - Neovim 配置
+
+模块化 Neovim 配置框架，支持版本锁定和回滚机制。
+
+## 🎯 设计理念
+
+| 来源 | 借鉴的优点 |
+|------|-----------|
+| **AstroNvim** | 美观的 UI 设计、模块化结构 |
+| **LazyVim** | 合理的默认配置、灵活的扩展机制 |
+| **LunarVim** | 独立隔离的运行环境、版本锁定 |
+| **NormalNvim** | 稳定性优先、热重载、回滚机制 |
+| **NvChad** | 极速启动、丰富的主题 |
+| **Ecovim** | 前端开发优化、AI 集成 |
+
+## 📁 目录结构
+
+```
+~/.config/nvim/
+├── init.lua                    # 入口文件
+├── lua/
+│   ├── config/
+│   │   ├── options.lua         # 基础选项
+│   │   ├── keymaps.lua         # 键位映射
+│   │   ├── autocmds.lua        # 自动命令
+│   │   └── lazy.lua            # 插件管理器
+│   ├── plugins/                # 插件配置
+│   │   ├── init.lua            # 插件入口
+│   │   ├── alpha.lua           # 启动页
+│   │   ├── editor/             # 编辑器插件
+│   │   ├── ui/                 # UI 插件
+│   │   ├── lsp/                # LSP 相关
+│   │   ├── git/                # Git 相关
+│   │   ├── finder/             # 查找插件
+│   │   └── lang/               # 语言支持
+│   ├── core/                   # 核心功能
+│   ├── lsp/                    # LSP 配置
+│   ├── lang/                   # 语言特定配置
+│   ├── utils/                  # 工具函数
+│   │   ├── icons.lua           # 图标定义
+│   │   ├── globals.lua         # 全局函数
+│   │   └── functions.lua       # 工具函数
+│   └── internal/               # 内部模块
+│       └── cursorword.lua      # 光标单词高亮
+└── after/plugin/               # 后加载配置
+```
+
+## ⚙️ 全局配置对象
+
+通过修改 `AeonVim` 对象来开关功能：
+
+```lua
+-- init.lua 中修改
+AeonVim = {
+  colorscheme = "tokyonight-night",
+  
+  features = {
+    -- AI 支持
+    ai = {
+      copilot = { enabled = true },
+      codeium = { enabled = false },
+      tabnine = { enabled = false },
+      codecompanion = { enabled = false },
+    },
+    
+    -- UI 设置
+    ui = {
+      noice = { enabled = false },
+      animations = { enabled = true },
+      transparent = { enabled = false },
+    },
+    
+    -- 编辑器功能
+    editor = {
+      autopairs = { enabled = true },
+      surround = { enabled = true },
+      comment = { enabled = true },
+      indentline = { enabled = true },
+    },
+    
+    -- 引擎选择
+    completion = {
+      engine = "blink",  -- "blink" | "cmp"
+    },
+    finder = {
+      engine = "snacks",  -- "snacks" | "telescope" | "fzf"
+    },
+    filetree = {
+      engine = "neo-tree",  -- "neo-tree" | "nvim-tree"
+    },
+    statusline = {
+      engine = "lualine",  -- "lualine" | "heirline"
+    },
+    
+    -- 其他功能
+    debugging = { enabled = false },
+    testing = { enabled = false },
+  },
+}
+```
+
+## ⌨️ 核心快捷键
+
+### 基础操作
+| 快捷键 | 功能 |
+|--------|------|
+| `<Space>` | Leader 键 |
+| `<C-s>` | 保存文件 |
+| `<C-q>` | 退出 |
+| `<Esc>` | 取消高亮 |
+| `jk` / `jj` | 退出插入模式 |
+
+### 窗口导航
+| 快捷键 | 功能 |
+|--------|------|
+| `<C-h/j/k/l>` | 切换窗口 |
+| `<C-方向键>` | 调整窗口大小 |
+| `<leader>-` | 水平分割 |
+| `<leader>\|` | 垂直分割 |
+
+### 文件操作
+| 快捷键 | 功能 |
+|--------|------|
+| `<leader>e` | 打开文件树 |
+| `<leader>f` | 查找文件 |
+| `<leader>g` | 查找文本 |
+| `<leader>r` | 最近文件 |
+
+### 缓冲区
+| 快捷键 | 功能 |
+|--------|------|
+| `<leader>bn` | 下一个缓冲区 |
+| `<leader>bp` | 上一个缓冲区 |
+| `<leader>bd` | 删除缓冲区 |
+| `[b` / `]b` | 缓冲区导航 |
+
+### LSP
+| 快捷键 | 功能 |
+|--------|------|
+| `gd` | 跳转到定义 |
+| `gr` | 查看引用 |
+| `K` | 悬停文档 |
+| `<leader>ca` | 代码操作 |
+| `<leader>cr` | 重命名 |
+| `<leader>cf` | 格式化 |
+
+### 诊断
+| 快捷键 | 功能 |
+|--------|------|
+| `[d` / `]d` | 诊断导航 |
+| `[e` / `]e` | 错误导航 |
+| `[w` / `]w` | 警告导航 |
+
+## 🚀 快速开始
+
+### 安装
+
+```bash
+# 备份现有配置
+mv ~/.config/nvim ~/.config/nvim.bak
+
+# 克隆配置
+git clone <your-repo> ~/.config/nvim
+
+# 启动 Neovim
+nvim
+```
+
+### 首次启动
+
+1. lazy.nvim 会自动安装
+2. 所有插件会自动下载
+3. Treesitter 语法会自动安装
+4. LSP 服务器可通过 `:Mason` 安装
+
+## 🔧 自定义配置
+
+### 添加新插件
+
+在 `lua/plugins/` 目录下创建新的配置文件：
+
+```lua
+-- lua/plugins/myplugin.lua
+return {
+  {
+    "author/plugin-name",
+    event = "VeryLazy",
+    config = function()
+      require("plugin-name").setup({
+        -- 配置
+      })
+    end,
+  },
+}
+```
+
+### 修改键位
+
+编辑 `lua/config/keymaps.lua`：
+
+```lua
+vim.keymap.set("n", "<leader>xx", "<cmd>MyCommand<CR>", { desc = "My description" })
+```
+
+### 修改选项
+
+编辑 `lua/config/options.lua`：
+
+```lua
+vim.opt.tabstop = 4
+vim.opt.shiftwidth = 4
+```
+
+## 📦 预配置插件
+
+### UI
+- [x] tokyonight.nvim (主题)
+- [x] alpha-nvim (启动页)
+- [x] nvim-notify (通知)
+- [x] nvim-web-devicons (图标)
+
+### 编辑器
+- [ ] nvim-treesitter (语法高亮)
+- [ ] nvim-cmp / blink.cmp (补全)
+- [ ] nvim-autopairs (自动括号)
+- [ ] comment.nvim (注释)
+- [ ] nvim-surround (环绕)
+
+### 查找
+- [ ] telescope.nvim / snacks.nvim (模糊查找)
+- [ ] nvim-tree.lua / neo-tree.nvim (文件树)
+
+### LSP
+- [ ] nvim-lspconfig (LSP 配置)
+- [ ] mason.nvim (LSP 管理器)
+- [ ] none-ls.nvim (格式化/Lint)
+
+### Git
+- [ ] gitsigns.nvim (Git 标记)
+- [ ] diffview.nvim (差异查看)
+- [ ] lazygit (终端集成)
+
+### 终端
+- [ ] toggleterm.nvim (终端)
+
+## 🎨 配色方案
+
+内置主题：
+- `tokyonight-night` (默认)
+- `tokyonight-storm`
+- `tokyonight-day`
+- `catppuccin`
+- `onedark`
+
+切换主题：
+```vim
+:colorscheme catppuccin
+```
+
+## 🔄 版本管理
+
+AeonVim 提供类似 NormalNvim 的版本锁定和回滚机制。
+
+### 更新通道
+
+编辑 `lua/config/lazy.lua`：
+```lua
+local updates_config = {
+  channel = "stable",  -- "stable" 或 "nightly"
+  snapshot_file = "lazy_snapshot.lua",
+}
+```
+
+| 通道 | 说明 |
+|------|------|
+| `stable` | 使用 `lazy_snapshot.lua` 锁定版本，确保稳定 |
+| `nightly` | 使用最新插件版本 |
+
+### 管理命令
+
+| 命令 | 说明 |
+|------|------|
+| `:DistroFreezePluginVersions` | 将当前插件版本锁定到快照 |
+| `:DistroUpdate` | 从 git 更新配置 |
+| `:DistroUpdateRevert` | 回滚到上次更新前 |
+| `:DistroReadVersion` | 查看当前版本信息 |
+| `:DistroReadChangelog` | 查看更新日志 |
+
+### 快捷键
+
+| 快捷键 | 说明 |
+|--------|------|
+| `<leader>pU` | 更新发行版 |
+| `<leader>pR` | 回滚更新 |
+| `<leader>pF` | 冻结插件版本 |
+| `<leader>pV` | 查看版本信息 |
+
+### 快照文件
+
+`lua/lazy_snapshot.lua` 示例：
+```lua
+return {
+  { "folke/lazy.nvim", version = "^11" },
+  { "nvim-treesitter/nvim-treesitter", commit = "42fc28ba..." },
+  -- ...
+}
+```
+
+## 🔌 扩展模块
+
+### AI 支持
+```lua
+AeonVim.features.ai.copilot.enabled = true
+AeonVim.features.ai.codeium.enabled = true
+```
+
+### 调试
+```lua
+AeonVim.features.debugging.enabled = true
+```
+
+### 测试
+```lua
+AeonVim.features.testing.enabled = true
+```
+
+## 📚 参考
+
+- [AstroNvim](https://github.com/AstroNvim/AstroNvim)
+- [LazyVim](https://github.com/LazyVim/LazyVim)
+- [LunarVim](https://github.com/LunarVim/LunarVim)
+- [NormalNvim](https://github.com/NormalNvim/NormalNvim)
+- [NvChad](https://github.com/NvChad/NvChad)
+- [Ecovim](https://github.com/ecosse3/nvim)
+
+## 📝 License
+
+MIT
