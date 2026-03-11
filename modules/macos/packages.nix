@@ -28,6 +28,11 @@ let
     python3
   ];
 
+  LUA_PACKAGES = with pkgs; [
+    lua
+    luarocks
+  ];
+
   # 基础开发工具
   DEVELOPMENT_PACKAGES = with pkgs; [
     git
@@ -37,10 +42,12 @@ let
     wget
     fd
     fzf
+    universal-ctags
     neovim       
     gcc 
     gnumake       
     lazygit
+    dockerfile-language-server-nodejs
   ];
 
   # 终端和界面工具
@@ -80,6 +87,7 @@ let
     SYSTEM_PACKAGES
     FONTS_PACKAGES
     PYTHON_PACKAGES
+    LUA_PACKAGES
   ];
 in
 {

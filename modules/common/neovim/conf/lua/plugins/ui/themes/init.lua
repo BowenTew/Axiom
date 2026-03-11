@@ -1,0 +1,5 @@
+return {
+  { import = "plugins.ui.themes.tokyonight" },
+  { import = "plugins.ui.themes.catppuccin" },
+  { import = "plugins.ui.themes.onedark" },
+}

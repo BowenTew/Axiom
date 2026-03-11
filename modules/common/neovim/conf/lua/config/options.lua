@@ -1,94 +1,156 @@
-local options = {
-  clipboard      = "unnamed,unnamedplus",   --- Copy-paste between vim and everything else
-  cmdheight      = 0,                       --- Give more space for displaying messages
-  completeopt    = "menu,menuone,preview", --- Better autocompletion
-  cursorline     = true,                    --- Highlight of current line
-  emoji          = false,                   --- Fix emoji display
-  expandtab      = true,                    --- Use spaces instead of tabs
-  foldcolumn     = "0",
-  foldnestmax    = 0,
-  foldlevel      = 99,                      --- Using ufo provider need a large value
-  foldlevelstart = 99,                      --- Expand all folds by default
-  ignorecase     = true,                    --- Needed for smartcase
-  laststatus     = 3,                       --- Have a global statusline at the bottom instead of one for each window
-  mouse          = "a",                     --- Enable mouse
-  number         = true,                    --- Shows current line number
-  pumheight      = 10,                      --- Max num of items in completion menu
-  relativenumber = true,                    --- Enables relative number
-  scrolloff      = 8,                       --- Always keep space when scrolling to bottom/top edge
-  shiftwidth     = 2,                       --- Change a number of space characters inserted for indentation
-  showtabline    = 2,                       --- Always show tabs
-  signcolumn     = "yes:2",                 --- Add extra sign column next to line number
-  smartcase      = true,                    --- Uses case in search
-  smartindent    = true,                    --- Makes indenting smart
-  smarttab       = true,                    --- Makes tabbing smarter will realize you have 2 vs 4
-  softtabstop    = 2,                       --- Insert 2 spaces for a tab
-  splitright     = true,                    --- Vertical splits will automatically be to the right
-  swapfile       = false,                   --- Swap not needed
-  tabstop        = 2,                       --- Insert 2 spaces for a tab
-  termguicolors  = true,                    --- Correct terminal colors
-  timeoutlen     = 200,                     --- Faster completion (cannot be lower than 200 because then commenting doesn't work)
-  undofile       = true,                    --- Sets undo to file
-  updatetime     = 100,                     --- Faster completion
-  viminfo        = "'1000",                 --- Increase the size of file history
-  wildignore     = "*node_modules/**",      --- Don't search inside Node.js modules (works for gutentag)
-  wrap           = false,                   --- Display long lines as just one line
-  writebackup    = false,                   --- Not needed
-  -- Neovim defaults
-  autoindent     = true,                    --- Good auto indent
-  backspace      = "indent,eol,start",      --- Making sure backspace works
-  backup         = false,                   --- Recommended by coc
-  --- Concealed text is completely hidden unless it has a custom replacement character defined (needed for dynamically showing tailwind classes)
-  conceallevel   = 2,
-  concealcursor  = "",                      --- Set to an empty string to expand tailwind class when on cursorline
-  encoding       = "utf-8",                 --- The encoding displayed
-  errorbells     = false,                   --- Disables sound effect for errors
-  fileencoding   = "utf-8",                 --- The encoding written to file
-  incsearch      = true,                    --- Start searching before pressing enter
-  showmode       = false,                   --- Don't show things like -- INSERT -- anymore
+-- ============================================================================
+-- 基础选项配置
+-- 选项配置
+-- ============================================================================
+
+local opt = vim.opt
+local g = vim.g
+
+-- 编码
+opt.encoding = "utf-8"
+opt.fileencoding = "utf-8"
+opt.fileencodings = "utf-8,gbk,gb2312,gb18030,ucs-bom,cp936"
+
+-- 行号
+opt.number = true
+opt.relativenumber = true
+opt.numberwidth = 2
+
+-- 缩进
+opt.expandtab = true      -- 使用空格代替 tab
+opt.shiftwidth = 2        -- 自动缩进宽度
+opt.tabstop = 2           -- Tab 显示宽度
+opt.softtabstop = 2       -- Tab 操作宽度
+opt.smartindent = true    -- 智能缩进
+opt.autoindent = true     -- 自动继承缩进
+
+-- 搜索
+opt.ignorecase = true     -- 忽略大小写
+opt.smartcase = true      -- 智能大小写
+opt.hlsearch = true       -- 高亮搜索
+opt.incsearch = true      -- 增量搜索
+
+-- 外观
+opt.termguicolors = true  -- 真彩色
+opt.cursorline = true     -- 高亮当前行
+opt.colorcolumn = "120"   -- 行长度提示
+opt.laststatus = 3        -- 全局状态栏
+opt.showmode = false      -- 不显示模式 (由状态栏处理)
+opt.cmdheight = 1         -- 命令行高度
+opt.pumheight = 10        -- 补全菜单高度
+opt.pumblend = 10         -- 补全菜单透明度
+opt.winblend = 0          -- 浮动窗口透明度
+opt.conceallevel = 0      -- 显示隐藏字符
+opt.signcolumn = "yes"    -- 始终显示标记列
+opt.fillchars = {
+  fold = " ",
+  foldopen = "",
+  foldclose = "",
+  foldsep = " ",
+  diff = "╱",
+  eob = " ",
 }
 
-local globals = {
-  mapleader                   = ' ',        --- Map leader key to SPC
-  maplocalleader              = ',',        --- Map local leader key to comma
-  speeddating_no_mappings     = 1,          --- Disable default mappings for speeddating
+-- 折叠
+opt.foldenable = true
+opt.foldlevel = 99
+opt.foldlevelstart = 99
+opt.foldmethod = "expr"
+opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+
+-- 滚动
+opt.scrolloff = 8         -- 上下滚动保留行数
+opt.sidescrolloff = 8     -- 左右滚动保留列数
+opt.wrap = false          -- 不自动换行
+opt.linebreak = true      -- 软换行
+opt.breakindent = true    -- 换行保持缩进
+
+-- 性能
+opt.updatetime = 200      -- 更新时间 (LSP 诊断等)
+opt.timeoutlen = 500      -- 键位超时
+opt.ttimeoutlen = 10      -- 终端键位超时
+opt.redrawtime = 1000     -- 重绘时间限制
+opt.lazyredraw = false    -- 不重绘时延迟 (会导致闪烁)
+
+-- 文件
+opt.backup = false        -- 不创建备份
+opt.writebackup = false   -- 不创建写入备份
+opt.swapfile = false      -- 不创建交换文件
+opt.undofile = true       -- 启用持久化撤销
+opt.undolevels = 10000    -- 撤销层级
+opt.confirm = true        -- 未保存时确认
+opt.autoread = true       -- 自动重新加载外部修改
+
+-- 分割
+opt.splitbelow = true     -- 下方分割
+opt.splitright = true     -- 右侧分割
+opt.splitkeep = "screen"  -- 保持屏幕稳定
+
+-- 补全
+opt.completeopt = { "menu", "menuone", "noselect", "preview" }
+opt.wildmenu = true
+opt.wildmode = "longest:full,full"
+opt.wildoptions = "pum"
+
+-- 列表字符
+opt.list = true
+opt.listchars = {
+  tab = "» ",
+  trail = "·",
+  nbsp = "␣",
+  extends = "⟩",
+  precedes = "⟨",
 }
 
-vim.opt.shortmess:append('c');
-vim.opt.formatoptions:remove('c');
-vim.opt.formatoptions:remove('r');
-vim.opt.formatoptions:remove('o');
-vim.opt.fillchars:append('stl: ');
-vim.opt.fillchars:append('eob: ');
-vim.opt.fillchars:append('fold: ');
-vim.opt.fillchars:append('foldopen: ');
-vim.opt.fillchars:append('foldsep: ');
-vim.opt.fillchars:append('foldclose:');
-vim.opt.fillchars:append('vert:▕');
-vim.opt.fillchars:append('vertleft:▕');
+-- 禁用内置插件 (加速启动)
+g.loaded_gzip = 1
+g.loaded_tar = 1
+g.loaded_tarPlugin = 1
+g.loaded_zip = 1
+g.loaded_zipPlugin = 1
+g.loaded_getscript = 1
+g.loaded_getscriptPlugin = 1
+g.loaded_vimball = 1
+g.loaded_vimballPlugin = 1
+g.loaded_matchit = 1
+g.loaded_matchparen = 1
+g.loaded_2html_plugin = 1
+g.loaded_logiPat = 1
+g.loaded_rrhelper = 1
+g.loaded_netrw = 1
+g.loaded_netrwPlugin = 1
+g.loaded_netrwSettings = 1
+g.loaded_netrwFileHandlers = 1
 
-for k, v in pairs(options) do
-  vim.opt[k] = v
-end
+-- 禁用 providers (如果没有安装)
+g.loaded_python3_provider = 0
+g.loaded_ruby_provider = 0
+g.loaded_perl_provider = 0
+g.loaded_node_provider = 0
 
-for k, v in pairs(globals) do
-  vim.g[k] = v
-end
+-- 剪贴板
+opt.clipboard = "unnamedplus"  -- 使用系统剪贴板
 
-if vim.g.neovide then
-  vim.opt.title = true
-  vim.opt.guifont = EcoVim.ui.font
-  vim.g.neovide_scale_factor = 1.1
-  vim.g.neovide_refresh_rate = 144
-  vim.g.neovide_underline_stroke_scale = 0.5
-  vim.g.neovide_input_use_logo = 1
-  vim.g.neovide_input_macos_option_key_is_meta = 'only_left'
-  vim.g.neovide_window_blurred = true
-  vim.g.neovide_floating_blur_amount_x = 2.0
-  vim.g.neovide_floating_blur_amount_y = 2.0
-  vim.g.neovide_transparency = 0.95
+-- 会话选项
+opt.sessionoptions = {
+  "buffers",
+  "curdir",
+  "folds",
+  "help",
+  "tabpages",
+  "winsize",
+  "winpos",
+  "terminal",
+  "localoptions",
+}
 
-  vim.keymap.set({ 'n', 'v' }, '<D-c>', '"+y')  -- Copy
-  vim.keymap.set({ 'n', 'v' }, '<D-v>', '"*p')  -- Paste normal/visual mode
-  vim.keymap.set({ 'c', 'i' }, '<D-v>', '<C-R>+') -- Paste command/insert mode
-end
+-- 差异模式
+opt.diffopt = {
+  "internal",
+  "filler",
+  "closeoff",
+  "context:12",
+  "algorithm:histogram",
+  "linematch:200",
+  "indent-heuristic",
+}
