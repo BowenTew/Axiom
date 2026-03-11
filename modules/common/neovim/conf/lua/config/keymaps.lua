@@ -205,3 +205,22 @@ nmap("<C-d>", "<C-d>zz", "Scroll down (center)")
 nmap("<C-u>", "<C-u>zz", "Scroll up (center)")
 nmap("n", "nzzzv", "Next search (center)")
 nmap("N", "Nzzzv", "Previous search (center)")
+
+-- 打开 URL（跨平台）
+nmap("gx", function()
+  local url = vim.fn.expand("<cfile>")
+  if not url or url == "" then
+    return
+  end
+
+  local cmd
+  if vim.fn.has("macunix") == 1 then
+    cmd = { "open", url }
+  elseif vim.fn.has("win32") == 1 or vim.fn.has("win64") == 1 then
+    cmd = { "cmd", "/c", "start", url }
+  else
+    cmd = { "xdg-open", url }
+  end
+
+  vim.fn.jobstart(cmd, { detach = true })
+end, "Open URL under cursor")

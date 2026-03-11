@@ -64,7 +64,7 @@ return {
       "svelte",                  -- Svelte
       "taplo",                   -- TOML
       "ts_ls",                   -- TypeScript / JavaScript
-      "vue",
+      "vuels",
       "yamlls",                  -- YAML
     },
 

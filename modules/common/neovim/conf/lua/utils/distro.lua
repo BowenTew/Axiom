@@ -77,7 +77,15 @@ function M.freeze_plugin_versions()
   local snapshot_path = get_snapshot_path()
   if vim.fn.filereadable(snapshot_path) == 1 then
     local backup_name = config.backup_dir .. "/lazy_snapshot_" .. os.date("%Y%m%d_%H%M%S") .. ".lua"
-    vim.fn.copy(snapshot_path, backup_name)
+    local ok, snapshot_data = pcall(vim.fn.readfile, snapshot_path)
+    if ok then
+      local write_ok = pcall(vim.fn.writefile, snapshot_data, backup_name)
+      if not write_ok then
+        vim.notify("Failed to write snapshot backup to " .. backup_name, vim.log.levels.WARN)
+      end
+    else
+      vim.notify("Failed to read existing snapshot for backup: " .. snapshot_path, vim.log.levels.WARN)
+    end
   end
   
   -- 写入新快照

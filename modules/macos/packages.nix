@@ -30,6 +30,7 @@ let
 
   LUA_PACKAGES = with pkgs; [
     lua
+    luarocks
   ];
 
   # 基础开发工具

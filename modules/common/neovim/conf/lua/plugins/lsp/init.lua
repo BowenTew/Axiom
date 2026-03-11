@@ -7,6 +7,7 @@ return {
   { import = "plugins.lsp.mason" },
   { import = "plugins.lsp.lspconfig" },
   { import = "plugins.lsp.mason-lspconfig" },
+  { import = "plugins.lsp.mason-tool-installer" },
   { import = "plugins.lsp.luasnip" },
   { import = "plugins.lsp.conform" },
   { import = "plugins.lsp.lint" },

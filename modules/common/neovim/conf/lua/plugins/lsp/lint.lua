@@ -8,18 +8,24 @@ return {
   event = { "BufReadPre", "BufNewFile" },
   opts = {
     linters_by_ft = {
-      lua = { "luacheck" },
-      python = { "flake8" },
-      javascript = { "eslint" },
-      typescript = { "eslint" },
+      -- lua = { "luacheck" },
+      -- python = { "pyright" },
+      javascript = { "eslint_d" },
+      javascriptreact = { "eslint_d" },
+      typescript = { "eslint_d" },
+      typescriptreact = { "eslint_d" },
     },
   },
   config = function(_, opts)
-    require("lint").linters_by_ft = opts.linters_by_ft
+    local lint = require "lint"
+    lint.linters_by_ft = opts.linters_by_ft
 
     vim.api.nvim_create_autocmd({ "BufWritePost", "BufReadPost", "InsertLeave" }, {
       callback = function()
-        require("lint").try_lint()
+        local ft = vim.bo.filetype
+        -- filetype 没配置 linter 时直接跳过，避免在 neo-tree 等特殊 buffer 里报错
+        if not lint.linters_by_ft[ft] then return end
+        lint.try_lint()
       end,
     })
   end,
