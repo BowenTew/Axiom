@@ -25,19 +25,19 @@
 
     # 从多个文件加载配置
     extraConfig = 
-      builtins.readFile ./config/settings.vim +
-      builtins.readFile ./config/ui.vim +
-      builtins.readFile ./config/git.vim +
-      builtins.readFile ./config/coc.vim +
-      builtins.readFile ./config/go.vim +
-      builtins.readFile ./config/shortcut/buffer.vim +
-      builtins.readFile ./config/shortcut/comment.vim +
-      builtins.readFile ./config/shortcut/coc.vim +
-      builtins.readFile ./config/shortcut/fzf.vim +
-      builtins.readFile ./config/shortcut/go.vim +
-      builtins.readFile ./config/shortcut/git.vim +
-      builtins.readFile ./config/shortcut/nerdtree.vim +
-      builtins.readFile ./config/shortcut/tagbar.vim +
-      builtins.readFile ./config/shortcut/window.vim;
+      builtins.readFile ./conf/settings.vim +
+      builtins.readFile ./conf/ui.vim +
+      builtins.readFile ./conf/git.vim +
+      builtins.readFile ./conf/coc.vim +
+      builtins.readFile ./conf/go.vim +
+      builtins.readFile ./conf/shortcut/buffer.vim +
+      builtins.readFile ./conf/shortcut/comment.vim +
+      builtins.readFile ./conf/shortcut/coc.vim +
+      builtins.readFile ./conf/shortcut/fzf.vim +
+      builtins.readFile ./conf/shortcut/go.vim +
+      builtins.readFile ./conf/shortcut/git.vim +
+      builtins.readFile ./conf/shortcut/nerdtree.vim +
+      builtins.readFile ./conf/shortcut/tagbar.vim +
+      builtins.readFile ./conf/shortcut/window.vim;
   };
 }
