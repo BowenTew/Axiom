@@ -8,7 +8,7 @@ return {
   event = { "BufReadPre", "BufNewFile" },
   opts = {
     linters_by_ft = {
-      -- lua = { "luacheck" },
+      lua = { "luacheck" },
       -- python = { "pyright" },
       javascript = { "eslint_d" },
       javascriptreact = { "eslint_d" },

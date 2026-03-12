@@ -48,7 +48,7 @@ return {
     },
 
     -- 服务器配置（从 servers/ 目录加载）
-    servers = require("plugins.lsp.servers"),
+    servers = require("config.lsp"),
   },
 
   config = function(_, opts)
