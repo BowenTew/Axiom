@@ -1,215 +1,169 @@
-local utils = require('utils')
+-- ============================================================================
+-- 工具函数
+-- ============================================================================
 
-local async_present, async = pcall(require, "plenary.async")
-
--- Exported functions
 local M = {}
 
-M.first_ecovim_run = function()
-  local is_first_run = utils.file_exists('/tmp/first-ecovim-run')
+-- 检查是否为空字符串
+function M.is_empty(s)
+  return s == nil or s == ""
+end
 
-  if is_first_run then
-    async.run(function()
-      vim.notify("Welcome to Ecovim! Hope you'll have a nice experience!", "info",
-        { title = "Ecovim", timeout = 5000 })
-      vim.notify("Please install treesitter servers manually by :TSInstall command.", "info",
-        { title = "Installation", timeout = 10000 })
-    end)
-    local suc = os.remove('/tmp/first-ecovim-run')
-    if (not suc) then print("Error: Couldn't remove /tmp/first-ecovim-run!") end
+-- 检查文件是否存在
+function M.file_exists(path)
+  local stat = vim.loop.fs_stat(path)
+  return stat ~= nil and stat.type == "file"
+end
+
+-- 检查目录是否存在
+function M.dir_exists(path)
+  local stat = vim.loop.fs_stat(path)
+  return stat ~= nil and stat.type == "directory"
+end
+
+-- 确保目录存在
+function M.ensure_dir(path)
+  if not M.dir_exists(path) then
+    vim.fn.mkdir(path, "p")
   end
 end
 
-M.first_ecovim_run()
-
-local present, win = pcall(require, "lspconfig.ui.windows")
-if not present then
-  return
+-- 获取当前缓冲区目录
+function M.get_buffer_dir()
+  local buf_name = vim.api.nvim_buf_get_name(0)
+  if buf_name == "" then
+    return vim.fn.getcwd()
+  end
+  return vim.fn.fnamemodify(buf_name, ":h")
 end
 
-local _default_opts = win.default_opts
-win.default_opts = function(options)
-  local opts = _default_opts(options)
-  opts.border = EcoVim.ui.float.border
-  return opts
+-- 获取 git 根目录
+function M.get_git_root()
+  local dot_git_path = vim.fn.finddir(".git", ".;")
+  if dot_git_path == "" then
+    return nil
+  end
+  return vim.fn.fnamemodify(dot_git_path, ":h")
 end
 
--- https://github.com/lunarmodules/Penlight/blob/master/lua/pl/utils.lua
--- An iterator over all non-integer keys (inverse of `ipairs`).
--- This uses `pairs` under the hood, so any value that is iterable using `pairs`
--- will work with this function.
-M.kpairs = function(t)
-  local index
-  return function()
-    local value
-    while true do
-      index, value = next(t, index)
-      if type(index) ~= "number" or math.floor(index) ~= index then
-        break
+-- 检查是否在 git 仓库中
+function M.is_git_repo()
+  return M.get_git_root() ~= nil
+end
+
+-- 获取项目根目录
+function M.get_project_root()
+  local git_root = M.get_git_root()
+  if git_root then
+    return git_root
+  end
+  return vim.fn.getcwd()
+end
+
+-- 切换背景
+function M.toggle_background()
+  if vim.o.background == "dark" then
+    vim.o.background = "light"
+  else
+    vim.o.background = "dark"
+  end
+end
+
+-- 切换透明背景
+function M.toggle_transparency()
+  local is_transparent = vim.g.transparent_enabled
+  if is_transparent then
+    vim.cmd("TransparentDisable")
+  else
+    vim.cmd("TransparentEnable")
+  end
+end
+
+-- 格式化 JSON
+function M.format_json()
+  vim.cmd("%!jq .")
+end
+
+-- 压缩 JSON
+function M.minify_json()
+  vim.cmd("%!jq -c .")
+end
+
+-- 复制当前行到剪贴板
+function M.copy_line()
+  local line = vim.api.nvim_get_current_line()
+  vim.fn.setreg("+", line)
+  vim.notify("Copied to clipboard", vim.log.levels.INFO)
+end
+
+-- 复制文件内容到剪贴板
+function M.copy_file_content()
+  local lines = vim.api.nvim_buf_get_lines(0, 0, -1, false)
+  local content = table.concat(lines, "\n")
+  vim.fn.setreg("+", content)
+  vim.notify("File content copied to clipboard", vim.log.levels.INFO)
+end
+
+-- 删除当前缓冲区且不关闭窗口
+function M.delete_buffer_keep_window()
+  local bufnr = vim.api.nvim_get_current_buf()
+  local windows = vim.fn.win_findbuf(bufnr)
+  
+  -- 为每个窗口切换到替代缓冲区
+  for _, win in ipairs(windows) do
+    vim.api.nvim_win_call(win, function()
+      vim.cmd("bprevious")
+      -- 如果还在同一个缓冲区，创建新缓冲区
+      if vim.api.nvim_win_get_buf(win) == bufnr then
+        vim.cmd("enew")
       end
-    end
-    return index, value
+    end)
+  end
+  
+  -- 删除原缓冲区
+  vim.api.nvim_buf_delete(bufnr, { force = false })
+end
+
+-- 打开 URL
+function M.open_url(url)
+  if not url then
+    url = vim.fn.expand("<cfile>")
+  end
+  
+  local cmd
+  if vim.fn.has("mac") == 1 then
+    cmd = "open"
+  elseif vim.fn.has("unix") == 1 then
+    cmd = "xdg-open"
+  elseif vim.fn.has("win32") == 1 then
+    cmd = "start"
+  end
+  
+  if cmd then
+    vim.fn.jobstart({ cmd, url }, { detach = true })
   end
 end
 
--- Executes a user-supplied "reducer" callback function on each element of the table indexed with a numeric key, in order, passing in the return value from the calculation on the preceding element
-M.ireduce = function(tbl, func, acc)
-  for i, v in ipairs(tbl) do
-    acc = func(acc, v, i)
-  end
-  return acc
-end
-
--- Executes a user-supplied "reducer" callback function on each key element of the table indexed with a string key, in order, passing in the return value from the calculation on the preceding element
-M.kreduce = function(tbl, func, acc)
-  for i, v in pairs(tbl) do
-    if type(i) == "string" then
-      acc = func(acc, v, i)
-    end
-  end
-  return acc
-end
-
--- Executes a user-supplied "reducer" callback function on each element of the table, in order, passing in the return value from the calculation on the preceding element
-M.reduce = function(tbl, func, acc)
-  for i, v in pairs(tbl) do
-    acc = func(acc, v, i)
-  end
-  return acc
-end
-
--- Returns the index of the first element in the array that satisfies the provided testing function
-M.find_index = function(tbl, func)
-  for index, item in ipairs(tbl) do
-    if func(item, index) then
-      return index
-    end
-  end
-
-  return nil
-end
-
-M.isome = function(tbl, func)
-  for index, item in ipairs(tbl) do
-    if func(item, index) then
-      return true
-    end
-  end
-
-  return false
-end
-
--- Returns the first element in the array that satisfies the provided testing function
-M.ifind = function(tbl, func)
-  for index, item in ipairs(tbl) do
-    if func(item, index) then
-      return item
-    end
-  end
-
-  return nil
-end
-
-M.find_last_index = function(tbl, func)
-  for index = #tbl, 1, -1 do
-    if func(tbl[index], index) then
-      return index
-    end
+-- 搜索选中的文本
+function M.search_selection()
+  local text = vim.fn.getreg("v")
+  if text and text ~= "" then
+    vim.fn.setreg("/", text)
+    vim.cmd("normal! n")
   end
 end
 
-M.slice = function(tbl, startIndex, endIndex)
-  local sliced = {}
-  endIndex = endIndex or #tbl
-
-  for index = startIndex, endIndex do
-    table.insert(sliced, tbl[index])
-  end
-
-  return sliced
+-- 显示消息
+function M.info(msg)
+  vim.notify(msg, vim.log.levels.INFO)
 end
 
-M.concat = function(...)
-  local concatenated = {}
-
-  for _, tbl in ipairs({ ... }) do
-    for _, value in ipairs(tbl) do
-      table.insert(concatenated, value)
-    end
-  end
-
-  return concatenated
+function M.warn(msg)
+  vim.notify(msg, vim.log.levels.WARN)
 end
 
--- Creates a new table populated with the results of calling a provided functions on every numeric indexed element in the calling table
-M.imap = function(tbl, func)
-  return M.ireduce(
-    tbl,
-    function(new_tbl, value, index)
-      table.insert(new_tbl, func(value, index))
-      return new_tbl
-    end,
-    {}
-  )
-end
-
-M.ieach = function(tbl, func)
-  for index, element in ipairs(tbl) do
-    func(element, index)
-  end
-end
-
--- Returns an array of a given table's string-keyed property names.
-M.keys = function(tbl)
-  local keys = {}
-  for key, _ in M.kpairs(tbl) do
-    table.insert(keys, key)
-  end
-  return keys
-end
-
--- Returns an array of a given table's numbered-keyed property names.
-M.indexes = function(tbl)
-  local indexes = {}
-  for key, _ in ipairs(tbl) do
-    table.insert(indexes, key)
-  end
-  return indexes
-end
-
--- Creates a new function that, when called, has its arguments preceded by any provided ones
-M.bind = function(func, ...)
-  local boundArgs = { ... }
-
-  return function(...)
-    return func(unpack(boundArgs), ...)
-  end
-end
-
-M.ifilter = function(tbl, func)
-  return vim.tbl_filter(func, tbl)
-end
-
-M.switch = function(param, t)
-  local case = t[param]
-  if case then
-    return case()
-  end
-  local defaultFn = t["default"]
-  return defaultFn and defaultFn() or nil
-end
-
-M.trim = function(str)
-  return (str:gsub("^%s*(.-)%s*$", "%1"))
-end
-
-M.ignore = function()
-end
-
-M.always = function(value)
-  return function()
-    return value
-  end
+function M.error(msg)
+  vim.notify(msg, vim.log.levels.ERROR)
 end
 
 return M
