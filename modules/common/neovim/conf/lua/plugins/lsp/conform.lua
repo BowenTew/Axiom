@@ -25,4 +25,14 @@ return {
       return { timeout_ms = 500, lsp_fallback = true }
     end,
   },
+  keys = {
+    {
+      "<leader>cf",
+      function()
+        require("conform").format({ async = true, lsp_fallback = true })
+      end,
+      desc = "Format current buffer",
+      mode = { "n", "v" },
+    },
+  },
 }
