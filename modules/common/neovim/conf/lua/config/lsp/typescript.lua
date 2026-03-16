@@ -1,7 +1,17 @@
 return {
   cmd = { "typescript-language-server", "--stdio" },
-  filetypes = { "javascript", "javascriptreact", "typescript", "typescriptreact" },
+  filetypes = { "javascript", "javascriptreact", "typescript", "typescriptreact", "vue" },
   root_markers = { "tsconfig.json", "jsconfig.json", "package.json", ".git" },
+  -- 启用 Vue TypeScript 插件，让 ts_ls 能识别 .vue 文件
+  init_options = {
+    plugins = {
+      {
+        name = "@vue/typescript-plugin",
+        location = vim.fn.stdpath("data") .. "/mason/packages/vue-language-server/node_modules/@vue/language-server",
+        languages = { "vue" },
+      },
+    },
+  },
   settings = {
     separate_diagnostic_server = true,
     publish_diagnostic_on = "insert_leave",
