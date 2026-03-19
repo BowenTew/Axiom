@@ -6,7 +6,8 @@
 
     # Nix 管理所有插件
     plugins = with pkgs.vimPlugins; [
-      gruvbox-material
+      vim-one
+      gruvbox-material 
       vim-airline
       vim-airline-themes
       nerdtree
@@ -38,6 +39,7 @@
       builtins.readFile ./conf/shortcut/git.vim +
       builtins.readFile ./conf/shortcut/nerdtree.vim +
       builtins.readFile ./conf/shortcut/tagbar.vim +
-      builtins.readFile ./conf/shortcut/window.vim;
+      builtins.readFile ./conf/shortcut/window.vim +
+      builtins.readFile ./conf/shortcut/term.vim;
   };
 }
