@@ -1,8 +1,7 @@
 return {
   cmd = { "typescript-language-server", "--stdio" },
-  filetypes = { "javascript", "javascriptreact", "typescript", "typescriptreact", "vue" },
+  filetypes = { "javascript", "javascriptreact", "typescript", "typescriptreact" },
   root_markers = { "tsconfig.json", "jsconfig.json", "package.json", ".git" },
-  -- 启用 Vue TypeScript 插件，让 ts_ls 能识别 .vue 文件
   init_options = {
     plugins = {
       {
@@ -12,6 +11,7 @@ return {
       },
     },
   },
+
   settings = {
     separate_diagnostic_server = true,
     publish_diagnostic_on = "insert_leave",

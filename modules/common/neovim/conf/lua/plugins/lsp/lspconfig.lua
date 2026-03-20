@@ -60,12 +60,15 @@ return {
       vim.lsp.config("*", opts.servers["*"])
     end
 
-    -- 配置各服务器
+    -- 配置并启用各服务器
+    local enabled = {}
     for server, server_opts in pairs(opts.servers) do
       if server ~= "*" and server_opts ~= false then
         vim.lsp.config(server, server_opts)
+        table.insert(enabled, server)
       end
     end
+    vim.lsp.enable(enabled)
 
     -- Inlay hints
     if opts.inlay_hints.enabled then

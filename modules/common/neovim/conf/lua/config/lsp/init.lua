@@ -15,4 +15,5 @@ return {
   lua_ls = require("config.lsp.lua_ls"),
   rust_analyzer = require("config.lsp.rust"),
   ts_ls = require("config.lsp.typescript"),
+  vue_ls = require("config.lsp.vue"),
 }
