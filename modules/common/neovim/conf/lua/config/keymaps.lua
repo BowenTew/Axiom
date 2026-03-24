@@ -126,17 +126,6 @@ nmap("<leader>tn", "<cmd>tabnext<CR>", "Next tab")
 nmap("<leader>tp", "<cmd>tabprevious<CR>", "Previous tab")
 
 -- ============================================================================
--- 缓冲区管理
--- ============================================================================
-
-nmap("<leader>bn", "<cmd>bnext<CR>", "Next buffer")
-nmap("<leader>bp", "<cmd>bprevious<CR>", "Previous buffer")
-nmap("<leader>bd", "<cmd>bdelete<CR>", "Delete buffer")
-nmap("<leader>bD", "<cmd>bdelete!<CR>", "Force delete buffer")
-nmap("[b", "<cmd>bprevious<CR>", "Previous buffer")
-map("n", "]b", "<cmd>bnext<CR>", { desc = "Next buffer" })
-
--- ============================================================================
 -- 快速修复和位置列表
 -- ============================================================================
 

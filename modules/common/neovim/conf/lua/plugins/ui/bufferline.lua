@@ -105,11 +105,10 @@ return {
           end,
           offsets = {
             {
-              filetype = "snacks_layout_box",
-              text = "",
-              highlight = "EcovimNvimTreeTitle",
+              filetype = "neo-tree",
+              text = "Explorer",
               text_align = "center",
-              separator = false,
+              separator = true,
             },
           },
         },
@@ -125,12 +124,21 @@ return {
       { "<A-7>",       "<cmd>BufferLineGoToBuffer 7<CR>" },
       { "<A-8>",       "<cmd>BufferLineGoToBuffer 8<CR>" },
       { "<A-9>",       "<cmd>BufferLineGoToBuffer 9<CR>" },
-      { "<Leader>bb",  "<cmd>BufferLineMovePrev<CR>",                desc = "Move back" },
+      -- 导航
+      { "[b",           "<cmd>BufferLineCyclePrev<CR>",               desc = "Previous buffer" },
+      { "]b",           "<cmd>BufferLineCycleNext<CR>",               desc = "Next buffer" },
+      -- 关闭
+      { "<Leader>bd",  function() Snacks.bufdelete() end,              desc = "Close current" },
+      { "<Leader>bD",  "<cmd>bdelete!<CR>",                           desc = "Force close" },
       { "<Leader>bl",  "<cmd>BufferLineCloseLeft<CR>",               desc = "Close Left" },
       { "<Leader>br",  "<cmd>BufferLineCloseRight<CR>",              desc = "Close Right" },
+      -- 移动
+      { "<Leader>bb",  "<cmd>BufferLineMovePrev<CR>",                desc = "Move back" },
       { "<Leader>bn",  "<cmd>BufferLineMoveNext<CR>",                desc = "Move next" },
+      -- 选择 & 固定
       { "<Leader>bp",  "<cmd>BufferLinePick<CR>",                    desc = "Pick Buffer" },
       { "<Leader>bP",  "<cmd>BufferLineTogglePin<CR>",               desc = "Pin/Unpin Buffer" },
+      -- 排序
       { "<Leader>bsd", "<cmd>BufferLineSortByDirectory<CR>",         desc = "Sort by directory" },
       { "<Leader>bse", "<cmd>BufferLineSortByExtension<CR>",         desc = "Sort by extension" },
       { "<Leader>bsr", "<cmd>BufferLineSortByRelativeDirectory<CR>", desc = "Sort by relative dir" },
