@@ -5,7 +5,7 @@
     priority = 1000,
     opts = {
       style = "night",
-      transparent = AeonVim.features.ui.transparent.enabled,
+      transparent = true,
       styles = {
         sidebars = "transparent",
         floats = "transparent",

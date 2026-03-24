@@ -16,7 +16,6 @@
 return {
     "numToStr/Comment.nvim",
     event = { "BufReadPost", "BufNewFile" },
-    enabled = AeonVim.features.editor.comment.enabled,
     dependencies = {
       "JoosepAlviste/nvim-ts-context-commentstring",
     },

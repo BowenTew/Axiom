@@ -33,7 +33,7 @@ return {
 
     -- Inlay hints
     inlay_hints = {
-      enabled = AeonVim.features.lsp.inlay_hints,
+      enabled = true,
     },
 
     -- 代码折叠

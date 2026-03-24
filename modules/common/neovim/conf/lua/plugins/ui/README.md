@@ -105,7 +105,7 @@ ui/
 - **文件：** `bufferline.lua`
 - **插件：** [akinsho/bufferline.nvim](https://github.com/akinsho/bufferline.nvim)
 - **作用：** 顶部 Buffer 标签栏，显示打开的文件标签、LSP 诊断计数、序号，支持鼠标操作。
-- **启用条件：** `AeonVim.features.tabline.enabled` 且 `engine == "bufferline"` 时生效。
+- **启用条件：** 默认启用。
 
 #### 快捷键
 
@@ -178,7 +178,7 @@ ui/
 - **文件：** `noice.lua`
 - **插件：** [folke/noice.nvim](https://github.com/folke/noice.nvim)
 - **作用：** 重新设计 Neovim 的命令行、消息和通知 UI。将命令行移到屏幕中央弹窗（command palette 风格），长消息自动转到 split 窗口。
-- **启用条件：** `AeonVim.features.ui.noice.enabled` 时生效。
+- **启用条件：** 默认启用。
 - **当前配置：** 关闭了消息拦截（`messages.enabled = false`）、LSP hover 和 progress，主要只使用命令行弹窗功能。
 
 ---
@@ -188,7 +188,7 @@ ui/
 - **文件：** `toggleterm.lua`
 - **插件：** [akinsho/toggleterm.nvim](https://github.com/akinsho/toggleterm.nvim)
 - **作用：** 在 Neovim 内快速打开/切换终端，支持水平、垂直、浮窗三种布局。
-- **启用条件：** `AeonVim.features.terminal.enabled` 时生效。
+- **启用条件：** 默认启用。
 
 #### 快捷键
 
@@ -231,4 +231,4 @@ ui/
 | One Dark | `onedark.lua` | [navarasu/onedark.nvim](https://github.com/navarasu/onedark.nvim) | 按需加载（`lazy = true`） |
 
 - **切换主题：** 执行 `:colorscheme catppuccin` 或 `:colorscheme onedark` 即可切换。
-- **透明背景：** 由 `AeonVim.features.ui.transparent.enabled` 控制（仅 tokyonight 配置了此项）。
+- **透明背景：** 可在 tokyonight 主题配置中设置 `transparent = true` 启用。

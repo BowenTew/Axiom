@@ -216,16 +216,7 @@ cst<div>- 将标签改为 <div>
 
 ## 配置开关
 
-所有插件都可通过 `init.lua` 中的 `AeonVim.features.editor` 进行开关：
-
-```lua
-AeonVim.features.editor = {
-  autopairs = { enabled = true },
-  surround = { enabled = true },
-  comment = { enabled = true },
-  indentline = { enabled = true },
-}
-```
+所有编辑器插件默认启用。如需禁用某个插件，可在对应插件文件中设置 `enabled = false`。
 
 ---
 

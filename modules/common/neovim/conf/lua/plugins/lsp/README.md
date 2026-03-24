@@ -120,7 +120,7 @@ lsp/
 - **插件：** [neovim/nvim-lspconfig](https://github.com/neovim/nvim-lspconfig)
 - **作用：** LSP 核心配置。负责：
   - **诊断显示** — 行内虚拟文本（`●` 前缀）、侧边栏图标、浮窗诊断详情
-  - **Inlay Hints** — 在代码中内联显示类型推断、参数名等提示（可通过 `AeonVim.features.lsp.inlay_hints` 开关）
+  - **Inlay Hints** — 在代码中内联显示类型推断、参数名等提示（默认启用）
   - **代码折叠** — 基于 LSP 的智能折叠（按函数/类/块折叠）
   - **服务器配置** — 从 `servers/` 目录加载各语言的独立配置
 
@@ -149,7 +149,7 @@ lsp/
 | JSON / YAML / Markdown | `prettier` |
 | 其他所有文件 | `trim_whitespace`（清除行尾空格） |
 
-- **保存时格式化：** 由 `AeonVim.features.lsp.format_on_save` 控制，设为 `false` 可关闭。
+- **保存时格式化：** 默认启用，保存时自动格式化（超时 500ms）。
 - **LSP 回退：** 当没有配置 formatter 时，自动回退到 LSP 自带的格式化功能。
 
 ### 6. nvim-lint

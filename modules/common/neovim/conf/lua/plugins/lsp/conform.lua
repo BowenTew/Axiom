@@ -18,12 +18,10 @@ return {
       markdown = { "prettier" },
       ["_"] = { "trim_whitespace" },
     },
-    format_on_save = function(bufnr)
-      if not AeonVim.features.lsp.format_on_save then
-        return
-      end
-      return { timeout_ms = 500, lsp_fallback = true }
-    end,
+    format_on_save = {
+      timeout_ms = 500,
+      lsp_fallback = true,
+    },
   },
   keys = {
     {

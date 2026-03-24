@@ -59,7 +59,6 @@ return {
     "DiffviewRefresh",
     "DiffviewFileHistory",
   },
-  enabled = AeonVim.features.git.diffview.enabled,
   keys = {
     { "<leader>gdo", "<cmd>DiffviewOpen<cr>", desc = "Git Diffview Open" },
     { "<leader>gdc", "<cmd>DiffviewClose<cr>", desc = "Git Diffview Close" },

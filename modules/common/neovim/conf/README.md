@@ -47,57 +47,26 @@
 
 ## ⚙️ 全局配置对象
 
-通过修改 `AeonVim` 对象来开关功能：
+通过修改 `AeonVim` 对象来自定义配置：
 
 ```lua
--- init.lua 中修改
+-- lua/config/global.lua
 AeonVim = {
+  version = "0.1.0",
   colorscheme = "tokyonight-night",
   
-  features = {
-    -- AI 支持
-    ai = {
-      copilot = { enabled = true },
-      codeium = { enabled = false },
-      tabnine = { enabled = false },
-      codecompanion = { enabled = false },
-    },
-    
-    -- UI 设置
-    ui = {
-      noice = { enabled = false },
-      animations = { enabled = true },
-      transparent = { enabled = false },
-    },
-    
-    -- 编辑器功能
-    editor = {
-      autopairs = { enabled = true },
-      surround = { enabled = true },
-      comment = { enabled = true },
-      indentline = { enabled = true },
-    },
-    
-    -- 引擎选择
-    completion = {
-      engine = "blink",  -- "blink" | "cmp"
-    },
-    finder = {
-      engine = "snacks",  -- "snacks" | "telescope" | "fzf"
-    },
-    filetree = {
-      engine = "neo-tree",  -- "neo-tree" | "nvim-tree"
-    },
-    statusline = {
-      engine = "lualine",  -- "lualine" | "heirline"
-    },
-    
-    -- 其他功能
-    debugging = { enabled = false },
-    testing = { enabled = false },
+  -- 图标配置
+  icons = require("utils.icons"),
+  
+  -- 键位配置
+  keys = {
+    leader = " ",
+    localleader = ",",
   },
 }
 ```
+
+所有插件默认启用，如需禁用某个插件，可在对应插件文件中设置 `enabled = false`。
 
 ## ⌨️ 核心快捷键
 
@@ -308,21 +277,7 @@ return {
 
 ## 🔌 扩展模块
 
-### AI 支持
-```lua
-AeonVim.features.ai.copilot.enabled = true
-AeonVim.features.ai.codeium.enabled = true
-```
-
-### 调试
-```lua
-AeonVim.features.debugging.enabled = true
-```
-
-### 测试
-```lua
-AeonVim.features.testing.enabled = true
-```
+如需扩展 AI 支持、调试、测试等功能，可在 `lua/plugins/` 下添加对应插件配置文件。
 
 ## 📚 参考
 

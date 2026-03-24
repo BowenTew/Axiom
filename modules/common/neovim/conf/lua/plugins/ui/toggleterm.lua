@@ -1,7 +1,6 @@
 return {
   "akinsho/toggleterm.nvim",
   version = "*",
-  enabled = AeonVim.features.terminal.enabled,
   cmd = { "ToggleTerm", "TermExec" },
   specs = {
     {

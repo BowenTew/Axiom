@@ -12,7 +12,6 @@ return {
     "LazyGitFilter",
     "LazyGitFilterCurrentFile",
   },
-  enabled = AeonVim.features.git.lazygit.enabled,
   dependencies = {
     "nvim-lua/plenary.nvim",
   },

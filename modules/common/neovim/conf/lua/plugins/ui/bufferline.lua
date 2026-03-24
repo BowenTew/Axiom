@@ -56,7 +56,6 @@ return {
   {
     "akinsho/bufferline.nvim",
     event = "VeryLazy",
-    enabled = AeonVim.features.tabline.enabled and AeonVim.features.tabline.engine == "bufferline",
     dependencies = {
       "nvim-tree/nvim-web-devicons",
     },

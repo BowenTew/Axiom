@@ -1,8 +1,5 @@
 return {
   "folke/noice.nvim",
-  cond = function()
-    return AeonVim and AeonVim.features and AeonVim.features.ui and AeonVim.features.ui.noice.enabled
-  end,
   lazy = false,
   dependencies = { "MunifTanjim/nui.nvim" },
   opts = {

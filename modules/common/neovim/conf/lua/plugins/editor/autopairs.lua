@@ -1,7 +1,6 @@
 return {
     "windwp/nvim-autopairs",
     event = "InsertEnter",
-    enabled = AeonVim.features.editor.autopairs.enabled,
     config = function()
       require("nvim-autopairs").setup({
         check_ts = true,

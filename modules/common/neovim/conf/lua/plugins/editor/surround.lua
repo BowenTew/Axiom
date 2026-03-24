@@ -7,7 +7,6 @@ return {
   "kylechui/nvim-surround",
   version = "*",
   event = "VeryLazy",
-  enabled = AeonVim.features.editor.surround.enabled,
   config = function()
     require("nvim-surround").setup({
       keymaps = {

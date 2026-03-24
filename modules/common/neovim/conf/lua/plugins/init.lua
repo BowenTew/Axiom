@@ -9,7 +9,6 @@ return {
   {
     "folke/persistence.nvim",
     event = "BufReadPre",
-    enabled = AeonVim.features.session.enabled,
     opts = {
       dir = vim.fn.stdpath("state") .. "/sessions/",
       options = { "buffers", "curdir", "tabpages", "winsize" },

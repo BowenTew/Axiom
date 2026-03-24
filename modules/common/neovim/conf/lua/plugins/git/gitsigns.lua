@@ -6,7 +6,6 @@
 return {
   "lewis6991/gitsigns.nvim",
   event = { "BufReadPost", "BufNewFile" },
-  enabled = AeonVim.features.git.gitsigns.enabled,
   opts = {
     signs = {
       add = { text = AeonVim.icons.git.added },

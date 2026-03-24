@@ -6,7 +6,6 @@
 return {
   "lukas-reineke/indent-blankline.nvim",
   event = { "BufReadPost", "BufNewFile" },
-  enabled = AeonVim.features.editor.indentline.enabled,
   main = "ibl",
   config = function()
     require("ibl").setup({
