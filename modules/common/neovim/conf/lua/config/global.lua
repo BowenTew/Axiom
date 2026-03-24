@@ -1,7 +1,7 @@
 -- 全局配置对象
 _G.AeonVim = {
   version = "0.1.0",
-  colorscheme = "tokyonight-day",
+  colorscheme = "base46-vscode_dark",
   
   -- 图标配置
   icons = require("utils.icons"),
