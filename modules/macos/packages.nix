@@ -4,6 +4,7 @@ let
   # 语言开发环境
   GO_DEVELOPMENT_PACKAGES = with pkgs; [
     go
+    gotags 
     gopls
     delve
     go-tools
@@ -54,8 +55,8 @@ let
   TERMINAL_PACKAGES = with pkgs; [
     tmux
     kitty
-    wezterm
-    alacritty
+    # wezterm
+    # alacritty
   ];
 
   # 系统工具
