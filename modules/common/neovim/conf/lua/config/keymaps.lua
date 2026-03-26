@@ -106,7 +106,6 @@ tmap("<C-h>", "<cmd>wincmd h<CR>", "Go to left window")
 tmap("<C-j>", "<cmd>wincmd j<CR>", "Go to lower window")
 tmap("<C-k>", "<cmd>wincmd k<CR>", "Go to upper window")
 tmap("<C-l>", "<cmd>wincmd l<CR>", "Go to right window")
-tmap("<Esc><Esc>", "<C-\\><C-n>", "Exit terminal mode")
 
 -- 窗口调整大小
 nmap("<C-Up>", "<cmd>resize +2<CR>", "Increase window height")
@@ -213,3 +212,4 @@ nmap("gx", function()
 
   vim.fn.jobstart(cmd, { detach = true })
 end, "Open URL under cursor")
+

@@ -20,7 +20,7 @@ return {
         local prefix = "t"
         ---@diagnostic disable-next-line: assign-type-mismatch
         opts.window.mappings[prefix] =
-          { "show_help", nowait = false, config = { title = "New Terminal", prefix_key = prefix } }
+        { "show_help", nowait = false, config = { title = "New Terminal", prefix_key = prefix } }
         for suffix, direction in pairs({ f = "float", h = "horizontal", v = "vertical" }) do
           local command = "toggleterm_" .. direction
           opts.commands[command] = function(state) toggleterm_in_direction(state, direction) end
@@ -30,7 +30,6 @@ return {
     },
   },
   keys = function()
-
     --- Open a toggleterm in the given direction, safely switching away from
     --- special buffers (neo-tree, help, quickfix, etc.) before splitting.
     --- Float terminals skip this check as they don't depend on window layout.
@@ -49,12 +48,23 @@ return {
       end
     end
 
+    --- Return the next unused terminal ID.
+    local function next_term_id()
+      local terms = require("toggleterm.terminal").get_all()
+      local max_id = 0
+      for _, t in ipairs(terms) do
+        if t.id > max_id then max_id = t.id end
+      end
+      return max_id + 1
+    end
+
     return {
-      { "<F12>", '<Cmd>execute v:count . "ToggleTerm"<CR>', desc = "Toggle terminal" },
-      { "<F12>", "<Cmd>ToggleTerm<CR>", mode = "t", desc = "Toggle terminal" },
-      { "<leader>th", open_term("horizontal"), desc = "Terminal Horizontal" },
-      { "<leader>tv", open_term("vertical"), desc = "Terminal Vertical" },
-      { "<leader>tf", open_term("float"), desc = "Terminal Float" },
+      { "<leader>tt", '<Cmd>execute v:count . "ToggleTerm"<CR>',              desc = "Toggle terminal" },
+      { "<leader>th", open_term("horizontal"),                                desc = "Terminal Horizontal" },
+      { "<leader>tv", open_term("vertical"),                                  desc = "Terminal Vertical" },
+      { "<leader>tf", open_term("float"),                                     desc = "Terminal Float" },
+      { "<leader>tn", function() vim.cmd(next_term_id() .. "ToggleTerm") end, desc = "New terminal" },
+      { "<Esc><Esc>", '<C-\\><C-n>',                               mode = "t", desc = "Exit terminal mode" },
     }
   end,
   opts = {
