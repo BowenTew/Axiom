@@ -16,8 +16,6 @@ in {
         ../common/zsh.nix
         ../common/tmux.nix
         ../common/vim
-        ../common/kitty
-        ../common/neovim
       ];
 
       home = {

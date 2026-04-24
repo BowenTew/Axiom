@@ -148,11 +148,11 @@
     "neovim-config": {
       "flake": false,
       "locked": {
-        "lastModified": 1777000700,
-        "narHash": "sha256-q1OhnxMTczY3A3RKy+e+JaHywftf1y2+MIi2drLVkDg=",
+        "lastModified": 1777020411,
+        "narHash": "sha256-Zz0ZXtQlSdo94ERkY9dy4D08Qkl03R7MhWwbpcJcF+E=",
         "owner": "BowenTew",
         "repo": "neovim-config",
-        "rev": "8c82ebd001d9fa8bf166bb1de7a01ebed9f6ced6",
+        "rev": "d188b3d4761a43fa2903629f03482a010f0d4cec",
         "type": "github"
       },
       "original": {

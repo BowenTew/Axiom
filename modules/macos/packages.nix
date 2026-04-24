@@ -48,6 +48,8 @@ let
     gcc 
     gnumake       
     lazygit
+    chezmoi
+    helix
     dockerfile-language-server-nodejs
   ];
 
