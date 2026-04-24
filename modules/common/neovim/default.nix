@@ -1,12 +1,12 @@
-{ config, lib, ... }:
+{ config, lib, inputs, ... }:
 
 {
   # Neovim 及其依赖已在 packages.nix 的 NVIM_PACKAGES 中安装
   # 这里管理 Neovim 配置文件
 
-  # 将配置链接到 ~/.config/nvim/
+  # 从 flake input 引入配置，链接到 ~/.config/nvim/
   xdg.configFile."nvim" = {
-    source = ./conf;
+    source = inputs.neovim-config;
     recursive = true;
     force = true;
   };
