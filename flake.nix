@@ -39,10 +39,6 @@
       darwinSystems = [ "aarch64-darwin" "x86_64-darwin" ];
       forAllSystems = f: nixpkgs.lib.genAttrs (linuxSystems ++ darwinSystems) f;
 
-      # Define Develop Shell
-      devShell = system:
-        let pkgs = nixpkgs.legacyPackages.${system}; in
-        import ./devshells/default.nix { inherit pkgs fenix; };
       mkApp = scriptName: system: {
         type = "app";
         program = "${(nixpkgs.legacyPackages.${system}.writeScriptBin scriptName ''
@@ -71,9 +67,44 @@
       };
     in
     {
-      devShells = forAllSystems devShell;
       apps = nixpkgs.lib.genAttrs linuxSystems mkLinuxApps // nixpkgs.lib.genAttrs darwinSystems mkDarwinApps;
 
       darwinConfigurations = import ./hosts/darwin.nix inputs;
-  };
+
+      # Project templates for nix flake init
+      templates = {
+        go = {
+          path = ./templates/go;
+          description = "Go project with gopls, delve, gotestsum";
+        };
+        node20 = {
+          path = ./templates/node20;
+          description = "Node.js 20 project with pnpm, yarn, TypeScript";
+        };
+        node22 = {
+          path = ./templates/node22;
+          description = "Node.js 22 project with pnpm, yarn, TypeScript";
+        };
+        deno = {
+          path = ./templates/deno;
+          description = "Deno project";
+        };
+        java8 = {
+          path = ./templates/java8;
+          description = "Java 8 project with Maven and Gradle";
+        };
+        java11 = {
+          path = ./templates/java11;
+          description = "Java 11 project with Maven and Gradle";
+        };
+        java17 = {
+          path = ./templates/java17;
+          description = "Java 17 project with Maven and Gradle";
+        };
+        rust-wasm = {
+          path = ./templates/rust-wasm;
+          description = "Rust + WebAssembly project with wasm-pack";
+        };
+      };
+    };
 }
