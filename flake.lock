@@ -145,22 +145,6 @@
         "type": "github"
       }
     },
-    "neovim-config": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1777020411,
-        "narHash": "sha256-Zz0ZXtQlSdo94ERkY9dy4D08Qkl03R7MhWwbpcJcF+E=",
-        "owner": "BowenTew",
-        "repo": "neovim-config",
-        "rev": "d188b3d4761a43fa2903629f03482a010f0d4cec",
-        "type": "github"
-      },
-      "original": {
-        "owner": "BowenTew",
-        "repo": "neovim-config",
-        "type": "github"
-      }
-    },
     "nix-homebrew": {
       "inputs": {
         "brew-src": "brew-src"
@@ -220,7 +204,6 @@
         "homebrew-bundle": "homebrew-bundle",
         "homebrew-cask": "homebrew-cask",
         "homebrew-core": "homebrew-core",
-        "neovim-config": "neovim-config",
         "nix-homebrew": "nix-homebrew",
         "nixpkgs": "nixpkgs_2"
       }

@@ -1,4 +1,4 @@
-{ config, inputs, ... }:
+{ config, ... }:
 
 let
   identity = config.axiom.identity;
@@ -6,8 +6,6 @@ in {
   config.home-manager = {
     useGlobalPkgs = true;
     backupFileExtension = "backup";
-    extraSpecialArgs = { inherit inputs; };
-
     users.${identity.user} = { ... }: {
       _module.args.axiomIdentity = identity;
 

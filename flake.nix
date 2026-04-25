@@ -31,13 +31,9 @@
       url = "github:nix-community/fenix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    neovim-config = {
-      url = "github:BowenTew/neovim-config";
-      flake = false;
-    };
   };
 
-  outputs = { self, darwin, nix-homebrew, homebrew-bundle, homebrew-core, homebrew-cask, home-manager, nixpkgs, disko, fenix, neovim-config } @inputs:
+  outputs = { self, darwin, nix-homebrew, homebrew-bundle, homebrew-core, homebrew-cask, home-manager, nixpkgs, disko, fenix } @inputs:
     let
       linuxSystems = [ "x86_64-linux" "aarch64-linux" ];
       darwinSystems = [ "aarch64-darwin" "x86_64-darwin" ];
