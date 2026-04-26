@@ -73,18 +73,6 @@
 
       # Project templates for nix flake init
       templates = {
-        go = {
-          path = ./templates/go;
-          description = "Go project with gopls, delve, gotestsum";
-        };
-        node20 = {
-          path = ./templates/node20;
-          description = "Node.js 20 project with pnpm, yarn, TypeScript";
-        };
-        node22 = {
-          path = ./templates/node22;
-          description = "Node.js 22 project with pnpm, yarn, TypeScript";
-        };
         deno = {
           path = ./templates/deno;
           description = "Deno project";
