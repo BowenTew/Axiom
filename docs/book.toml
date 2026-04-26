@@ -3,7 +3,6 @@ title = "Axiom Docs"
 authors = ["tubowen"]
 description = "One Flake to Rule Them All – for macOS (nix-darwin), NixOS, and home-manager."
 language = "zh"
-multilingual = false
 src = "src"
 
 [build]
