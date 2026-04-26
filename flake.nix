@@ -65,9 +65,25 @@
         "check-keys" = mkApp "check-keys" system;
         "rollback" = mkApp "rollback" system;
       };
+
+      # Docs devShell with mdbook
+      docsShell = system:
+        let pkgs = nixpkgs.legacyPackages.${system}; in
+        pkgs.mkShell {
+          packages = with pkgs; [ mdbook ];
+          shellHook = ''
+            echo "📚 mdbook devShell ready"
+            echo "  mdbook serve docs    # 本地预览"
+            echo "  mdbook build docs    # 构建文档"
+          '';
+        };
     in
     {
       apps = nixpkgs.lib.genAttrs linuxSystems mkLinuxApps // nixpkgs.lib.genAttrs darwinSystems mkDarwinApps;
+
+      devShells = forAllSystems (system: {
+        default = docsShell system;
+      });
 
       darwinConfigurations = import ./hosts/darwin.nix inputs;
 

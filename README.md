@@ -6,6 +6,9 @@
 <a href="https://opensource.org/licenses/MIT">
 <img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License: MIT" />
 </a>
+<a href="https://beauvntu.github.io/Axiom">
+<img src="https://img.shields.io/badge/Docs-mdBook-orange.svg" alt="Docs" />
+</a>
 </div>
 <!-- <div> -->
 <!-- [![CI](https://github.com/YOUR_GH_NAME/YOUR_REPO/actions/workflows/build.yml/badge.svg)](https://github.com/YOUR_GH_NAME/YOUR_REPO/actions) -->
@@ -25,6 +28,7 @@ Clone this repo, run a command, and watch your system bend to your will. No more
 ---
 
 ## 📖 TOC
+- [📚 在线文档](https://beauvntu.github.io/Axiom)
 - [✨ Features](#-features)
 - [📁 Folder Map](#-folder-map)
 - [🚀 Quick Start](#-quick-start)
