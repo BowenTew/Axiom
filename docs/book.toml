@@ -17,7 +17,7 @@ create-missing = false
 default-theme = "rust"
 preferred-dark-theme = "coal"
 git-repository-url = "https://github.com/BeauvnTu/Axiom"
-git-repository-icon = "fa-github"
+git-repository-icon = "github"
 edit-url-template = "https://github.com/BeauvnTu/Axiom/edit/main/docs/{path}"
 site-url = "/Axiom/"
 
