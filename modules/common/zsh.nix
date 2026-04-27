@@ -31,6 +31,7 @@
       export PATH=$HOME/.pnpm-packages/bin:$HOME/.pnpm-packages:$PATH
       export PATH=$HOME/.npm-packages/bin:$HOME/bin:$PATH
       export PATH=$HOME/.local/share/bin:$PATH
+      export PATH=$HOME/.cargo/bin:$PATH
       export NPM_CONFIG_PREFIX=$HOME/.npm-packages
       mkdir -p "$HOME/.npm-packages/bin"
 
