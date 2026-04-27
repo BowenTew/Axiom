@@ -2,7 +2,11 @@
 
 let
   packages = [];
-  casks = [];
+  casks = [
+    "kitty"
+    # "wezterm"
+    # "alacritty"
+  ];
 in
 {
   config.homebrew = {

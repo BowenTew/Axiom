@@ -48,6 +48,7 @@ let
 
   # 基础开发工具
   DEVELOPMENT_PACKAGES = with pkgs; [
+    tmux
     git
     git-lfs
     tig
@@ -63,14 +64,6 @@ let
     chezmoi
     helix
     dockerfile-language-server-nodejs
-  ];
-
-  # 终端和界面工具
-  TERMINAL_PACKAGES = with pkgs; [
-    tmux
-    kitty
-    # wezterm
-    # alacritty
   ];
 
   # 系统工具
@@ -89,7 +82,6 @@ let
     RUST_DEVELOPMENT_PACKAGES
     JAVASCRIPT_DEVELOPMENT_PACKAGES
     DEVELOPMENT_PACKAGES
-    TERMINAL_PACKAGES
     SYSTEM_PACKAGES
     PYTHON_PACKAGES
     LUA_PACKAGES
