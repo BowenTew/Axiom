@@ -88,27 +88,6 @@
       darwinConfigurations = import ./hosts/darwin.nix inputs;
 
       # Project templates for nix flake init
-      templates = {
-        deno = {
-          path = ./templates/deno;
-          description = "Deno project";
-        };
-        java8 = {
-          path = ./templates/java8;
-          description = "Java 8 project with Maven and Gradle";
-        };
-        java11 = {
-          path = ./templates/java11;
-          description = "Java 11 project with Maven and Gradle";
-        };
-        java17 = {
-          path = ./templates/java17;
-          description = "Java 17 project with Maven and Gradle";
-        };
-        rust-wasm = {
-          path = ./templates/rust-wasm;
-          description = "Rust + WebAssembly project with wasm-pack";
-        };
-      };
+      templates = import ./templates;
     };
 }
