@@ -82,15 +82,6 @@ let
     unzip
   ];
 
-  # 字体包
-  FONTS_PACKAGES = with pkgs; [
-    hack-font
-    meslo-lgs-nf
-    noto-fonts
-    noto-fonts-emoji
-    nerd-fonts.roboto-mono
-    powerline
-  ];
 
   # 所有包组合
   HOME_MANAGER_PACKAGE_GROUPS = [
@@ -100,7 +91,6 @@ let
     DEVELOPMENT_PACKAGES
     TERMINAL_PACKAGES
     SYSTEM_PACKAGES
-    FONTS_PACKAGES
     PYTHON_PACKAGES
     LUA_PACKAGES
   ];

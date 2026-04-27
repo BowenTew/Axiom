@@ -73,6 +73,16 @@ let
         };
       };
     };
+
+    # 系统级字体注册
+    fonts.packages = with pkgs; [
+      hack-font
+      meslo-lgs-nf
+      noto-fonts
+      noto-fonts-emoji
+      nerd-fonts.roboto-mono
+      powerline
+    ];
   };
 in
 
