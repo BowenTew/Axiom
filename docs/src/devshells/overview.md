@@ -44,9 +44,7 @@ nix develop
 | 模板 | 说明 | 使用 |
 |------|------|------|
 | [Deno](deno.md) | Deno 运行时 | `nix flake init -t github:BeauvnTu/Axiom#deno` |
-| [Java 8](java.md) | JDK 8 + Maven + Gradle | `nix flake init -t github:BeauvnTu/Axiom#java8` |
-| [Java 11](java.md) | JDK 11 + Maven + Gradle | `nix flake init -t github:BeauvnTu/Axiom#java11` |
-| [Java 17](java.md) | JDK 17 + Maven + Gradle | `nix flake init -t github:BeauvnTu/Axiom#java17` |
+| [Java](java.md) | JDK 17 + Maven + Gradle | `nix flake init -t github:BeauvnTu/Axiom#java` |
 | [Rust + WASM](rust-wasm.md) | Rust + WebAssembly | `nix flake init -t github:BeauvnTu/Axiom#rust-wasm` |
 
 ## 通用特性
@@ -124,35 +122,42 @@ cargo init             # Rust
 
 ## 定义位置
 
-模板在 `flake.nix` 中定义：
+模板在 `flake.nix` 中通过 `templates/default.nix` 引入：
 
 ```nix
-templates = {
-  deno = {
-    path = ./templates/deno;
-    description = "Deno project";
+templates = import ./templates;
+```
+
+`templates/default.nix` 内容示例：
+
+```nix
+{
+  templates = {
+    deno = {
+      path = ./deno;
+      description = "Deno project";
+    };
+    # ...
   };
-  # ...
-};
+}
 ```
 
 ## 自定义模板
 
 如需添加新模板：
 
-1. 在 `templates/` 下创建新目录
+1. 在 `templates/` 下创建新目录（如 `templates/my-template/`）
 2. 编写 `flake.nix`（project 级别）
-3. 在 `flake.nix` 的 `templates` 输出中注册
+3. 在 `templates/default.nix` 中注册
 
 ```nix
-# flake.nix
+# templates/default.nix
 {
-  outputs = { ... }: {
-    templates = {
-      my-template = {
-        path = ./templates/my-template;
-        description = "My custom project template";
-      };
+  templates = {
+    # ... 已有模板
+    my-template = {
+      path = ./my-template;
+      description = "My custom project template";
     };
   };
 }

@@ -55,13 +55,11 @@ Clone this repo, run a command, and watch your system bend to your will. No more
 │   ├── linux.svg
 │   ├── macos.svg
 │   └── nix-icon.svg
-├── devshells
+├── templates
 │   ├── default.nix
 │   ├── deno
-│   ├── go
 │   ├── java
-│   ├── node
-│   └── rust
+│   └── rust-wasm
 ├── flake.lock
 ├── flake.nix
 ├── hosts
@@ -132,8 +130,8 @@ nix develop .#rust -c zsh
 # Go devShell: Go toolchain (go, gopls, delve, go-tools, gotestsum); reproducible, no global installs.
 nix develop .#go -c zsh
 
-# Java devShell: JDK (8/11/17), Maven, Gradle; reproducible, no global installs.
-nix develop .#java17 -c zsh 
+# Java template: JDK 17, Maven, Gradle; use `nix flake init -t .#java` to scaffold.
+nix flake init -t .#java 
 ```
 
 You can also explicitly specify the system for different architectures: 

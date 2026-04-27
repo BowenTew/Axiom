@@ -8,13 +8,11 @@
 │   ├── linux.svg
 │   ├── macos.svg
 │   └── nix-icon.svg
-├── devshells/               # 开发环境定义
+├── templates/               # 项目模板
 │   ├── default.nix
 │   ├── deno/
-│   ├── go/
 │   ├── java/
-│   ├── node/
-│   └── rust/
+│   └── rust-wasm/
 ├── docs/                    # 本文档站
 │   ├── book.toml
 │   └── src/
