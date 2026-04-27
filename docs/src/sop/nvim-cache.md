@@ -31,6 +31,37 @@ Neovim 的 Lua 字节码缓存（`.luac` 文件）未正确刷新，导致加载
 
 - 配置文件通过符号链接指向 Nix Store
 - 当 Nix Store 路径变化时，缓存可能指向旧位置
+- 文件内容变化但路径不变时，缓存检测机制可能失效
+
+## 排查思路
+
+### 第一步：验证配置文件内容
+
+```bash
+cat ~/.config/nvim/lua/config/lsp/init.lua
+```
+
+确认文件内容正确（如第 18 行应为 `vtsls` 而非 `vuels`）。
+
+### 第二步：检查 Nix Store 中的文件
+
+```bash
+cat /nix/store/...-hm_conf/lua/config/lsp/init.lua
+```
+
+确认 Nix Store 中的文件也是正确的。
+
+### 第三步：定位缓存问题
+
+```bash
+ls ~/.cache/nvim/luac/
+```
+
+缓存目录存在大量 `.luac` 文件，即使源文件已更新，缓存可能未同步刷新。
+
+### 第四步：确认缓存机制
+
+错误信息中 `cache_loader: module 'config.lsp.vuels' not found` 表明缓存系统参与了加载过程，加载了过期的字节码。
 
 ## 解决方案
 
@@ -70,6 +101,8 @@ nvim
 
 ### Home Manager 激活脚本
 
+在 Nix 配置中添加自动清除缓存的激活脚本：
+
 ```nix
 home.activation.clearNvimCache = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
   rm -rf "${config.home.homeDirectory}/.cache/nvim/luac"
@@ -96,12 +129,25 @@ alias nvim-clean='rm -rf ~/.cache/nvim/luac && nvim'
 
 ### 缓存文件命名
 
+缓存文件名是原始路径的 URL 编码：
+
 - 原始路径：`/Users/moonshot/.config/nvim/lua/config/lsp/init.lua`
 - 缓存名：`%2fUsers%2fmoonshot%2f.config%2fnvim%2flua%2fconfig%2flsp%2finit.luac`
 
 ### 加载优先级
 
-1. `package.preload`
-2. `cache_loader` — 字节码缓存
-3. `cache_loader_lib` — 库缓存
-4. 文件系统搜索 `.lua` 文件
+1. `package.preload` — 预加载表
+2. `cache_loader` — 字节码缓存加载器
+3. `cache_loader_lib` — 库缓存加载器
+4. 文件系统搜索 — 原始 `.lua` 文件
+
+错误信息中的顺序反映了 Neovim 的模块加载尝试顺序。
+
+## 参考信息
+
+| 目录 | 说明 |
+|------|------|
+| `~/.cache/nvim/luac/` | Lua 字节码缓存 |
+| `~/.local/share/nvim/lazy/` | lazy.nvim 插件目录 |
+| `~/.local/state/nvim/` | LSP 日志等状态文件 |
+| **相关技术** | LuaJIT, Lua 5.1, Nix, Home Manager |

@@ -39,9 +39,11 @@ let
         substituters = [
           "https://nix-community.cachix.org"
           "https://cache.nixos.org"
+          "https://fenix.cachix.org"
         ];
         trusted-public-keys = [
           "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
+          "fenix.cachix.org-1:PpL1UNHViEFrcJzCDV+yl+S+c90I5hTqGq0G+1RP0wM="
         ];
       };
       gc = {

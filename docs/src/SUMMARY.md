@@ -43,6 +43,7 @@
 
 - [清理 Launchpad 残留图标](sop/clean-launchpad.md)
 - [Neovim Lua 缓存问题](sop/nvim-cache.md)
+- [修复 rust-analyzer 不报错](sop/fix-rust-analyzer.md)
 
 # 参考
 

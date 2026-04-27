@@ -1,6 +1,22 @@
-{ config, pkgs, ... }:
+{ config, pkgs, inputs, ... }:
 
 let
+  # Rust 完整工具链（通过 fenix 提供，包含 rust-src，使用 USTC 镜像加速下载）
+  fenixPkgs = inputs.fenix.packages.${pkgs.system};
+  rust-toolchain = (fenixPkgs.toolchainOf {
+    channel = "stable";
+    date = "2025-09-18";
+    sha256 = "sha256-SJwZ8g0zF2WrKDVmHrVG3pD2RGoQeo24MEXnNx5FyuI=";
+    root = "https://mirrors.ustc.edu.cn/rust-static/dist";
+  }).withComponents [
+    "cargo"
+    "clippy"
+    "rustc"
+    "rustfmt"
+    "rust-src"
+    "rust-analyzer"
+  ];
+
   # 语言开发环境
   GO_DEVELOPMENT_PACKAGES = with pkgs; [
     go
@@ -11,12 +27,8 @@ let
     gotestsum
   ];
 
-  RUST_DEVELOPMENT_PACKAGES = with pkgs; [
-    rustc
-    cargo
-    clippy
-    rust-analyzer
-    rustfmt
+  RUST_DEVELOPMENT_PACKAGES = [
+    rust-toolchain
   ];
 
   JAVASCRIPT_DEVELOPMENT_PACKAGES = with pkgs; [
