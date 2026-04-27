@@ -18,7 +18,7 @@ default-theme = "rust"
 preferred-dark-theme = "coal"
 git-repository-url = "https://github.com/BeauvnTu/Axiom"
 edit-url-template = "https://github.com/BeauvnTu/Axiom/edit/main/docs/{path}"
-site-url = "/Axiom/"
+site-url = "/axiom/"
 
 [output.html.fold]
 enable = true
