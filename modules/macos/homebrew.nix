@@ -6,6 +6,7 @@ let
     "kitty"
     # "wezterm"
     # "alacritty"
+    # "ghostty"
   ];
 in
 {
