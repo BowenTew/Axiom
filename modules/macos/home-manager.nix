@@ -13,7 +13,6 @@ in {
         ../common/git.nix
         ../common/zsh.nix
         ../common/tmux.nix
-        ../common/vim
       ];
 
       home = {
