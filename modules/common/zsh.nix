@@ -3,12 +3,49 @@
 {
   programs.zsh = {
     enable = true;
-    autocd = false;
+    autocd = true;
     "oh-my-zsh" = {
       enable = true;
       theme = "robbyrussell";
       plugins = [ "git" "web-search" ];
     };
+
+    history = {
+      size = 50000;
+      save = 50000;
+      path = "$HOME/.zsh_history";
+      append = true;
+      share = true;
+      ignoreDups = true;
+      ignoreAllDups = true;
+      expireDuplicatesFirst = true;
+      extended = true;
+      ignorePatterns = [ "pwd" "ls" "cd" ];
+    };
+
+    enableCompletion = true;
+
+    shellAliases = {
+      diff = "difft";
+      ls = "ls -G";
+      ll = "ls -la";
+      la = "ls -a";
+    };
+
+    envExtra = ''
+      export PATH="/opt/homebrew/bin:$PATH"
+      export PATH="$HOME/.local/bin:$PATH"
+      export PATH="$HOME/.pnpm-packages/bin:$HOME/.pnpm-packages:$PATH"
+      export PATH="$HOME/.npm-packages/bin:$HOME/bin:$PATH"
+      export PATH="$HOME/.local/share/bin:$PATH"
+      export PATH="$HOME/.cargo/bin:$PATH"
+      export NPM_CONFIG_PREFIX="$HOME/.npm-packages"
+
+      # Load local environment overrides if present
+      if [[ -f "$HOME/.zshenv.local" ]]; then
+        source "$HOME/.zshenv.local"
+      fi
+    '';
 
     initContent = lib.mkBefore ''
       # This script initializes the environment for the Nix package manager.
@@ -27,32 +64,19 @@
         # expressions (like nixpkgs). It may also configure other settings.
         . /nix/var/nix/profiles/default/etc/profile.d/nix.sh
       fi
-      # Define variables for directories
-      export PATH=$HOME/.pnpm-packages/bin:$HOME/.pnpm-packages:$PATH
-      export PATH=$HOME/.npm-packages/bin:$HOME/bin:$PATH
-      export PATH=$HOME/.local/share/bin:$PATH
-      export PATH=$HOME/.cargo/bin:$PATH
-      export NPM_CONFIG_PREFIX=$HOME/.npm-packages
+
+      # Ensure npm package directory exists
       mkdir -p "$HOME/.npm-packages/bin"
-
-      # Remove history data we don't want to see
-      export HISTIGNORE="pwd:ls:cd"
-
 
       # nix shortcuts
       shell() {
           nix-shell '<nixpkgs>' -A "$1"
       }
 
-      # Use difftastic, syntax-aware diffing
-      alias diff=difft
-
-      # Always color ls and group directories
-      alias ls='ls --color=auto'
-    '';
-    envExtra = ''
-      export PATH="/opt/homebrew/bin:$PATH"
-      export PATH="$HOME/.local/bin:$PATH"
+      # Load local interactive overrides if present
+      if [[ -f "$HOME/.zshrc.local" ]]; then
+        source "$HOME/.zshrc.local"
+      fi
     '';
   };
 }
