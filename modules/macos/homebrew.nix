@@ -4,9 +4,9 @@ let
   packages = [];
   casks = [
     "kitty"
+    "ghostty"
     # "wezterm"
     # "alacritty"
-    # "ghostty"
   ];
 in
 {
