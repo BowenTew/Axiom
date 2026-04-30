@@ -1,3 +1,0 @@
-font-hack-nerd-font
-font-meslo-lg-nerd-font
-kitty

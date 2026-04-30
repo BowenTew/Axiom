@@ -49,3 +49,4 @@
 
 - [FAQ](reference/faq.md)
 - [常用命令](reference/commands.md)
+- [开发工具推荐](reference/awesome-tools.md)
