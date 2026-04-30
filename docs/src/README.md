@@ -1,4 +1,4 @@
-# Axiom
+# Bootstrap
 
 One Flake to Rule Them All – for macOS (nix-darwin), NixOS, and home-manager.
 
@@ -26,6 +26,6 @@ One Flake to Rule Them All – for macOS (nix-darwin), NixOS, and home-manager.
 
 ## 快速链接
 
-- [GitHub 仓库](https://github.com/BeauvnTu/Axiom)
+- [GitHub 仓库](https://github.com/BeauvnTu/Bootstrap)
 - [快速开始 →](quickstart/install-nix.md)
 - [常见问题](reference/faq.md)
