@@ -16,9 +16,9 @@ create-missing = false
 [output.html]
 default-theme = "rust"
 preferred-dark-theme = "coal"
-git-repository-url = "https://github.com/BeauvnTu/Axiom"
-edit-url-template = "https://github.com/BeauvnTu/Axiom/edit/main/docs/{path}"
-site-url = "/axiom/"
+git-repository-url = "https://github.com/BeauvnTu/Bootstrap"
+edit-url-template = "https://github.com/BeauvnTu/Bootstrap/edit/main/docs/{path}"
+site-url = "/bootstrap/"
 
 [output.html.fold]
 enable = true

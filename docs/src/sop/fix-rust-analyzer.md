@@ -121,7 +121,7 @@ trusted-public-keys = cache.nixos.org-1:... nix-community.cachix.org-1:... fenix
 ### Apply
 
 ```bash
-cd ~/github/tubowen/axiom && sh scripts/aarch64-darwin/build-switch
+cd ~/github/self/bootstrap && sh scripts/aarch64-darwin/build-switch
 ```
 
 ### 验证

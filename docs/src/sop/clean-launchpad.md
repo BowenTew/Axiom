@@ -53,7 +53,7 @@ Launchpad 扫描路径：
 ### 第一步：确认配置确实已修改
 
 ```bash
-grep -r "wezterm\|alacritty" ~/github/tubowen/axiom --include="*.nix"
+grep -r "wezterm\|alacritty" ~/github/self/bootstrap --include="*.nix"
 # 输出：只有注释掉的行，说明配置已更新
 ```
 
@@ -85,7 +85,7 @@ ls -la /nix/store/<hash>-home-manager-applications/Applications/
 
 ```bash
 # 1. 确保配置已更新并应用
-cd ~/github/tubowen/axiom
+cd ~/github/self/bootstrap
 sh scripts/aarch64-darwin/build-switch
 
 # 2. 清理旧 generations 和无用包

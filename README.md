@@ -1,12 +1,12 @@
 <div align="left">
-<img src="./assets/nix-icon.svg" alt="Axiom" width="100" />
+<img src="./assets/nix-icon.svg" alt="Bootstrap" width="100" />
 <div>
 <a href="https://nixos.org"><img src="https://img.shields.io/badge/Nix-flakes-blue?logo=nixos" alt="Nix Flakes" /></a>
 
 <a href="https://opensource.org/licenses/MIT">
 <img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License: MIT" />
 </a>
-<a href="https://beauvntu.github.io/Axiom">
+<a href="https://beauvntu.github.io/Bootstrap">
 <img src="https://img.shields.io/badge/Docs-mdBook-orange.svg" alt="Docs" />
 </a>
 </div>
@@ -15,7 +15,7 @@
 <!-- </div> -->
 </div>
 
-# Axiom
+# Bootstrap
 One Flake to Rule Them All – for macOS (nix-darwin), NixOS, and home-manager.
 
 Clone this repo, run a command, and watch your system bend to your will. No more configuration chaos. More time for important things—like sipping coffee while your OS sets itself up.
@@ -28,7 +28,7 @@ Clone this repo, run a command, and watch your system bend to your will. No more
 ---
 
 ## 📖 TOC
-- [📚 在线文档](https://beauvntu.github.io/Axiom)
+- [📚 在线文档](https://beauvntu.github.io/Bootstrap)
 - [✨ Features](#-features)
 - [📁 Folder Map](#-folder-map)
 - [🚀 Quick Start](#-quick-start)
@@ -95,7 +95,7 @@ MacOS Setup Guide
 
 ```zsh
 # Clone the repo
-git clone git@github.com:BeauvnTu/Axiom.git
+git clone git@github.com:BeauvnTu/Bootstrap.git
 
 # enter the folder
 cd Axiom/scripts
