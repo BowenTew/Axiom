@@ -1,4 +1,4 @@
-{ config, pkgs, inputs, ... }:
+{ axiomIdentity, pkgs, inputs, ... }:
 
 let
   # Rust 完整工具链（通过 fenix 提供，包含 rust-src，使用 USTC 镜像加速下载）
@@ -88,7 +88,7 @@ let
   ];
 in
 {
-  config.home-manager.users.${config.axiom.identity.user} = {
+  config.home-manager.users.${axiomIdentity.user} = {
     home.packages = pkgs.lib.concatLists HOME_MANAGER_PACKAGE_GROUPS;
   };
 

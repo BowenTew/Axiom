@@ -1,12 +1,12 @@
-{ self, darwin, nix-homebrew, homebrew-bundle, homebrew-core, homebrew-cask, home-manager, nixpkgs, disko, fenix, ... } @inputs:
+{ self, darwin, nix-homebrew, homebrew-bundle, homebrew-core, homebrew-cask, home-manager, nixpkgs, disko, fenix, inventory, ... } @inputs:
 
 let
   darwinSystems = [ "aarch64-darwin" "x86_64-darwin" ];
   macosModule = ../modules/macos;
 
-  nixHomebrewConfigModule = { config, ... }: {
+  nixHomebrewConfigModule = { axiomIdentity, ... }: {
     nix-homebrew = {
-      user = config.axiom.identity.user;
+      user = axiomIdentity.user;
       enable = true;
       mutableTaps = false;
       autoMigrate = true;
@@ -19,9 +19,9 @@ let
   };
 
   # MacOS System Configuration
-  darwinConfigModule = { config, pkgs, ... }:
+  darwinConfigModule = { axiomIdentity, pkgs, ... }:
     let
-      user = config.axiom.identity.user;
+      user = axiomIdentity.user;
     in {
     # User Configuration
     users.users.${user} = {
@@ -89,7 +89,10 @@ in
 nixpkgs.lib.genAttrs darwinSystems (system:
   darwin.lib.darwinSystem {
     inherit system;
-    specialArgs = { inherit inputs; };
+    specialArgs = {
+      inherit inputs;
+      axiomIdentity = inventory.identity;
+    };
     modules = [
       home-manager.darwinModules.home-manager
       nix-homebrew.darwinModules.nix-homebrew

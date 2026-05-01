@@ -7,7 +7,6 @@
 ```nix
 # modules/macos/default.nix
 imports = [
-  ../common/identity.nix    # 身份信息
   ./home-manager.nix        # Home Manager 配置
   ./homebrew.nix            # Homebrew 包管理
   ./packages.nix            # 系统/用户包

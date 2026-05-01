@@ -140,12 +140,12 @@ replace_tokens() {
   fi
 }
 
-# Replace identity placeholders only in the centralized identity module
-IDENTITY_FILE="./modules/common/identity.nix"
+# Replace identity placeholders only in the centralized inventory
+IDENTITY_FILE="./inventory/default.nix"
 if [[ -f "$IDENTITY_FILE" ]]; then
   replace_tokens "$IDENTITY_FILE"
 else
-  _print "${RED}Identity file not found: $IDENTITY_FILE${NC}"
+  _print "${RED}Inventory file not found: $IDENTITY_FILE${NC}"
   exit 1
 fi
 

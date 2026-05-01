@@ -11,16 +11,14 @@ Common 模块是跨平台共享的配置，被 macOS 和 NixOS 共同导入。
 | [Vim](vim.md) | Vim 编辑器配置 |
 | [Zsh](zsh.md) | Zsh Shell 配置 |
 
-## 身份模块
+## 身份数据
 
-`identity.nix` 定义了系统的基本身份信息：
+`inventory/default.nix` 定义了系统的基本身份信息，并通过 `specialArgs` / `extraSpecialArgs` 传给系统模块和 Home Manager 模块：
 
 ```nix
-axiom.identity = {
-  user = "moonshot";           # 主用户名
-  gitName = "Tetsuya";         # Git 用户名
-  gitEmail = "1376490336@qq.com";  # Git 邮箱
+identity = {
+  user = "moonshot";
+  gitName = "Tetsuya";
+  gitEmail = "1376490336@qq.com";
 };
 ```
-
-这些选项可以被各主机配置覆盖。

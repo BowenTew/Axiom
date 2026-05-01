@@ -37,6 +37,7 @@
     let
       linuxSystems = [ "x86_64-linux" "aarch64-linux" ];
       darwinSystems = [ "aarch64-darwin" "x86_64-darwin" ];
+      inventory = import ./inventory;
       forAllSystems = f: nixpkgs.lib.genAttrs (linuxSystems ++ darwinSystems) f;
 
       mkApp = scriptName: system: {
@@ -85,7 +86,19 @@
         default = docsShell system;
       });
 
-      darwinConfigurations = import ./hosts/darwin.nix inputs;
+      darwinConfigurations = import ./hosts/darwin.nix (inputs // { inherit inventory; });
+
+      # Standalone Home Manager configurations
+      # Usage: home-manager switch --flake .#username
+      homeConfigurations = {
+        ${inventory.identity.user} = home-manager.lib.homeManagerConfiguration {
+          pkgs = nixpkgs.legacyPackages.aarch64-darwin;
+          extraSpecialArgs = {
+            axiomIdentity = inventory.identity;
+          };
+          modules = [ ./home.nix ];
+        };
+      };
 
       # Project templates for nix flake init
       templates = import ./templates;

@@ -1,26 +1,20 @@
-{ config, ... }:
+# Darwin 的 Home Manager 封装
+{ axiomIdentity, ... }:
 
 let
-  identity = config.axiom.identity;
-in {
+  identity = axiomIdentity;
+in
+{
   config.home-manager = {
     useGlobalPkgs = true;
+    extraSpecialArgs = {
+      inherit axiomIdentity;
+    };
     backupFileExtension = "backup";
     users.${identity.user} = { ... }: {
-      _module.args.axiomIdentity = identity;
-
       imports = [
-        ../common/git.nix
-        ../common/zsh.nix
-        ../common/tmux.nix
+        ../../modules/common
       ];
-
-      home = {
-        enableNixpkgsReleaseCheck = false;
-        stateVersion = "23.11";
-      };
-
-      manual.manpages.enable = false;
     };
   };
 }
