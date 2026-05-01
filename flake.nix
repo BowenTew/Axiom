@@ -94,6 +94,7 @@
         ${inventory.identity.user} = home-manager.lib.homeManagerConfiguration {
           pkgs = nixpkgs.legacyPackages.aarch64-darwin;
           extraSpecialArgs = {
+            inherit inputs;
             axiomIdentity = inventory.identity;
           };
           modules = [ ./home.nix ];

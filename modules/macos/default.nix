@@ -1,9 +1,12 @@
-{ ... }:
+{ pkgs, ... }:
 
 {
   imports = [
     ./home-manager.nix
     ./homebrew.nix
-    ./packages.nix
+  ];
+  # System Packages
+  environment.systemPackages = with pkgs; [
+    zsh
   ];
 }

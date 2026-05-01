@@ -1,6 +1,6 @@
 # 独立的 Home Manager 配置入口
 # 使用方式: home-manager switch --flake .#username
-{ axiomIdentity, pkgs, ... }:
+{ axiomIdentity, pkgs, inputs, ... }:
 
 {
   imports = [

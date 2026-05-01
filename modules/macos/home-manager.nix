@@ -1,5 +1,5 @@
 # Darwin 的 Home Manager 封装
-{ axiomIdentity, ... }:
+{ axiomIdentity, inputs, ... }:
 
 let
   identity = axiomIdentity;
@@ -8,12 +8,12 @@ in
   config.home-manager = {
     useGlobalPkgs = true;
     extraSpecialArgs = {
-      inherit axiomIdentity;
+      inherit axiomIdentity inputs;
     };
     backupFileExtension = "backup";
     users.${identity.user} = { ... }: {
       imports = [
-        ../../modules/common
+        ../common
       ];
     };
   };
