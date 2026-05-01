@@ -11,12 +11,6 @@ NC='\033[0m' # No Color
 # Determine the operating system
 export OS=$(uname)
 
-# Primary network interface
-if [[ "$OS" != "Darwin" ]]; then
-  export PRIMARY_IFACE=$(ip -o -4 route show to default | awk '{print $5}')
-  echo -e "${GREEN}Found primary network interface $PRIMARY_IFACE${NC}"
-fi
-
 # Custom print function
 _print() {
   if [[ "$OS" == "Darwin" ]]; then
@@ -85,10 +79,16 @@ select_boot_disk() {
   fi
 }
 
-# Set hostname and find primary disk if this is NixOS
 if [[ "$OS" != "Darwin" ]]; then
+
+  # Primary network interface
+  export PRIMARY_IFACE=$(ip -o -4 route show to default | awk '{print $5}')
+  echo -e "${GREEN}Found primary network interface $PRIMARY_IFACE${NC}"
+  
+  # Set hostname and find primary disk if this is NixOS
   _prompt "${YELLOW}Please enter a hostname for the system: ${NC}" HOST_NAME
   export HOST_NAME
+  
   select_boot_disk
 fi
 
