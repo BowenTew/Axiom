@@ -1,6 +1,6 @@
 # Templates 概览
 
-Axiom 提供了一系列 `nix flake init` 模板，用于快速初始化各语言的开发环境。
+Bootstrap 提供了一系列 `nix flake init` 模板，用于快速初始化各语言的开发环境。
 
 ## 什么是 Template
 
@@ -37,7 +37,7 @@ nix flake init -t ~/github/self/bootstrap#<template-name>
 nix develop
 ```
 
-> 路径根据本地 axiom 仓库实际位置调整。
+> 路径根据本地 bootstrap 仓库实际位置调整。
 
 ## 可用模板
 
@@ -108,17 +108,6 @@ go mod init my-api     # Go
 npm init               # Node.js
 cargo init             # Rust
 ```
-
-## 与 devShells 的区别
-
-| 特性 | Templates（当前） | devShells（旧方式） |
-|------|-------------------|---------------------|
-| flake 归属 | project 级别 | machine 级别（bootstrap） |
-| 新项目是否依赖 axiom | ❌ 不依赖 | ✅ 依赖 |
-| 版本锁定 | 项目自有 `flake.lock` | 跟随 axiom 的 `flake.lock` |
-| 使用方式 | `nix flake init -t` 后 `nix develop` | `cd bootstrap && nix develop .#go` |
-| 团队协作 | ✅ 项目自带环境配置 | ❌ 需要团队成员也配置 bootstrap |
-| 适用场景 | 项目脚手架、团队共享 | 个人快速切换环境 |
 
 ## 定义位置
 

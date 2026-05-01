@@ -3,8 +3,8 @@
 ## 1. 克隆仓库
 
 ```zsh
-git clone git@github.com:BeauvnTu/Axiom.git
-cd Axiom
+git clone git@github.com:BeauvnTu/Bootstrap.git
+cd Bootstrap
 ```
 
 ## 2. 进入脚本目录
@@ -28,9 +28,10 @@ sh ./x86_64-darwin/build-switch
 ## 4. 首次运行后的操作
 
 构建完成后，系统会自动配置：
-- Homebrew 包
+- Homebrew 包（kitty, ghostty）
 - macOS 系统设置
-- Home Manager 用户配置
+- Home Manager 用户配置（git, zsh, tmux, 开发工具包）
+- 系统字体
 
 ## 可用命令
 
@@ -48,3 +49,4 @@ sh ./x86_64-darwin/build-switch
 
 - [清理 Launchpad 残留图标 →](../sop/clean-launchpad.md)
 - [Neovim Lua 缓存问题 →](../sop/nvim-cache.md)
+- [修复 rust-analyzer 不报错 →](../sop/fix-rust-analyzer.md)

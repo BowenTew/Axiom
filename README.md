@@ -18,17 +18,17 @@
 # Bootstrap
 One Flake to Rule Them All – for macOS (nix-darwin), NixOS, and home-manager.
 
-Clone this repo, run a command, and watch your system bend to your will. No more configuration chaos. More time for important things—like sipping coffee while your OS sets itself up.
+Clone this repo, run a command, and watch your system configure itself. No more configuration chaos. More time for important things — like sipping coffee while your OS sets itself up.
 
-✨ git clone your way to sanity.
-⚡ nix run your way to glory.
+✨ git clone your way to sanity  
+⚡ nix run your way to glory
 
 ⚠️ Warning: Side effects may include unexpected happiness, extra free time, and the strange urge to show off your terminal to friends.
 
 ---
 
 ## 📖 TOC
-- [📚 在线文档](https://beauvntu.github.io/Bootstrap)
+- [📚 Docs](https://beauvntu.github.io/Bootstrap)
 - [✨ Features](#-features)
 - [📁 Folder Map](#-folder-map)
 - [🚀 Quick Start](#-quick-start)
@@ -41,113 +41,149 @@ Clone this repo, run a command, and watch your system bend to your will. No more
 - **Zero bootstrap scripts** – pure `nix` commands only
 - **Multi-host, multi-user** – keep all machines in one repo
 - **Deterministic** – lock file pins every bit
-- **Modular** – mix & match common modules (`desktop`, `dev`, `docker`, `gaming`…)
-- **CI cached** – GitHub Actions builds your system closure nightly → cachix push
+- **Modular** – mix & match common modules (`git`, `zsh`, `tmux`…)
+- **Project templates** – `nix flake init -t` scaffolding for Deno, Java, Rust+WASM
+- **Standalone Home Manager** – use without nix-darwin via `home-manager switch --flake .#<user>`
 
 ---
 
 ## 📁 Folder Map
 
 ```
-├── apps
-│   └── software.md
-├── assets
+.
+├── assets/                  # Static assets (icons, images)
 │   ├── linux.svg
 │   ├── macos.svg
 │   └── nix-icon.svg
-├── templates
-│   ├── default.nix
-│   ├── deno
-│   ├── java
-│   └── rust-wasm
-├── flake.lock
-├── flake.nix
-├── hosts
-│   ├── darwin
-│   └── nixos
-├── modules
-│   ├── darwin
-│   ├── nixos
-│   └── shared
-├── overlays
+├── docs/                    # mdBook documentation site
+│   ├── book.toml
+│   ├── book/                # Build output (GitHub Pages)
+│   └── src/                 # Markdown source files
+├── hosts/                   # Host configurations
+│   ├── darwin.nix           # macOS system config entry
+│   └── nixos.nix            # NixOS config template (WIP)
+├── inventory/               # Identity data
+│   └── default.nix
+├── modules/                 # Modular configurations
+│   ├── common/              # Cross-platform modules (Home Manager)
+│   │   ├── default.nix
+│   │   ├── git.nix
+│   │   ├── packages.nix
+│   │   ├── tmux.nix
+│   │   └── zsh.nix
+│   └── macos/               # macOS-specific modules
+│       ├── default.nix
+│       ├── home-manager.nix
+│       ├── homebrew.nix
+│       └── packages.nix
+├── overlays/                # Nixpkgs overlay
 │   └── README.md
-├── README.md
-└── scripts
-    ├── aarch64-darwin
-    ├── aarch64-linux -> x86_64-linux
-    ├── x86_64-darwin
-    └── x86_64-linux
+├── scripts/                 # Build / deploy scripts
+│   ├── aarch64-darwin/
+│   ├── x86_64-darwin/
+│   ├── x86_64-linux/
+│   ├── apply.sh
+│   └── setup.sh
+├── templates/               # nix flake init project templates
+│   ├── default.nix
+│   ├── deno/
+│   ├── java/
+│   └── rust-wasm/
+├── flake.lock               # Flake dependency lock
+├── flake.nix                # Flake entrypoint
+├── home.nix                 # Standalone Home Manager entrypoint
+└── README.md
 ```
+
 ## 🚀 Quick Start
-First of all, you should run the command to install the nix
+
+First, install Nix:
+
 ```sh
 sh <(curl -L https://nixos.org/nix/install) --daemon
 ```
-Axiom is a declarative system configuration management tool built on Nix, supporting both macOS (nix-darwin) and Linux (NixOS). It enables rapid deployment of complete development environments through simple commands, encompassing system configuration, development tools, and desktop environments.
+
+Then enable Flakes:
+
+```sh
+mkdir -p ~/.config/nix
+cat > ~/.config/nix/nix.conf << 'CONF'
+experimental-features = nix-command flakes
+CONF
+```
 
 ### NixOS
-Seamless Linux Environment Setup
 
 > ⚠️ Linux (NixOS) support is currently under development. Stay tuned for future updates.
 
 ### nix-darwin
-MacOS Setup Guide
+
+macOS setup guide:
 
 ```zsh
 # Clone the repo
 git clone git@github.com:BeauvnTu/Bootstrap.git
 
-# enter the folder
-cd Axiom/scripts
+# Enter the folder
+cd Bootstrap/scripts
 
-# Apple  Chip
-# apply the your info 
-sh ./aarch64-darwin/apply 
-
-# build the system
-sh ./aarch64-darwin/build
-
-# or build and switch
+# Apple Silicon
 sh ./aarch64-darwin/build-switch
+
+# Intel Mac
+sh ./x86_64-darwin/build-switch
 ```
+
+### Standalone Home Manager
+
+You can also use Home Manager without nix-darwin:
+
+```zsh
+# Install home-manager first, then:
+home-manager switch --flake .#moonshot
+```
+
+> Replace `moonshot` with your username defined in `inventory/default.nix`.
 
 ## 🧪 DevShells
 
-Provide reproducible, stack-specific dev environments without global installs. Enter with nix develop to get the exact toolchains and PATH you need (preferring project-local node_modules/.bin) for Node, Rust, Go, Java, Deno, and more.
-
-The environment entered by runing nix develop xxx use bash as default shell-env.You can use `nix develop -c zsh xxx` to enter the zsh-env.
+This repo provides a docs development shell with mdbook:
 
 ```zsh
-# Default devShell: minimal dependencies (zsh, git), no language toolchains.
+# Enter the docs devShell
 nix develop -c zsh
 
-# Node devShell: Node.js (20/22) with Corepack (pnpm, Yarn) enabled; prefers project-local node_modules/.bin.
-nix develop .#node22 -c zsh
+# Serve docs locally
+mdbook serve docs
 
-# Rust devShell: Rust toolchain (rustup, cargo, clippy, rustfmt, rust-analyzer); reproducible, no global installs.
-nix develop .#rust -c zsh
-
-# Go devShell: Go toolchain (go, gopls, delve, go-tools, gotestsum); reproducible, no global installs.
-nix develop .#go -c zsh
-
-# Java template: JDK 17, Maven, Gradle; use `nix flake init -t .#java` to scaffold.
-nix flake init -t .#java 
+# Build docs
+mdbook build docs
 ```
 
-You can also explicitly specify the system for different architectures: 
+For language-specific dev environments, use the project templates:
 
 ```zsh
-nix develop .#frontend --system aarch64-darwin -c zsh
-nix develop .#rust --system x86_64-linux' -c zsh
+# Scaffold a new Rust + WASM project
+mkdir my-project && cd my-project
+nix flake init -t github:BeauvnTu/Bootstrap#rust-wasm
+nix develop
+
+# Or Java
+nix flake init -t github:BeauvnTu/Bootstrap#java
+nix develop
+
+# Or Deno
+nix flake init -t github:BeauvnTu/Bootstrap#deno
+nix develop
 ```
-
-It’s recommended to place a .envrc (with direnv) or a devenv.yaml in the project subdirectory so the corresponding devShell is auto-activated when entering the directory.
-
 
 ## 🤖 FAQ
 
-- **⚠️ After running build and switch, `~/.zshrc` and `~/.oh-my-zsh` package are still missing**  
-  
-  1. In your Home-Manager config, quote the plugin name exactly like this: programs.zsh.oh-my-zsh = "oh-my-zsh"; (double quotes around the string).
-  2. Make sure ~/.zshrc.backup does not exist; with home-manager.backupFileExtension = "backup" Home-Manager will refuse to proceed if it sees that file.
-  3. Home-Manager installs Oh-My-Zsh into the Nix store and only references it from ~/.zshrc, so you won't find an oh-my-zsh folder in your home directory.
+- **⚠️ After running build and switch, `~/.zshrc` and `~/.oh-my-zsh` package are still missing**
+
+  1. Make sure `~/.zshrc.backup` does not exist; with `home-manager.backupFileExtension = "backup"` Home Manager will refuse to proceed if it sees that file.
+  2. Home Manager installs Oh-My-Zsh into the Nix store and only references it from `~/.zshrc`, so you won't find an `oh-my-zsh` folder in your home directory.
+
+- **⚠️ `attribute 'inputs' missing` error**
+
+  This happens when `modules/common/` requires `inputs` (for `fenix` Rust toolchain) but it's not passed through. Ensure `flake.nix`, `home.nix`, and `modules/macos/home-manager.nix` all pass `inputs` in their `extraSpecialArgs` / module arguments.

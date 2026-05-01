@@ -1,8 +1,11 @@
 # Packages
 
-`modules/macos/packages.nix` 定义了系统级和用户级安装的所有包。
+包定义分散在两个文件中：
 
-## 包分组
+- **`modules/common/packages.nix`** — 用户级包（通过 Home Manager 安装）
+- **`modules/macos/packages.nix`** — 遗留文件（当前未被导入）
+
+## 用户级包 (modules/common/packages.nix)
 
 ### Go 开发
 
@@ -17,13 +20,26 @@
 
 ### Rust 开发
 
-| 包 | 说明 |
-|----|------|
-| `rustc` | Rust 编译器 |
+通过 `fenix` 提供完整工具链：
+
+| 组件 | 说明 |
+|------|------|
 | `cargo` | 包管理器 |
 | `clippy` | Linter |
-| `rust-analyzer` | LSP |
+| `rustc` | 编译器 |
 | `rustfmt` | 格式化 |
+| `rust-src` | 标准库源码（rust-analyzer 需要） |
+| `rust-analyzer` | LSP |
+
+使用 USTC 镜像加速下载：
+```nix
+fenixPkgs.toolchainOf {
+  channel = "stable";
+  date = "2025-09-18";
+  sha256 = "sha256-SJwZ8g0zF2WrKDVmHrVG3pD2RGoQeo24MEXnNx5FyuI=";
+  root = "https://mirrors.ustc.edu.cn/rust-static/dist";
+}
+```
 
 ### JavaScript 开发
 
@@ -60,13 +76,6 @@
 | `helix` | 模态编辑器 |
 | `dockerfile-language-server-nodejs` | Dockerfile LSP |
 
-### 终端工具
-
-| 包 | 说明 |
-|----|------|
-| `tmux` | 终端复用器 |
-| `kitty` | GPU 终端 |
-
 ### 系统工具
 
 | 包 | 说明 |
@@ -76,7 +85,9 @@
 | `coreutils` | GNU 核心工具 |
 | `zip`, `unzip` | 压缩工具 |
 
-### 字体
+## 系统级字体 (hosts/darwin.nix)
+
+在 `hosts/darwin.nix` 中配置的系统级字体：
 
 | 包 | 说明 |
 |----|------|

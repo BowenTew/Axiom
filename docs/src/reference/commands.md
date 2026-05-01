@@ -12,7 +12,7 @@
 | `nix-store --gc --print-roots` | 查看 gc roots |
 | `nix-shell -p <pkg>` | 临时进入含某包的 shell |
 
-## Axiom 构建
+## Bootstrap 构建
 
 | 命令 | 说明 |
 |------|------|
@@ -41,6 +41,14 @@
 
 | 命令 | 说明 |
 |------|------|
-| `nix flake init -t github:BeauvnTu/Axiom#<template>` | 初始化项目 |
-| `nix flake init -t github:BeauvnTu/Axiom#deno` | Deno 项目 |
-| `nix flake init -t github:BeauvnTu/Axiom#rust-wasm` | Rust + WASM 项目 |
+| `nix flake init -t github:BeauvnTu/Bootstrap#<template>` | 初始化项目 |
+| `nix flake init -t github:BeauvnTu/Bootstrap#deno` | Deno 项目 |
+| `nix flake init -t github:BeauvnTu/Bootstrap#rust-wasm` | Rust + WASM 项目 |
+
+## 文档开发
+
+| 命令 | 说明 |
+|------|------|
+| `nix develop -c zsh` | 进入 docs devShell |
+| `mdbook serve docs` | 本地预览文档 |
+| `mdbook build docs` | 构建文档 |

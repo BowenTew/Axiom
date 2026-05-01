@@ -5,7 +5,7 @@ Rust WebAssembly 开发环境模板。
 ## 使用
 
 ```sh
-nix flake init -t github:BeauvnTu/Axiom#rust-wasm
+nix flake init -t github:BeauvnTu/Bootstrap#rust-wasm
 ```
 
 ## 包含

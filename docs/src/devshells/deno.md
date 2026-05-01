@@ -5,7 +5,7 @@ Deno 运行时开发环境模板。
 ## 使用
 
 ```sh
-nix flake init -t github:BeauvnTu/Axiom#deno
+nix flake init -t github:BeauvnTu/Bootstrap#deno
 ```
 
 ## 包含

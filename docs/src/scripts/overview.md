@@ -19,11 +19,12 @@ scripts/
 │   ├── copy-keys
 │   ├── create-keys
 │   └── rollback
-├── x86_64-linux/       # x86_64 Linux
-│   ├── apply
-│   └── build-switch
-└── aarch64-linux -> x86_64-linux   # 符号链接
+└── x86_64-linux/       # x86_64 Linux
+    ├── apply
+    └── build-switch
 ```
+
+> 注意：`aarch64-linux` 是 `x86_64-linux` 的符号链接。
 
 ## 脚本说明
 

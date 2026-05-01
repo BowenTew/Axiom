@@ -6,8 +6,8 @@
 
 | 选项 | 值 | 说明 |
 |------|-----|------|
-| `userName` | `identity.gitName` | 从身份模块读取 |
-| `userEmail` | `identity.gitEmail` | 从身份模块读取 |
+| `userName` | `axiomIdentity.gitName` | 从身份模块读取 |
+| `userEmail` | `axiomIdentity.gitEmail` | 从身份模块读取 |
 | `init.defaultBranch` | `main` | 默认分支名 |
 | `core.editor` | `vim` | 默认编辑器 |
 | `core.autocrlf` | `input` | 行尾符处理 |

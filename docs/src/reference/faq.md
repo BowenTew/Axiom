@@ -2,7 +2,7 @@
 
 ## 一般问题
 
-### Q: Axiom 支持哪些平台？
+### Q: Bootstrap 支持哪些平台？
 
 A: 目前 macOS (nix-darwin) 完全支持，NixOS 支持正在开发中。
 
@@ -35,7 +35,7 @@ sudo darwin-rebuild switch --flake .#aarch64-darwin
 
 ### Q: 如何添加新的软件包？
 
-A: 编辑 `modules/macos/packages.nix`，在对应的包组中添加包名，然后运行 `build-switch`。
+A: 编辑 `modules/common/packages.nix`，在对应的包组中添加包名，然后运行 `build-switch`。
 
 ## Nix 相关问题
 
@@ -64,6 +64,33 @@ A:
 - `build` — 仅构建配置，生成 `result` 链接，不切换系统
 - `build-switch` — 构建并立即切换到新配置
 
+### Q: `attribute 'inputs' missing` 错误怎么办？
+
+A: 这个错误发生在 `modules/common/` 需要 `inputs`（用于 `fenix` Rust 工具链）但没有正确传递时。确保以下三个地方都正确传递了 `inputs`：
+
+1. `flake.nix` 中的 `extraSpecialArgs`：
+   ```nix
+   extraSpecialArgs = {
+     inherit inputs;
+     axiomIdentity = inventory.identity;
+   };
+   ```
+
+2. `home.nix` 的模块参数：
+   ```nix
+   { axiomIdentity, pkgs, inputs, ... }:
+   ```
+
+3. `modules/macos/home-manager.nix` 的模块参数和 `extraSpecialArgs`：
+   ```nix
+   { axiomIdentity, inputs, ... }:
+   {
+     home-manager.extraSpecialArgs = {
+       inherit axiomIdentity inputs;
+     };
+   }
+   ```
+
 ## 故障排查
 
 ### Q: Launchpad 显示已删除的应用？
@@ -73,6 +100,10 @@ A: 参见 [清理 Launchpad 残留图标](../sop/clean-launchpad.md)。
 ### Q: Neovim 配置修改后不生效？
 
 A: 参见 [Neovim Lua 缓存问题](../sop/nvim-cache.md)。
+
+### Q: rust-analyzer 不报错？
+
+A: 参见 [修复 rust-analyzer 不报错](../sop/fix-rust-analyzer.md)。
 
 ### Q: 构建失败怎么办？
 

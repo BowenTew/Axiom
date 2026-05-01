@@ -1,6 +1,6 @@
 # 安装 Nix
 
-Axiom 基于 Nix 包管理器，首先需要安装 Nix。
+Bootstrap 基于 Nix 包管理器，首先需要安装 Nix。
 
 ## 官方安装脚本
 
@@ -22,7 +22,7 @@ nix --version
 
 ## 启用 Flakes
 
-Axiom 使用 Flakes，需要确保已启用：
+Bootstrap 使用 Flakes，需要确保已启用：
 
 ```sh
 mkdir -p ~/.config/nix
